@@ -1,14 +1,14 @@
 ---
-title: API Reference
+title: API Referenz
 
 language_tabs:
   - shell
-  - ruby
   - python
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='https://my.ax-semantics.com/#/account/sign-up'>Kostenlos registrieren</a>
+  - <a href="https://github.com/axsemantics/api-docs/">Quellcode auf Github</a>
+  - <a href='http://github.com/tripit/slate'>Erstellt mit Slate</a>
 
 includes:
   - errors
@@ -16,58 +16,161 @@ includes:
 search: true
 ---
 
-# Introduction
+# Einführung und kurze Erläuterungen
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
 # Authentication
 
-> To authorize, use this code:
+Endpoint: `POST /v1/rest-auth/login/`
 
-```ruby
-require 'kittn'
+Die API verlangt die Angabe eines sog. "Authorization headers". Der Wert wird
+Ihnen nach Login übermittelt.'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+Der Header sollte wie folgt aussehen:
+
+`Authorization: Token aa5d2e36668c11e5964038bc572ec103`
+
+<aside class="notice">
+Sie müssen <code>aa5d2e36668c11e5964038bc572ec103</code> durch Ihr persönliches Token ersetzen.
+</aside>
+
 
 ```python
-import kittn
+import axsemantics
 
-api = kittn.authorize('meowmeowmeow')
+api = axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
+print(api.token)
 ```
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+$ curl --request POST \
+     --url https://api.ax-semantics.com/v1/rest-auth/login/ \
+     --data 'username=USER%40EXAMPLE.COM&password=SECRET%20PASSWORD'
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Die API gibt dabei beispielsweise folgendes JSON zurück:
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+```json
+{"key":"3c019382668c11e5bb5feb0c65696656"} 
+```
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+# Content Projekte
 
-`Authorization: meowmeowmeow`
+"Content Projekte" stellen jeweils die Trainings dar. Innerhalb der Content
+Projekte sind die einzelnen Datensätze als Objekte abgelegt; die Objekte haben
+jeweils den gleichen Datentyp.
+
+## Content Projekte auflisten
+
+Endpoint: `GET /v1/content-project/`
+
+```python
+import axsemantics
+api = axsemantics.login('your', 'credentials')
+
+cp_list = api.content_projects.all()
+```
+
+```shell
+$ curl --request GET \
+  --url https://api.ax-semantics.com/v1/content-project/ \
+  --header 'authorization: Token 3c019382668c11e5bb5feb0c65696656'
+```
+
+> Die API gibt beispielsweise folgendes JSON zurück:
+
+```json
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "name": "Test",
+      "keyword_deviation": "33.00",
+      "keyword_density": "3.00",
+      "max_length": 0,
+      "axcompany": 20,
+      "axcompany_name": "Ihre Firma",
+      "engine_configuration": 1,
+      "count_things": 1,
+      "count_generated_texts": 0,
+      "min_length": null,
+      "count_generated_texts_errors": 0
+    }
+   ]
+}
+```
+
+## Ein bestimmtes Content Projekt anzeigen
+
+Endpoint: `GET /v1/content-project/{ID}/`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+Sie müssen `{ID}` durch die id des jeweiligen Content Projektes ersetzen.
 </aside>
+
+```python
+import axsemntics
+api = axsemantics.login('', '')
+
+cp = axsemantics.content_projects.get(1)
+```
+
+```shell
+curl --request GET \
+  --url https://api.ax-semantics.com/v1/content-project/1/ \
+  --header 'authorization: Token 3c019382668c11e5bb5feb0c65696656''
+```
+
+> Die API gibt beispielsweise folgendes JSON zurück:
+
+```json
+{
+  "id": 1,
+  "name": "Test",
+  "keyword_deviation": "33.00",
+  "keyword_density": "3.00",
+  "max_length": 0,
+  "axcompany": 20,
+  "axcompany_name": "Ihre Firma",
+  "engine_configuration": 1,
+  "count_things": 1,
+  "count_generated_texts": 0,
+  "min_length": null,
+  "count_generated_texts_errors": 0
+}
+```
+
+## Neues Content Projekt anlegen
+
+Endpoint: `POST /v1/content-project/`
+
+# Objekte
+
+## Objekte eines Content Projektes auflisten
+
+## Nach Objekten in einem Content Projekt suchen
+
+## Objekte in einem Content Projekt filtern
+
+## Ein neues Objekt in einem Content Projekt erstellen
+
+## Datei hochladen
+
+# Textgenerierung
+
+## anstoßen
+
+## generierte Texte herunterladen
+
+
+
 
 # Kittens
 
 ## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
 
 ```python
 import kittn
@@ -121,13 +224,6 @@ Remember — a happy kitten is an authenticated kitten!
 
 ## Get a Specific Kitten
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
 ```python
 import kittn
 
@@ -154,7 +250,8 @@ curl "http://example.com/api/kittens/2"
 
 This endpoint retrieves a specific kitten.
 
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+<aside class="warning">If you're not using an administrator API key, note that
+some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
 
 ### HTTP Request
 
