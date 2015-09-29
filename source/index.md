@@ -21,7 +21,8 @@ search: true
 
 # Authentication
 
-Endpoint: `POST /v1/rest-auth/login/`
+### Endpoint
+`POST /v1/rest-auth/login/`
 
 Die API verlangt die Angabe eines sog. "Authorization headers". Der Wert wird
 Ihnen nach Login übermittelt.'
@@ -62,7 +63,8 @@ jeweils den gleichen Datentyp.
 
 ## Content Projekte auflisten
 
-Endpoint: `GET /v1/content-project/`
+### Endpoint
+`GET /v1/content-project/`
 
 ```python
 import axsemantics
@@ -105,7 +107,8 @@ $ curl --request GET \
 
 ## Ein bestimmtes Content Projekt anzeigen
 
-Endpoint: `GET /v1/content-project/{ID}/`
+### Endpoint
+`GET /v1/content-project/{ID}/`
 
 <aside class="notice">
 Sie müssen `{ID}` durch die id des jeweiligen Content Projektes ersetzen.
@@ -145,7 +148,54 @@ curl --request GET \
 
 ## Neues Content Projekt anlegen
 
-Endpoint: `POST /v1/content-project/`
+### Endpoint
+`POST /v1/content-project/`
+
+Sie müssen folgende Felder angeben: 
+
+ - `name`: der von Ihnen gewählte Name dieses Content Projekts, geben Sie hier einen String an
+ - `engine_configuration`: Die ID der passenden Engine Configuration, dies muss ein Integer sein
+ 
+Sie können folgende Felder angeben:
+
+ - `keyword_deviation`: Dezimalzahl, z.B.: '33.0'
+ - `keyword_density`: Dezimalzahl, z.B.: '3.0'
+ 
+
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+cp = axsemantics.content_project.create(name='neues cp', engine_configuration=123)
+```
+
+```shell
+curl -X POST https://api.ax-sementics.com/v1/content-project/ \
+     -H 'Authorization: Token 3c019382668c11e5bb5feb0c65696656' \
+     -H 'Content-type: application/json' \
+     -d '{"name":"neues cp","engine_configuration":123}'
+```
+
+> Die API gibt beispielsweise folgendes JSON zurück:
+
+```json
+{
+  "id": 42,
+  "name": "neues cp",
+  "keyword_deviation": "33.00",
+  "keyword_density": "3.00",
+  "max_length": null,
+  "axcompany": 20,
+  "axcompany_name": "Ihre Firma",
+  "engine_configuration": 123,
+  "count_things": 0,
+  "count_generated_texts": null,
+  "min_length": null,
+  "count_generated_texts_errors": null
+}
+```
+
+## Content Projekte suchen & filtern
 
 # Objekte
 
@@ -170,42 +220,6 @@ Endpoint: `POST /v1/content-project/`
 
 # Kittens
 
-## Get All Kittens
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
 
 ### HTTP Request
 
