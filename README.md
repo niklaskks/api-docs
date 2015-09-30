@@ -53,10 +53,18 @@ Or use the included Dockerfile! (must install Docker first)
 
 ```shell
 docker build -t slate .
-docker run -d -p 4567:4567 --name slate -v $(pwd)/source:/app/source slate
+docker run -d -p 4567:4567 --name slate -v $(pwd):/app slate
 ```
 
 You can now see the docs at <http://localhost:4567>. Whoa! That was fast!
+
+To build your site in docker
+
+```shell
+docker exec -ti slate build
+```
+
+You can then deploy the `build` directory.
 
 *Note: if you're using the Docker setup on OSX, the docs will be
 availalable at the output of `boot2docker ip` instead of `localhost:4567`.*
