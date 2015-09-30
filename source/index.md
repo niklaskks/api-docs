@@ -109,7 +109,7 @@ $ curl --request GET \
 `GET /v1/content-project/{ID}/`
 
 <aside class="notice">
-Sie müssen `{ID}` durch die id des jeweiligen Content Projektes ersetzen.
+Sie müssen <code>{ID}</code> durch die id des jeweiligen Content Projektes ersetzen.
 </aside>
 
 ```python
@@ -202,7 +202,7 @@ $ curl --request POST \
 `DELETE /v1/content-project/{ID}/`
 
 <aside class="notice">
-Sie müssen `{ID}` durch die id des zu löschenden Content Projektes ersetzen.
+Sie müssen <code>{ID}</code> durch die id des zu löschenden Content Projektes ersetzen.
 </aside>
 
 <aside class="warning">
