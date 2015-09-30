@@ -123,7 +123,7 @@ cp = axsemantics.content_projects.get(1)
 ```
 
 ```shell
-curl --request GET \
+$ curl --request GET \
   --url https://api.ax-semantics.com/v1/content-project/1/ \
   --header 'authorization: Token 3c019382668c11e5bb5feb0c65696656''
 ```
@@ -171,10 +171,10 @@ cp = axsemantics.content_project.create(name='neues cp', engine_configuration=12
 ```
 
 ```shell
-curl -X POST https://api.ax-sementics.com/v1/content-project/ \
-     -H 'Authorization: Token 3c019382668c11e5bb5feb0c65696656' \
-     -H 'Content-type: application/json' \
-     -d '{"name":"neues cp","engine_configuration":123}'
+$ curl --request POST https://api.ax-sementics.com/v1/content-project/ \
+  --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656' \
+  --header 'Content-type: application/json' \
+  --data '{"name":"neues cp","engine_configuration":123}'
 ```
 
 > Die API gibt beispielsweise folgendes JSON zurück:
