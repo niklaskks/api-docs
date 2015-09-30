@@ -10,9 +10,6 @@ toc_footers:
   - <a href="https://github.com/axsemantics/api-docs/">Quellcode auf Github</a>
   - <a href='http://github.com/tripit/slate'>Erstellt mit Slate</a>
 
-includes:
-  - errors
-
 search: true
 ---
 
@@ -154,13 +151,13 @@ $ curl --request GET \
 
 Sie müssen folgende Felder angeben: 
 
- - `name`: der von Ihnen gewählte Name dieses Content Projekts, geben Sie hier einen String an
- - `engine_configuration`: Die ID der passenden Engine Configuration, dies muss ein Integer sein
+ - **name**: der von Ihnen gewählte Name dieses Content Projekts, geben Sie hier einen String an
+ - **engine_configuration**: Die ID der passenden Engine Configuration, dies muss ein Integer sein. Die IDs der Ihnen zur Verfügung stehenden Engine Configurations erfahren Sie 
  
 Sie können folgende Felder angeben:
 
- - `keyword_deviation`: Dezimalzahl, z.B.: '33.0'
- - `keyword_density`: Dezimalzahl, z.B.: '3.0'
+ - **keyword_deviation**: Dezimalzahl, z.B.: '33.0'
+ - **keyword_density**: Dezimalzahl, z.B.: '3.0'
  
 
 ```python
@@ -171,7 +168,8 @@ cp = axsemantics.content_project.create(name='neues cp', engine_configuration=12
 ```
 
 ```shell
-$ curl --request POST https://api.ax-sementics.com/v1/content-project/ \
+$ curl --request POST \
+  --url https://api.ax-sementics.com/v1/content-project/ \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656' \
   --header 'Content-type: application/json' \
   --data '{"name":"neues cp","engine_configuration":123}'
@@ -198,6 +196,36 @@ $ curl --request POST https://api.ax-sementics.com/v1/content-project/ \
 
 ## Content Projekte suchen & filtern
 
+## Content Projekte löschen
+
+### Endpoint
+`DELETE /v1/content-project/{ID}/`
+
+<aside class="notice">
+Sie müssen `{ID}` durch die id des zu löschenden Content Projektes ersetzen.
+</aside>
+
+<aside class="warning">
+Wenn Sie ein Content Projekt löschen, werden ALLE Objekte und deren generierte
+Texte ebenfalls gelöscht! Die API wird nicht nachfragen sondern ohne extra
+Bestätigung den Löschauftrag ausführen.
+</aside>
+
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+api.content_project.get(1).delete()
+```
+
+```shell
+$ curl --request DELETE
+  --url https://api.ax-sementics.com/v1/content-project/1/ \
+  --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656' \
+```
+
+> Die API antwortet mit einem '204 NO CONTENT'-Status.
+
 # Objekte
 
 ## Objekte eines Content Projektes auflisten
@@ -215,66 +243,3 @@ $ curl --request POST https://api.ax-sementics.com/v1/content-project/ \
 ## anstoßen
 
 ## generierte Texte herunterladen
-
-
-
-
-# Kittens
-
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that
-some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
