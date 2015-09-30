@@ -45,8 +45,9 @@ print(api.token)
 
 ```shell
 $ curl --request POST \
-     --url https://api.ax-semantics.com/v1/rest-auth/login/ \
-     --data 'username=USER%40EXAMPLE.COM&password=SECRET%20PASSWORD'
+  --url https://api.ax-semantics.com/v1/rest-auth/login/ \
+  --header 'Content-Type: application/json' \
+  --data '{"username":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
 ```
 
 > Die API gibt dabei beispielsweise folgendes JSON zurück:
