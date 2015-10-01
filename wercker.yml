@@ -1,7 +1,7 @@
 box: ruby
 build:
     steps:
-        - bundle install
+        - bundle-install
 deploy:
     steps:
         - aexea/slate-build-step
