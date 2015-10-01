@@ -1,5 +1,5 @@
 ---
-title: API Referenz
+title: AX Semantics API Referenz
 
 language_tabs:
   - shell
@@ -44,13 +44,66 @@ $ curl --request POST \
 > Die API gibt dabei beispielsweise folgendes JSON zurück:
 
 ```json
-{"key":"3c019382668c11e5bb5feb0c65696656"} 
+{"key":"aa5d2e36668c11e5964038bc572ec103"} 
 ```
 
 Nach dem Login erhalten Sie Ihr Token in der Antwort der API.
 
 ### Endpoint
 `POST /v1/rest-auth/login/`
+
+# Objekte
+
+Ihre Datensätze werden unabhängig vom Format als Objekte gespeichert. Alle
+Objekte sind immer einem Content Projekt zugeordnet.
+
+## Neue Objekte anlegen
+
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+data = {'key':'value'}
+obj = api.content_project.get(1)\
+      .create(uid=1, name='demo', pure_data=data)
+```
+
+```shell
+$ curl --request POST \
+  --url https://api.ax-semantics.com/v1/content-project/thing/ \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
+  --data '{"uid":1, "name":"demo", "content_project":1, "pure_data":"{\"key\":\"value\"}"}'
+```
+
+Um ein neues Objekt anzulegen, POSTen Sie dessen Daten in ein bestehendes
+Content Projekt. Geben Sie ebenfalls die ID des Content Projekts an.
+
+Pflichtangaben bei allen Objekten sind:
+
+ - **uid**: String mit beliebigem Inhalt; hiermit können Sie Ihren Datensatz
+ identifizieren
+ - **name**: String mit beliebigem Inhalt; der sprechende Bezeichner dieses
+ Datensatzes
+ - **content_project**: Integer; gibt das Content Project an, dem dieser
+ Datensatz zugeordnet werden soll
+ - **pure_data** (nur bei entsprechenden Projekten): JSON
+ 
+Je nach Inhaltstyp kann es weitere Pflichtfelder geben.
+
+### Hinweise zu pure_data
+
+Falls Sie cURL verwenden, müssen Sie den JSON-String für das pure_data-Feld
+noch schützen. Im shell-Beispiel sehen Sie, dass die Anführungszeichen durch ein
+vorangestelltes Backslash geschützt wurden. 
+
+### Endpoint
+`POST /v1/content-project/{ID}/thing/`
+
+Sie müssen `{ID}` durch die ID Content Projekts ersetzen.
+
+## ein bestehendes Objekt aktualisieren
+
+## ein bestehendes Objekt löschen
 
 # Content Projekte
 
@@ -70,7 +123,7 @@ cp_list = api.content_projects.all()
 ```shell
 $ curl --request GET \
   --url https://api.ax-semantics.com/v1/content-project/ \
-  --header 'authorization: Token 3c019382668c11e5bb5feb0c65696656'
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
 > Die API gibt beispielsweise folgendes JSON zurück:
@@ -114,7 +167,7 @@ cp = axsemantics.content_projects.get(1)
 ```shell
 $ curl --request GET \
   --url https://api.ax-semantics.com/v1/content-project/1/ \
-  --header 'authorization: Token 3c019382668c11e5bb5feb0c65696656''
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
 > Die API gibt beispielsweise folgendes JSON zurück:
@@ -153,7 +206,7 @@ cp = axsemantics.content_project.create(name='neues cp', engine_configuration=12
 ```shell
 $ curl --request POST \
   --url https://api.ax-sementics.com/v1/content-project/ \
-  --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656' \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
   --header 'Content-type: application/json' \
   --data '{"name":"neues cp","engine_configuration":123}'
 ```
@@ -182,8 +235,11 @@ $ curl --request POST \
 
 Sie müssen folgende Felder angeben: 
 
- - **name**: der von Ihnen gewählte Name dieses Content Projekts, geben Sie hier einen String an
- - **engine_configuration**: Die ID der passenden Engine Configuration, dies muss ein Integer sein. Die IDs der Ihnen zur Verfügung stehenden Engine Configurations erfahren Sie 
+ - **name**: der von Ihnen gewählte Name dieses Content Projekts, geben Sie
+ hier einen String an
+ - **engine_configuration**: Die ID der passenden Engine Configuration, dies
+ muss ein Integer sein. Die IDs der Ihnen zur Verfügung stehenden Engine
+ Configurations erfahren Sie von dem Endpoint für "Engine Configuration".
  
 Sie können folgende Felder angeben:
 
