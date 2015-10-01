@@ -18,21 +18,6 @@ search: true
 
 # Authentication
 
-### Endpoint
-`POST /v1/rest-auth/login/`
-
-Die API verlangt die Angabe eines sog. "Authorization headers". Der Wert wird
-Ihnen nach Login übermittelt.'
-
-Der Header sollte wie folgt aussehen:
-
-`Authorization: Token aa5d2e36668c11e5964038bc572ec103`
-
-<aside class="notice">
-Sie müssen <code>aa5d2e36668c11e5964038bc572ec103</code> durch Ihr persönliches Token ersetzen.
-</aside>
-
-
 ```python
 import axsemantics
 
@@ -53,6 +38,21 @@ $ curl --request POST \
 {"key":"3c019382668c11e5bb5feb0c65696656"} 
 ```
 
+### Endpoint
+`POST /v1/rest-auth/login/`
+
+Die API verlangt die Angabe eines sog. "Authorization headers". Der Wert wird
+Ihnen nach Login übermittelt.'
+
+Der Header sollte wie folgt aussehen:
+
+`Authorization: Token aa5d2e36668c11e5964038bc572ec103`
+
+<aside class="notice">
+Sie müssen <code>aa5d2e36668c11e5964038bc572ec103</code> durch Ihr persönliches Token ersetzen.
+</aside>
+
+
 # Content Projekte
 
 "Content Projekte" stellen jeweils die Trainings dar. Innerhalb der Content
@@ -60,9 +60,6 @@ Projekte sind die einzelnen Datensätze als Objekte abgelegt; die Objekte haben
 jeweils den gleichen Datentyp.
 
 ## Content Projekte auflisten
-
-### Endpoint
-`GET /v1/content-project/`
 
 ```python
 import axsemantics
@@ -103,14 +100,10 @@ $ curl --request GET \
 }
 ```
 
-## Ein bestimmtes Content Projekt anzeigen
-
 ### Endpoint
-`GET /v1/content-project/{ID}/`
+`GET /v1/content-project/`
 
-<aside class="notice">
-Sie müssen <code>{ID}</code> durch die id des jeweiligen Content Projektes ersetzen.
-</aside>
+## Ein bestimmtes Content Projekt anzeigen
 
 ```python
 import axsemntics
@@ -144,21 +137,14 @@ $ curl --request GET \
 }
 ```
 
-## Neues Content Projekt anlegen
-
 ### Endpoint
-`POST /v1/content-project/`
+`GET /v1/content-project/{ID}/`
 
-Sie müssen folgende Felder angeben: 
+<aside class="notice">
+Sie müssen <code>{ID}</code> durch die id des jeweiligen Content Projektes ersetzen.
+</aside>
 
- - **name**: der von Ihnen gewählte Name dieses Content Projekts, geben Sie hier einen String an
- - **engine_configuration**: Die ID der passenden Engine Configuration, dies muss ein Integer sein. Die IDs der Ihnen zur Verfügung stehenden Engine Configurations erfahren Sie 
- 
-Sie können folgende Felder angeben:
-
- - **keyword_deviation**: Dezimalzahl, z.B.: '33.0'
- - **keyword_density**: Dezimalzahl, z.B.: '3.0'
- 
+## Neues Content Projekt anlegen
 
 ```python
 import axsemantics
@@ -194,22 +180,22 @@ $ curl --request POST \
 }
 ```
 
+### Endpoint
+`POST /v1/content-project/`
+
+Sie müssen folgende Felder angeben: 
+
+ - **name**: der von Ihnen gewählte Name dieses Content Projekts, geben Sie hier einen String an
+ - **engine_configuration**: Die ID der passenden Engine Configuration, dies muss ein Integer sein. Die IDs der Ihnen zur Verfügung stehenden Engine Configurations erfahren Sie 
+ 
+Sie können folgende Felder angeben:
+
+ - **keyword_deviation**: Dezimalzahl, z.B.: '33.0'
+ - **keyword_density**: Dezimalzahl, z.B.: '3.0'
+
 ## Content Projekte suchen & filtern
 
 ## Content Projekte löschen
-
-### Endpoint
-`DELETE /v1/content-project/{ID}/`
-
-<aside class="notice">
-Sie müssen <code>{ID}</code> durch die id des zu löschenden Content Projektes ersetzen.
-</aside>
-
-<aside class="warning">
-Wenn Sie ein Content Projekt löschen, werden ALLE Objekte und deren generierte
-Texte ebenfalls gelöscht! Die API wird nicht nachfragen sondern ohne extra
-Bestätigung den Löschauftrag ausführen.
-</aside>
 
 ```python
 import axsemantics
@@ -225,6 +211,19 @@ $ curl --request DELETE
 ```
 
 > Die API antwortet mit einem '204 NO CONTENT'-Status.
+
+### Endpoint
+`DELETE /v1/content-project/{ID}/`
+
+<aside class="notice">
+Sie müssen <code>{ID}</code> durch die id des zu löschenden Content Projektes ersetzen.
+</aside>
+
+<aside class="warning">
+Wenn Sie ein Content Projekt löschen, werden ALLE Objekte und deren generierte
+Texte ebenfalls gelöscht! Die API wird nicht nachfragen sondern ohne extra
+Bestätigung den Löschauftrag ausführen.
+</aside>
 
 # Objekte
 
