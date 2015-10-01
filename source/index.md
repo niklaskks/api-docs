@@ -13,10 +13,19 @@ toc_footers:
 search: true
 ---
 
-# Einführung und kurze Erläuterungen
-
 
 # Authentication
+
+Die API verlangt die Angabe eines sog. "Authorization headers". Der Wert wird
+Ihnen nach Login übermittelt.
+
+Der Header sollte wie folgt aussehen:
+
+`Authorization: Token aa5d2e36668c11e5964038bc572ec103`
+
+Sie müssen `aa5d2e36668c11e5964038bc572ec103` durch Ihr persönliches Token ersetzen.
+
+## Login
 
 ```python
 import axsemantics
@@ -38,20 +47,10 @@ $ curl --request POST \
 {"key":"3c019382668c11e5bb5feb0c65696656"} 
 ```
 
+Nach dem Login erhalten Sie Ihr Token in der Antwort der API.
+
 ### Endpoint
 `POST /v1/rest-auth/login/`
-
-Die API verlangt die Angabe eines sog. "Authorization headers". Der Wert wird
-Ihnen nach Login übermittelt.'
-
-Der Header sollte wie folgt aussehen:
-
-`Authorization: Token aa5d2e36668c11e5964038bc572ec103`
-
-<aside class="notice">
-Sie müssen <code>aa5d2e36668c11e5964038bc572ec103</code> durch Ihr persönliches Token ersetzen.
-</aside>
-
 
 # Content Projekte
 
@@ -140,9 +139,7 @@ $ curl --request GET \
 ### Endpoint
 `GET /v1/content-project/{ID}/`
 
-<aside class="notice">
-Sie müssen <code>{ID}</code> durch die id des jeweiligen Content Projektes ersetzen.
-</aside>
+Sie müssen `{ID}` durch die id des jeweiligen Content Projektes ersetzen.
 
 ## Neues Content Projekt anlegen
 
@@ -215,9 +212,7 @@ $ curl --request DELETE
 ### Endpoint
 `DELETE /v1/content-project/{ID}/`
 
-<aside class="notice">
-Sie müssen <code>{ID}</code> durch die id des zu löschenden Content Projektes ersetzen.
-</aside>
+Sie müssen `{ID}` durch die id des zu löschenden Content Projektes ersetzen.
 
 <aside class="warning">
 Wenn Sie ein Content Projekt löschen, werden ALLE Objekte und deren generierte
@@ -228,8 +223,6 @@ Bestätigung den Löschauftrag ausführen.
 # Objekte
 
 ## Objekte eines Content Projektes auflisten
-
-TODO
 
 ## Nach Objekten in einem Content Projekt suchen
 
