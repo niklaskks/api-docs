@@ -144,6 +144,94 @@ $ curl --request DELETE \
 Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
 durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
 
+# Content Generierung
+
+Wenn die Daten der Objekte den projektabhängigen Qualitätskriterien genügen,
+kann über die API die Contentgenerierung gestartet werden.
+
+## Content für ein einzelnes Objekt generieren lassen
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+obj = axsemantics.content_project.get(1).get(123)
+obj.generate_content(force=True)
+```
+
+```shell
+$ curl --request POST \
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/generate_content/?force=true \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' 
+```
+
+> Als Antwort bekommt man Angaben zu dem sog. Text Request
+
+```json
+{ "status": "CALLED",
+  "number": 1,
+  "content_request": {
+    "id": 123,
+    "content_project": 1,
+    "generated_text_in_html": null,
+    "thing_type": "demo",
+    "state": "Started",
+    "created": "2015-10-02T11:56:45.994940Z",
+    "modified": "2015-10-02T11:56:46.068082Z",
+    "...":"..."
+}}
+```
+
+### Endpoint
+`POST /v1/content-project/{CP_ID}/thing/{OBJ_ID}/generate_content/{force}`
+
+Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
+durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
+
+`{force}` ist ein sog. Queryparameter, mit dem Sie angeben können ob eventuell
+bereits bestehender Content durch neu Generierten ersetzt werden soll. Die
+Angabe ist optional: wenn Sie sie weglassen, wird **force=false** angenommen.
+
+- **?force=false** (default): gibt es für dieses Objekt noch keinen Content, so
+wird dieser generiert. Gibt es bereits Content, geschieht nichts weiter.
+- **?force=true**: eventuell bestehender Content wird ersetzt
+
+## Content für ein gesamtes Content Projekt generieren lassen
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+success, count = api.content_project.get(1).generate_content(force=True)
+if success:
+    print('Started content generation for {} objects'.format(count))
+```
+
+```shell
+curl --request POST \
+  --url "https://api.ax-semantics.com/v1/content-project/2123/generate_content/?force=true" \
+  --header "Authorization: Token aa5d2e36668c11e5964038bc572ec103"
+```
+
+> Die API gibt beispielsweise folgendes JSON zurück:
+
+```json
+{"status":"CALLED","number":3}
+```
+### Endpoint
+`POST /v1/content_project/{CP_ID}/generate_content/{force}`
+
+Sie müssen `{CP_ID}` durch die ID des betreffenden Content Projekts ersetzen.
+
+`{force}` ist ein sog. Queryparameter, mit dem Sie angeben können ob eventuell
+bereits bestehender Content durch neu Generierten ersetzt werden soll. Die
+Angabe ist optional: wenn Sie sie weglassen, wird **force=false** angenommen.
+
+## Status der Contentgenerierung abfragen
+
+## Generierten Content abrufen für einzelnes Objekt
+
+## Generierten Content abrufen für gesamtes Content Projekt
+
+## Content automatisch generieren lassen nach Import von mehreren Datensätzen
 
 # Content Projekte
 
@@ -306,30 +394,12 @@ $ curl --request DELETE \
 > Die API antwortet mit einem '204 NO CONTENT'-Status.
 
 ### Endpoint
-`DELETE /v1/content-project/{ID}/`
+`DELETE /v1/content-project/{CP_ID}/`
 
-Sie müssen `{ID}` durch die id des zu löschenden Content Projektes ersetzen.
+Sie müssen `{CP_ID}` durch die id des zu löschenden Content Projektes ersetzen.
 
 <aside class="warning">
 Wenn Sie ein Content Projekt löschen, werden ALLE Objekte und deren generierte
 Texte ebenfalls gelöscht! Die API wird nicht nachfragen sondern ohne extra
 Bestätigung den Löschauftrag ausführen.
 </aside>
-
-# Objekte
-
-## Objekte eines Content Projektes auflisten
-
-## Nach Objekten in einem Content Projekt suchen
-
-## Objekte in einem Content Projekt filtern
-
-## Ein neues Objekt in einem Content Projekt erstellen
-
-## Datei hochladen
-
-# Textgenerierung
-
-## anstoßen
-
-## generierte Texte herunterladen
