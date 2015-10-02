@@ -103,7 +103,47 @@ Sie müssen `{ID}` durch die ID Content Projekts ersetzen.
 
 ## ein bestehendes Objekt aktualisieren
 
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+obj = api.content_project.get(1).get(123)
+obj.pure_data = {'different key':'different value'}
+obj.save()
+```
+
+```shell
+$ curl --request PUT \
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/ \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
+  --data '{"uid":1, "name":"demo", "content_project":1, "pure_data":"{\"diffent key\":\"different value\"}"}'
+```
+
+### Endpoint
+`PUT /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
+
+Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
+durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
+
 ## ein bestehendes Objekt löschen
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+obj = axsemantics.content_project.get(1).get(123)
+obj.delete()
+```
+```shell
+$ curl --request DELETE \
+  --url https://api.ax-sementics.com/v1/content-project/1/thing/123/ \
+  --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
+```
+### Endpoint
+`DELETE /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
+
+Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
+durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
+
 
 # Content Projekte
 
