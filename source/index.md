@@ -64,8 +64,7 @@ import axsemantics
 api = axsemantics.login('', '')
 
 data = {'key':'value'}
-obj = api.content_project.get(1)\
-      .create(uid=1, name='demo', pure_data=data)
+obj = api.content_project.get(1).create(uid=1, name='demo', pure_data=data)
 ```
 
 ```shell
@@ -97,9 +96,9 @@ noch schützen. Im shell-Beispiel sehen Sie, dass die Anführungszeichen durch e
 vorangestelltes Backslash geschützt wurden. 
 
 ### Endpoint
-`POST /v1/content-project/{ID}/thing/`
+`POST /v1/content-project/{CP_ID}/thing/`
 
-Sie müssen `{ID}` durch die ID Content Projekts ersetzen.
+Sie müssen `{CP_ID}` durch die ID Content Projekts ersetzen.
 
 ## ein bestehendes Objekt aktualisieren
 
@@ -133,6 +132,7 @@ api = axsemantics.login('', '')
 obj = axsemantics.content_project.get(1).get(123)
 obj.delete()
 ```
+
 ```shell
 $ curl --request DELETE \
   --url https://api.ax-sementics.com/v1/content-project/1/thing/123/ \
@@ -230,9 +230,9 @@ $ curl --request GET \
 ```
 
 ### Endpoint
-`GET /v1/content-project/{ID}/`
+`GET /v1/content-project/{CP_ID}/`
 
-Sie müssen `{ID}` durch die id des jeweiligen Content Projektes ersetzen.
+Sie müssen `{CP_ID}` durch die id des jeweiligen Content Projektes ersetzen.
 
 ## Neues Content Projekt anlegen
 
