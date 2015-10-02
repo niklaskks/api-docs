@@ -227,6 +227,38 @@ Angabe ist optional: wenn Sie sie weglassen, wird **force=false** angenommen.
 
 ## Status der Contentgenerierung abfragen
 
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+obj = api.content_project.get(1).get(123)
+if obj.status:
+    print('Content for this object has already been requested.')
+```
+
+```shell
+$ curl --request GET \
+    --header "Authorization: Token " \
+    --url "https://api.ax-semantics.com/v1/content-project/1/thing/123/"
+```
+
+> Das relevante Feld in der API-Antwort heißt **status**.
+
+```json
+{ "id": 123,
+  "uid": "demo",
+  "status": "not requested",
+  "generated_text": null,
+  "content_project": 1,
+  "...":"..." }
+```
+
+### Endpoint
+`GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
+
+Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
+durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
+
 ## Generierten Content abrufen für einzelnes Objekt
 
 ```python
