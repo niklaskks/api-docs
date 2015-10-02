@@ -229,6 +229,42 @@ Angabe ist optional: wenn Sie sie weglassen, wird **force=false** angenommen.
 
 ## Generierten Content abrufen für einzelnes Objekt
 
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+content = api.content_project.get(1).get(123).content
+print(content.text_html)
+```
+
+```shell
+$ curl --request GET \
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/content_request/ \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
+```
+
+> Die API gibt beispielsweise folgende Information zum Content Request aus:
+
+```json
+{ "id": 456,
+  "content_project": 1,
+  "state": "Success",
+  "generated_text_in_html": "<h1>Überschrift</h1>\n<p>Absatz</p>",
+  "generated_text": "# Überschrift\nAbsatz",
+  "error_msg": null,
+  "...": "..." }
+```
+
+Der generierte Content wird im Originalformat und in HTML-Formatierung
+ausgegeben. Das Originalformat ist üblicherweise [Markdown](https://daringfireball.net/projects/markdown/syntax/).
+
+### Endpoint
+`GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/content_request/`
+
+Ersetzen Sie `{CP_ID}` durch die ID des betreffenden Content Projects; und
+`{OBJ_ID}` durch die ID des Objektes, dies ist *nicht die von Ihnen angegebende
+UID*.
+
 ## Generierten Content abrufen für gesamtes Content Projekt
 
 ## Content automatisch generieren lassen nach Import von mehreren Datensätzen
