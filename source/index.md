@@ -70,7 +70,7 @@ obj = api.content_project.get(1)\
 
 ```shell
 $ curl --request POST \
-  --url https://api.ax-semantics.com/v1/content-project/thing/ \
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/ \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
   --data '{"uid":1, "name":"demo", "content_project":1, "pure_data":"{\"key\":\"value\"}"}'
 ```
@@ -84,7 +84,7 @@ Pflichtangaben bei allen Objekten sind:
  identifizieren
  - **name**: String mit beliebigem Inhalt; der sprechende Bezeichner dieses
  Datensatzes
- - **content_project**: Integer; gibt das Content Project an, dem dieser
+ - **content_project**: Integer; gibt das Content Projekt an, dem dieser
  Datensatz zugeordnet werden soll
  - **pure_data** (nur bei entsprechenden Projekten): JSON
  
@@ -258,9 +258,9 @@ api.content_project.get(1).delete()
 ```
 
 ```shell
-$ curl --request DELETE
+$ curl --request DELETE \
   --url https://api.ax-sementics.com/v1/content-project/1/ \
-  --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656' \
+  --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
 > Die API antwortet mit einem '204 NO CONTENT'-Status.
