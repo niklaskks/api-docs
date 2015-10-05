@@ -343,13 +343,10 @@ $ curl --request GET \
 > Die API gibt beispielsweise folgendes JSON zurück:
 
 ```json
-{
-  "count": 1,
+{ "count": 1,
   "next": null,
   "previous": null,
-  "results": [
-    {
-      "id": 1,
+  "results": [ { "id": 1,
       "name": "Test",
       "keyword_deviation": "33.00",
       "keyword_density": "3.00",
@@ -360,10 +357,7 @@ $ curl --request GET \
       "count_things": 1,
       "count_generated_texts": 0,
       "min_length": null,
-      "count_generated_texts_errors": 0
-    }
-   ]
-}
+      "count_generated_texts_errors": 0 } ] }
 ```
 
 ### Endpoint
@@ -386,8 +380,7 @@ $ curl --request GET \
 > Die API gibt beispielsweise folgendes JSON zurück:
 
 ```json
-{
-  "id": 1,
+{ "id": 1,
   "name": "Test",
   "keyword_deviation": "33.00",
   "keyword_density": "3.00",
@@ -398,8 +391,7 @@ $ curl --request GET \
   "count_things": 1,
   "count_generated_texts": 0,
   "min_length": null,
-  "count_generated_texts_errors": 0
-}
+  "count_generated_texts_errors": 0 }
 ```
 
 ### Endpoint
@@ -426,8 +418,7 @@ $ curl --request POST \
 > Die API gibt beispielsweise folgendes JSON zurück:
 
 ```json
-{
-  "id": 42,
+{ "id": 42,
   "name": "neues cp",
   "keyword_deviation": "33.00",
   "keyword_density": "3.00",
@@ -438,8 +429,7 @@ $ curl --request POST \
   "count_things": 0,
   "count_generated_texts": null,
   "min_length": null,
-  "count_generated_texts_errors": null
-}
+  "count_generated_texts_errors": null }
 ```
 
 ### Endpoint
