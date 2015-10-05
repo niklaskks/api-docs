@@ -296,7 +296,8 @@ import axsemantics
 api = axsemantics.login('', '')
 
 cp = api.content_project.get(1)
-axsemantics.bulkupload(content_project=cp, tag='demo', file='demofile.xlsx', autoprocess=True)
+axsemantics.bulkupload(content_project=cp, tag='demo',
+    file='/home/user/Desktop/demofile.xlsx', autoprocess=True)
 ```
 
 ```shell
