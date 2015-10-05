@@ -15,7 +15,6 @@ search: true
 
 
 # Authentication
-
 Die API verlangt die Angabe eines sog. "Authorization headers". Der Wert wird
 Ihnen nach Login übermittelt.
 
@@ -26,7 +25,6 @@ Der Header sollte wie folgt aussehen:
 Sie müssen `aa5d2e36668c11e5964038bc572ec103` durch Ihr persönliches Token ersetzen.
 
 ## Login
-
 ```python
 import axsemantics
 
@@ -53,12 +51,10 @@ Nach dem Login erhalten Sie Ihr Token in der Antwort der API.
 `POST /v1/rest-auth/login/`
 
 # Objekte
-
 Ihre Datensätze werden unabhängig vom Format als Objekte gespeichert. Alle
 Objekte sind immer einem Content Projekt zugeordnet.
 
 ## Neue Objekte anlegen
-
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -90,7 +86,6 @@ Pflichtangaben bei allen Objekten sind:
 Je nach Inhaltstyp kann es weitere Pflichtfelder geben.
 
 ### Hinweise zu pure_data
-
 Falls Sie cURL verwenden, müssen Sie den JSON-String für das pure_data-Feld
 noch schützen. Im shell-Beispiel sehen Sie, dass die Anführungszeichen durch ein
 vorangestelltes Backslash geschützt wurden. 
@@ -101,7 +96,6 @@ vorangestelltes Backslash geschützt wurden.
 Sie müssen `{CP_ID}` durch die ID Content Projekts ersetzen.
 
 ## ein bestehendes Objekt aktualisieren
-
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -138,6 +132,7 @@ $ curl --request DELETE \
   --url https://api.ax-sementics.com/v1/content-project/1/thing/123/ \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
+
 ### Endpoint
 `DELETE /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
@@ -145,7 +140,6 @@ Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
 durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
 
 # Content Generierung
-
 Wenn die Daten der Objekte den projektabhängigen Qualitätskriterien genügen,
 kann über die API die Contentgenerierung gestartet werden.
 
@@ -164,7 +158,7 @@ $ curl --request POST \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' 
 ```
 
-> Als Antwort bekommt man Angaben zu dem sog. Text Request
+> Als Antwort bekommt man Angaben zu dem sog. Text Request:
 
 ```json
 { "status": "CALLED",
@@ -177,8 +171,7 @@ $ curl --request POST \
     "state": "Started",
     "created": "2015-10-02T11:56:45.994940Z",
     "modified": "2015-10-02T11:56:46.068082Z",
-    "...":"..."
-}}
+    "...":"..." }}
 ```
 
 ### Endpoint
@@ -226,7 +219,6 @@ bereits bestehender Content durch neu Generierten ersetzt werden soll. Die
 Angabe ist optional: wenn Sie sie weglassen, wird **force=false** angenommen.
 
 ## Status der Contentgenerierung abfragen
-
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -260,7 +252,6 @@ Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
 durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
 
 ## Generierten Content abrufen für einzelnes Objekt
-
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -300,15 +291,41 @@ UID*.
 ## Generierten Content abrufen für gesamtes Content Projekt
 
 # Autoprocessing
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+cp = api.content_project.get(1)
+axsemantics.bulkupload(content_project=cp, tag='demo', file='demofile.xlsx', autoprocess=True)
+```
+
+```shell
+$ curl --request POST \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
+  --url https://api.ax-semantics.com/v1/bulkupload/ \
+  --form 'tag=demo' \
+  --form 'content_project=1' \
+  --form 'data_file=@/home/user/Desktop/demofile.xlsx;filename=demofile.xlsx' \
+  --form 'autoprocess=true'
+```
+Mittels Autoprocessing können Sie Content generieren und zum download
+bereitstellen lassen. Sie erhalten eine E-Mail, wenn der Content für Sie
+bereit liegt.
+
+Sie können Autoprocessing veranlassen, wenn sie ein entsprechendes Flag beim
+Bulkupload angeben. Ihre Daten werden zunächst in das angegebene Content
+Projekt übernommen, dann wird hierfür Content generiert, der anschließend zum
+Download bereitgestellt wird, und schließlich wird Ihnen eine
+Benachrichtigungs-E-Mail geschickt.
+### Endpoint
+`POST /v1/bulkupload/`
 
 # Content Projekte
-
 "Content Projekte" stellen jeweils die Trainings dar. Innerhalb der Content
 Projekte sind die einzelnen Datensätze als Objekte abgelegt; die Objekte haben
 jeweils den gleichen Datentyp.
 
 ## Content Projekte auflisten
-
 ```python
 import axsemantics
 api = axsemantics.login('your', 'credentials')
@@ -352,7 +369,6 @@ $ curl --request GET \
 `GET /v1/content-project/`
 
 ## Ein bestimmtes Content Projekt anzeigen
-
 ```python
 import axsemntics
 api = axsemantics.login('', '')
@@ -391,7 +407,6 @@ $ curl --request GET \
 Sie müssen `{CP_ID}` durch die id des jeweiligen Content Projektes ersetzen.
 
 ## Neues Content Projekt anlegen
-
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -445,7 +460,6 @@ Sie können folgende Felder angeben:
 ## Content Projekte suchen & filtern
 
 ## Content Projekte löschen
-
 ```python
 import axsemantics
 api = axsemantics.login('', '')
