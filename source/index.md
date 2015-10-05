@@ -289,6 +289,29 @@ Ersetzen Sie `{CP_ID}` durch die ID des betreffenden Content Projects; und
 UID*.
 
 ## Generierten Content abrufen für gesamtes Content Projekt
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+cp = api.content_project.get(1)
+download = api.download_exports.filter(content_project=cp).first()
+with open('exports.xlsx', mode='wb') as f:
+    f.write(download)  # nun kann man die Datei z.B. in Excel öffnen
+```
+
+```shell
+$ curl --request GET \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
+  --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10' 
+  # ergibt Liste von möglichen Downloads, die analysiert werden müssen. Die
+  # relevante Information findet sich unter dem Schlüsselwort "download_url"
+$ curl --request GET \
+  --output export.xlsx \
+  --url https://api.ax-semantics.com/v1/content_project_export_download/7f9cc6a2-6b55-11e5-bb84-5e2c2d9baef2
+```
+### Endpoint
+`GET /v1/download-exports/`
+
 
 # Autoprocessing
 ```python
