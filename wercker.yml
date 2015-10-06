@@ -4,7 +4,7 @@ build:
         - bundle-install
     after-steps:
         - install-packages:
-            packages: gawk
+            packages: gawk sudo
         - hipchat-notify:
             token: $HIPCHAT_TOKEN
             room-id: "493581"
