@@ -514,4 +514,5 @@ Bestätigung den Löschauftrag ausführen.
 
 # Projektübergreifende Aktionen
 
-Einige Aktionen lassen sich für Objekte unabhängig von ihrer Zugehörigkeit eines Content Projektes durchführen.
+Einige Aktionen lassen sich für Objekte unabhängig von ihrer Zugehörigkeit
+eines Content Projektes durchführen.
