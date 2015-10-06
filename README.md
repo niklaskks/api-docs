@@ -34,7 +34,7 @@ Danach liegt die Dokumentation unter <http://localhost:4567>.
 Mit dem Befehl
 
 ```shell
-docker exec -ti slate build
+docker exec -ti api-docs rake build
 ```
 wird eine deploy-fertige Version des Projekts im `build`-Verzeichnis erstellt.
 
