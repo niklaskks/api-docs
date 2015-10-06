@@ -6,12 +6,24 @@ language_tabs:
   - python
 
 toc_footers:
-  - <a href='https://my.ax-semantics.com/#/account/sign-up'>Kostenlos registrieren</a>
+  - <a href='https://www.ax-semantics.com/'>mehr über AX NLG Cloud</a>
+  - <a href='https://my.ax-semantics.com/#/account/sign-up'>auf dem myAX - Self Service Portal registrieren</a>
   - <a href="https://github.com/axsemantics/api-docs/">Quellcode auf Github</a>
-  - <a href='http://github.com/tripit/slate'>Erstellt mit Slate</a>
 
 search: true
 ---
+
+# Einführung
+Die Webapplikation „myAX“ (`my.ax-semantics.com`) ist das self-service Portal der AX NLG Cloud. Darüber ist der Zugang zum Zwecke des Datenaustausch, generieren von Texten und abrufen von automatisch generierten Texten möglich.
+
+**Alle Funktionen stehen dabei über eine API zur Verfügung** (`api.ax-semantics.com`), um eine Integration mit anderen IT-Systemen zu ermöglichen.
+
+## Generelle Konzepte
+* _Objekte_ (sog. Things) sind die Datenpunkte, aus denen jeweils ein Text generierbar ist
+* _Content Projekte_ sind eine Sammlung an gleichartigen Datenobjekten, mit Zuordnung zu einem Training und Konfiguration wie z.B. gewünschte Textlänge, Keyworddichte
+* ein _Training_ ist ein Regelsatz zur Interpretation durch die AX Text-Engine, der aus Daten die Aussagen ableitet und in natürliche Sprache überführt. Trainings beziehen sich immer auf konkrete Datenstrukturen.
+* _Content Generierung_ sind Aufträge an die NLG Cloud, für einen Datensatz anhand eines Trainings einen Text zu generieren. Dieser Text wird asyncron generiert und nach erfolgreicher Generierung am Objekt abgelegt.
+
 
 
 # Authentication
