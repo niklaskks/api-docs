@@ -499,3 +499,7 @@ Wenn Sie ein Content Projekt löschen, werden ALLE Objekte und deren generierte
 Texte ebenfalls gelöscht! Die API wird nicht nachfragen sondern ohne extra
 Bestätigung den Löschauftrag ausführen.
 </aside>
+
+# Projektübergreifende Aktionen
+
+
