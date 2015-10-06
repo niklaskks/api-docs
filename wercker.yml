@@ -10,3 +10,7 @@ deploy:
             basedir: build
             repo: $GITHUB_REPO
             domain: $AX_DOMAIN
+    after-steps:
+        - hipchat-notify:
+            token: $HIPCHAT_TOKEN
+            room-id: "493581"
