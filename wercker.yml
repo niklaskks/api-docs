@@ -2,12 +2,7 @@ box: ruby
 build:
     steps:
         - bundle-install
-    after-steps:
-        - install-packages:
-            packages: gawk sudo
-        - hipchat-notify:
-            token: $HIPCHAT_TOKEN
-            room-id: "493581"
+
 deploy:
     steps:
         - aexea/slate-build-step
