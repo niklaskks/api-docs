@@ -1,0 +1,633 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>AX Semantics API Referenz</title>
+
+    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <script src="javascripts/all.js" type="text/javascript"></script>
+
+      <script>
+        $(function() {
+          setupLanguages(["shell","python"]);
+        });
+      </script>
+  </head>
+
+  <body class="index">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="python">python</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://www.ax-semantics.com/'>mehr über AX NLG Cloud</a></li>
+            <li><a href='https://my.ax-semantics.com/#/account/sign-up'>auf dem myAX - Self Service Portal registrieren</a></li>
+            <li><a href="https://github.com/axsemantics/api-docs/">Quellcode auf Github</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="einführung">Einführung</h1>
+
+<p>Die Webapplikation „myAX“ (<code class="prettyprint">my.ax-semantics.com</code>) ist das self-service Portal der AX NLG Cloud. Darüber ist der Zugang zum Zwecke des Datenaustausch, generieren von Texten und abrufen von automatisch generierten Texten möglich.</p>
+
+<p><strong>Alle Funktionen stehen dabei über eine API zur Verfügung</strong> (<code class="prettyprint">api.ax-semantics.com</code>), um eine Integration mit anderen IT-Systemen zu ermöglichen.</p>
+
+<h2 id="generelle-konzepte">Generelle Konzepte</h2>
+
+<ul>
+<li><em>Objekte</em> (sog. Things) sind die Datenpunkte, aus denen jeweils ein Text generierbar ist</li>
+<li><em>Content Projekte</em> sind eine Sammlung an gleichartigen Datenobjekten, mit Zuordnung zu einem Training und Konfiguration wie z.B. gewünschte Textlänge, Keyworddichte</li>
+<li>ein <em>Training</em> ist ein Regelsatz zur Interpretation durch die AX Text-Engine, der aus Daten die Aussagen ableitet und in natürliche Sprache überführt. Trainings beziehen sich immer auf konkrete Datenstrukturen.</li>
+<li><em>Content Generierung</em> sind Aufträge an die NLG Cloud, für einen Datensatz anhand eines Trainings einen Text zu generieren. Dieser Text wird asyncron generiert und nach erfolgreicher Generierung am Objekt abgelegt.</li>
+</ul>
+
+<h1 id="authentication">Authentication</h1>
+
+<p>Die API verlangt die Angabe eines sog. &ldquo;Authorization headers&rdquo;. Der Wert wird
+Ihnen nach Login übermittelt.</p>
+
+<p>Der Header sollte wie folgt aussehen:</p>
+
+<p><code class="prettyprint">Authorization: Token aa5d2e36668c11e5964038bc572ec103</code></p>
+
+<p>Sie müssen <code class="prettyprint">aa5d2e36668c11e5964038bc572ec103</code> durch Ihr persönliches Token ersetzen.</p>
+
+<h2 id="login">Login</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">'USER@EXAMPLE.COM'</span><span class="p">,</span> <span class="s">'SECRET_PASSWORD'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">token</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request POST <span class="se">\</span>
+  --url https://api.ax-semantics.com/v1/rest-auth/login/ <span class="se">\</span>
+  --header <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  --data <span class="s1">'{"username":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'</span>
+</code></pre>
+
+<blockquote>
+<p>Die API gibt dabei beispielsweise folgendes JSON zurück:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="nt">"key"</span><span class="p">:</span><span class="s2">"aa5d2e36668c11e5964038bc572ec103"</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
+
+<p>Nach dem Login erhalten Sie Ihr Token in der Antwort der API.</p>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">POST /v1/rest-auth/login/</code></p>
+
+<h1 id="objekte">Objekte</h1>
+
+<p>Ihre Datensätze werden unabhängig vom Format als Objekte gespeichert. Alle
+Objekte sind immer einem Content Projekt zugeordnet.</p>
+
+<h2 id="neue-objekte-anlegen">Neue Objekte anlegen</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'key'</span><span class="p">:</span><span class="s">'value'</span><span class="p">}</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span> <span class="n">pure_data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request POST <span class="se">\</span>
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/ <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span> <span class="se">\</span>
+  --data <span class="s1">'{"uid":1, "name":"demo", "content_project":1, "pure_data":"{\"key\":\"value\"}"}'</span>
+</code></pre>
+
+<p>Um ein neues Objekt anzulegen, POSTen Sie dessen Daten in ein bestehendes
+Content Projekt. Geben Sie ebenfalls die ID des Content Projekts an.</p>
+
+<p>Pflichtangaben bei allen Objekten sind:</p>
+
+<ul>
+<li><strong>uid</strong>: String mit beliebigem Inhalt; hiermit können Sie Ihren Datensatz
+identifizieren</li>
+<li><strong>name</strong>: String mit beliebigem Inhalt; der sprechende Bezeichner dieses
+Datensatzes</li>
+<li><strong>content_project</strong>: Integer; gibt das Content Projekt an, dem dieser
+Datensatz zugeordnet werden soll</li>
+<li><strong>pure_data</strong> (nur bei entsprechenden Projekten): JSON</li>
+</ul>
+
+<p>Je nach Inhaltstyp kann es weitere Pflichtfelder geben.</p>
+
+<h3 id="hinweise-zu-pure_data">Hinweise zu pure_data</h3>
+
+<p>Falls Sie cURL verwenden, müssen Sie den JSON-String für das pure_data-Feld
+noch schützen. Im shell-Beispiel sehen Sie, dass die Anführungszeichen durch ein
+vorangestelltes Backslash geschützt wurden. </p>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">POST /v1/content-project/{CP_ID}/thing/</code></p>
+
+<p>Sie müssen <code class="prettyprint">{CP_ID}</code> durch die ID Content Projekts ersetzen.</p>
+
+<h2 id="ein-bestehendes-objekt-aktualisieren">ein bestehendes Objekt aktualisieren</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">pure_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'different key'</span><span class="p">:</span><span class="s">'different value'</span><span class="p">}</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request PUT <span class="se">\</span>
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/ <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span> <span class="se">\</span>
+  --data <span class="s1">'{"uid":1, "name":"demo", "content_project":1, "pure_data":"{\"diffent key\":\"different value\"}"}'</span>
+</code></pre>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">PUT /v1/content-project/{CP_ID}/thing/{OBJ_ID}/</code></p>
+
+<p>Sie müssen <code class="prettyprint">{CP_ID}</code> ersetzen durch die ID des Content Projekts; und <code class="prettyprint">{OBJ_ID}</code>
+durch die ID des betreffenden Objektes, dies ist <em>nicht Ihre selbst gewählte UID</em>.</p>
+
+<h2 id="ein-bestehendes-objekt-löschen">ein bestehendes Objekt löschen</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request DELETE <span class="se">\</span>
+  --url https://api.ax-sementics.com/v1/content-project/1/thing/123/ <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token 3c019382668c11e5bb5feb0c65696656'</span>
+</code></pre>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">DELETE /v1/content-project/{CP_ID}/thing/{OBJ_ID}/</code></p>
+
+<p>Sie müssen <code class="prettyprint">{CP_ID}</code> ersetzen durch die ID des Content Projekts; und <code class="prettyprint">{OBJ_ID}</code>
+durch die ID des betreffenden Objektes, dies ist <em>nicht Ihre selbst gewählte UID</em>.</p>
+
+<h1 id="content-generierung">Content Generierung</h1>
+
+<p>Wenn die Daten der Objekte den projektabhängigen Qualitätskriterien genügen,
+kann über die API die Contentgenerierung gestartet werden.</p>
+
+<h2 id="content-für-ein-einzelnes-objekt-generieren-lassen">Content für ein einzelnes Objekt generieren lassen</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">generate_content</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request POST <span class="se">\</span>
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/generate_content/?force<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span> 
+</code></pre>
+
+<blockquote>
+<p>Als Antwort bekommt man Angaben zu dem sog. Text Request:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CALLED"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"content_request"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"content_project"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"generated_text_in_html"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"thing_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Started"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-02T11:56:45.994940Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-02T11:56:46.068082Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"..."</span><span class="p">:</span><span class="s2">"..."</span><span class="w"> </span><span class="p">}}</span><span class="w">
+</span></code></pre>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">POST /v1/content-project/{CP_ID}/thing/{OBJ_ID}/generate_content/{force}</code></p>
+
+<p>Sie müssen <code class="prettyprint">{CP_ID}</code> ersetzen durch die ID des Content Projekts; und <code class="prettyprint">{OBJ_ID}</code>
+durch die ID des betreffenden Objektes, dies ist <em>nicht Ihre selbst gewählte UID</em>.</p>
+
+<p><code class="prettyprint">{force}</code> ist ein sog. Queryparameter, mit dem Sie angeben können ob eventuell
+bereits bestehender Content durch neu Generierten ersetzt werden soll. Die
+Angabe ist optional: wenn Sie sie weglassen, wird <strong>force=false</strong> angenommen.</p>
+
+<ul>
+<li><strong>?force=false</strong> (default): gibt es für dieses Objekt noch keinen Content, so
+wird dieser generiert. Gibt es bereits Content, geschieht nichts weiter.</li>
+<li><strong>?force=true</strong>: eventuell bestehender Content wird ersetzt</li>
+</ul>
+
+<h2 id="content-für-ein-gesamtes-content-projekt-generieren-lassen">Content für ein gesamtes Content Projekt generieren lassen</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">success</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">generate_content</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Started content generation for {} objects'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+</code></pre>
+<pre class="highlight shell"><code>curl --request POST <span class="se">\</span>
+  --url <span class="s2">"https://api.ax-semantics.com/v1/content-project/2123/generate_content/?force=true"</span> <span class="se">\</span>
+  --header <span class="s2">"Authorization: Token aa5d2e36668c11e5964038bc572ec103"</span>
+</code></pre>
+
+<blockquote>
+<p>Die API gibt beispielsweise folgendes JSON zurück:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="nt">"status"</span><span class="p">:</span><span class="s2">"CALLED"</span><span class="p">,</span><span class="nt">"number"</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">POST /v1/content_project/{CP_ID}/generate_content/{force}</code></p>
+
+<p>Sie müssen <code class="prettyprint">{CP_ID}</code> durch die ID des betreffenden Content Projekts ersetzen.</p>
+
+<p><code class="prettyprint">{force}</code> ist ein sog. Queryparameter, mit dem Sie angeben können ob eventuell
+bereits bestehender Content durch neu Generierten ersetzt werden soll. Die
+Angabe ist optional: wenn Sie sie weglassen, wird <strong>force=false</strong> angenommen.</p>
+
+<h2 id="status-der-contentgenerierung-abfragen">Status der Contentgenerierung abfragen</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Content for this object has already been requested.'</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request GET <span class="se">\</span>
+    --header <span class="s2">"Authorization: Token aa5d2e36668c11e5964038bc572ec103"</span> <span class="se">\</span>
+    --url <span class="s2">"https://api.ax-semantics.com/v1/content-project/1/thing/123/"</span>
+</code></pre>
+
+<blockquote>
+<p>Das relevante Feld in der API-Antwort heißt <strong>status</strong>.</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not requested"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"generated_text"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"content_project"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"..."</span><span class="p">:</span><span class="s2">"..."</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/</code></p>
+
+<p>Sie müssen <code class="prettyprint">{CP_ID}</code> ersetzen durch die ID des Content Projekts; und <code class="prettyprint">{OBJ_ID}</code>
+durch die ID des betreffenden Objektes, dies ist <em>nicht Ihre selbst gewählte UID</em>.</p>
+
+<h2 id="generierten-content-abrufen-für-einzelnes-objekt">Generierten Content abrufen für einzelnes Objekt</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">content</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span><span class="o">.</span><span class="n">content</span>
+<span class="k">print</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">text_html</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request GET <span class="se">\</span>
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/content_request/ <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span>
+</code></pre>
+
+<blockquote>
+<p>Die API gibt beispielsweise folgende Information zum Content Request aus:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">456</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"content_project"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"generated_text_in_html"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Überschrift&lt;/h1&gt;\n&lt;p&gt;Absatz&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"generated_text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"# Überschrift\nAbsatz"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"error_msg"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Der generierte Content wird im Originalformat und in HTML-Formatierung
+ausgegeben. Das Originalformat ist üblicherweise <a href="https://daringfireball.net/projects/markdown/syntax/">Markdown</a>.</p>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/content_request/</code></p>
+
+<p>Ersetzen Sie <code class="prettyprint">{CP_ID}</code> durch die ID des betreffenden Content Projects; und
+<code class="prettyprint">{OBJ_ID}</code> durch die ID des Objektes, dies ist <em>nicht die von Ihnen angegebende
+UID</em>.</p>
+
+<h2 id="generierten-content-abrufen-für-gesamtes-content-projekt">Generierten Content abrufen für gesamtes Content Projekt</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">cp</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">download</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">download_exports</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">content_project</span><span class="o">=</span><span class="n">cp</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'exports.xlsx'</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">download</span><span class="p">)</span>  <span class="c"># nun kann man die Datei z.B. in Excel öffnen</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request GET <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span> <span class="se">\</span>
+  --url <span class="s1">'https://api.ax-semantics.com/v1/download-exports/?page=1&amp;page_size=10'</span> 
+  <span class="c"># ergibt Liste von möglichen Downloads, die analysiert werden müssen. Die</span>
+  <span class="c"># relevante Information findet sich unter dem Schlüsselwort "download_url"</span>
+<span class="gp">$ </span>curl --request GET <span class="se">\</span>
+  --output export.xlsx <span class="se">\</span>
+  --url https://api.ax-semantics.com/v1/content_project_export_download/7f9cc6a2-6b55-11e5-bb84-5e2c2d9baef2
+</code></pre>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">GET /v1/download-exports/</code></p>
+
+<h1 id="autoprocessing">Autoprocessing</h1>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">cp</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axsemantics</span><span class="o">.</span><span class="n">bulkupload</span><span class="p">(</span><span class="n">content_project</span><span class="o">=</span><span class="n">cp</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+    <span class="nb">file</span><span class="o">=</span><span class="s">'/home/user/Desktop/demofile.xlsx'</span><span class="p">,</span> <span class="n">autoprocess</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request POST <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span> <span class="se">\</span>
+  --url https://api.ax-semantics.com/v1/bulkupload/ <span class="se">\</span>
+  --form <span class="s1">'tag=demo'</span> <span class="se">\</span>
+  --form <span class="s1">'content_project=1'</span> <span class="se">\</span>
+  --form <span class="s1">'data_file=@/home/user/Desktop/demofile.xlsx;filename=demofile.xlsx'</span> <span class="se">\</span>
+  --form <span class="s1">'autoprocess=true'</span>
+</code></pre>
+
+<p>Mittels Autoprocessing können Sie Content generieren und zum download
+bereitstellen lassen. Sie erhalten eine E-Mail, wenn der Content für Sie
+bereit liegt.</p>
+
+<p>Sie können Autoprocessing veranlassen, wenn sie ein entsprechendes Flag beim
+Bulkupload angeben. Ihre Daten werden zunächst in das angegebene Content
+Projekt übernommen, dann wird hierfür Content generiert, der anschließend zum
+Download bereitgestellt wird, und schließlich wird Ihnen eine
+Benachrichtigungs-E-Mail geschickt.</p>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">POST /v1/bulkupload/</code></p>
+
+<h1 id="content-projekte">Content Projekte</h1>
+
+<p>&ldquo;Content Projekte&rdquo; stellen jeweils die Trainings dar. Innerhalb der Content
+Projekte sind die einzelnen Datensätze als Objekte abgelegt; die Objekte haben
+jeweils den gleichen Datentyp.</p>
+
+<h2 id="content-projekte-auflisten">Content Projekte auflisten</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">'your'</span><span class="p">,</span> <span class="s">'credentials'</span><span class="p">)</span>
+
+<span class="n">cp_list</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">content_projects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request GET <span class="se">\</span>
+  --url https://api.ax-semantics.com/v1/content-project/ <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span>
+</code></pre>
+
+<blockquote>
+<p>Die API gibt beispielsweise folgendes JSON zurück:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"previous"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"keyword_deviation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"33.00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"keyword_density"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"max_length"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"axcompany"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"axcompany_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ihre Firma"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"engine_configuration"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"count_things"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"count_generated_texts"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"min_length"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"count_generated_texts_errors"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">GET /v1/content-project/</code></p>
+
+<h2 id="ein-bestimmtes-content-projekt-anzeigen">Ein bestimmtes Content Projekt anzeigen</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemntics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">cp</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">content_projects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request GET <span class="se">\</span>
+  --url https://api.ax-semantics.com/v1/content-project/1/ <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span>
+</code></pre>
+
+<blockquote>
+<p>Die API gibt beispielsweise folgendes JSON zurück:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"keyword_deviation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"33.00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"keyword_density"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"max_length"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"axcompany"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"axcompany_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ihre Firma"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"engine_configuration"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count_things"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count_generated_texts"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"min_length"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count_generated_texts_errors"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">GET /v1/content-project/{CP_ID}/</code></p>
+
+<p>Sie müssen <code class="prettyprint">{CP_ID}</code> durch die id des jeweiligen Content Projektes ersetzen.</p>
+
+<h2 id="neues-content-projekt-anlegen">Neues Content Projekt anlegen</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">cp</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'neues cp'</span><span class="p">,</span> <span class="n">engine_configuration</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request POST <span class="se">\</span>
+  --url https://api.ax-sementics.com/v1/content-project/ <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span> <span class="se">\</span>
+  --header <span class="s1">'Content-type: application/json'</span> <span class="se">\</span>
+  --data <span class="s1">'{"name":"neues cp","engine_configuration":123}'</span>
+</code></pre>
+
+<blockquote>
+<p>Die API gibt beispielsweise folgendes JSON zurück:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"neues cp"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"keyword_deviation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"33.00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"keyword_density"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"max_length"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"axcompany"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"axcompany_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ihre Firma"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"engine_configuration"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count_things"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count_generated_texts"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"min_length"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count_generated_texts_errors"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">POST /v1/content-project/</code></p>
+
+<p>Sie müssen folgende Felder angeben: </p>
+
+<ul>
+<li><strong>name</strong>: der von Ihnen gewählte Name dieses Content Projekts, geben Sie
+hier einen String an</li>
+<li><strong>engine_configuration</strong>: Die ID der passenden Engine Configuration, dies
+muss ein Integer sein. Die IDs der Ihnen zur Verfügung stehenden Engine
+Configurations erfahren Sie von dem Endpoint für &ldquo;Engine Configuration&rdquo;.</li>
+</ul>
+
+<p>Sie können folgende Felder angeben:</p>
+
+<ul>
+<li><strong>keyword_deviation</strong>: Dezimalzahl, z.B.: &lsquo;33.0&rsquo;</li>
+<li><strong>keyword_density</strong>: Dezimalzahl, z.B.: &#39;3.0&rsquo;</li>
+</ul>
+
+<h2 id="content-projekte-suchen-amp-filtern">Content Projekte suchen &amp; filtern</h2>
+
+<h2 id="content-projekte-löschen">Content Projekte löschen</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="n">api</span><span class="o">.</span><span class="n">content_project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request DELETE <span class="se">\</span>
+  --url https://api.ax-sementics.com/v1/content-project/1/ <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token 3c019382668c11e5bb5feb0c65696656'</span>
+</code></pre>
+
+<blockquote>
+<p>Die API antwortet mit einem &#39;204 NO CONTENT&rsquo;-Status.</p>
+</blockquote>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">DELETE /v1/content-project/{CP_ID}/</code></p>
+
+<p>Sie müssen <code class="prettyprint">{CP_ID}</code> durch die id des zu löschenden Content Projektes ersetzen.</p>
+
+<aside class="warning">
+Wenn Sie ein Content Projekt löschen, werden ALLE Objekte und deren generierte
+Texte ebenfalls gelöscht! Die API wird nicht nachfragen sondern ohne extra
+Bestätigung den Löschauftrag ausführen.
+</aside>
+
+<h1 id="projektübergreifende-aktionen">Projektübergreifende Aktionen</h1>
+
+<p>Einige Aktionen lassen sich für Objekte unabhängig von ihrer Zugehörigkeit
+eines Content Projektes durchführen.</p>
+
+<h2 id="objekte-aus-verschiedenen-content-projekten-anzeigen">Objekte aus verschiedenen Content Projekten anzeigen</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">axsemantics</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">axsemantics</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">each_obj</span> <span class="ow">in</span> <span class="n">api</span><span class="o">.</span><span class="n">allthings</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s">'KW23'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">each_obj</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+        <span class="n">each_obj</span><span class="o">.</span><span class="n">generate_content</span><span class="p">()</span>
+</code></pre>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl --request GET <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span> <span class="se">\</span>
+  --url <span class="s1">'https://api.ax-semantics.com/v1/allthings/?ordering=-modified&amp;page=1&amp;page_size=30&amp;tag=KW+23'</span>
+  <span class="c"># die Objekte unter dem Schlüsselwort 'things' auswerten</span>
+  <span class="c"># beispielhafter Aufruf für nur ein Objekt</span>
+  curl --request POST <span class="se">\</span>
+  --header <span class="s1">'Authorization: Token aa5d2e36668c11e5964038bc572ec103'</span> <span class="se">\</span>
+  --url <span class="s1">'https://api.ax-semantics.com/v1/content_project/1/thing/123/generate_content/?force=true
+</span></code></pre>
+
+<blockquote>
+<p>Die Api antwortet beispielsweise mit:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"next_link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.ax-semantics.com/v1/allthings/?page=2"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"ordering"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-modified"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9001</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ea9cebc6-6c40-11e5-bd8e-3d122d9baef2"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demoteil"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"thing_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"content_project_pk"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Beachten Sie, dass das Feld <code class="prettyprint">id</code> der Objekte in dieser Ansicht nicht immer
+eineindeutig ist. Um Eineindeutigkeit herzustellen, sollten Sie entweder <code class="prettyprint">id</code>
+mit <code class="prettyprint">content_project_pk</code> kombinieren oder das Feld <code class="prettyprint">uuid</code> verwenden.</p>
+
+<h3 id="endpoint">Endpoint</h3>
+
+<p><code class="prettyprint">GET /v1/allthings/</code></p>
+
+<p>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;</p>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="python">python</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
