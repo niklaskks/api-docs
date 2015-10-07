@@ -242,7 +242,7 @@ if obj.status:
 
 ```shell
 $ curl --request GET \
-    --header "Authorization: Token " \
+    --header "Authorization: Token aa5d2e36668c11e5964038bc572ec103" \
     --url "https://api.ax-semantics.com/v1/content-project/1/thing/123/"
 ```
 
@@ -516,3 +516,50 @@ Bestätigung den Löschauftrag ausführen.
 
 Einige Aktionen lassen sich für Objekte unabhängig von ihrer Zugehörigkeit
 eines Content Projektes durchführen.
+
+## Objekte aus verschiedenen Content Projekten anzeigen
+```python
+import axsemantics
+api = axsemantics.login('', '')
+
+for each_obj in api.allthings(tag='KW23'):
+    if not each_obj.status:
+        each_obj.generate_content()
+```
+```shell
+$ curl --request GET \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
+  --url 'https://api.ax-semantics.com/v1/allthings/?ordering=-modified&page=1&page_size=30&tag=KW+23'
+  # die Objekte unter dem Schlüsselwort 'things' auswerten
+  # beispielhafter Aufruf für nur ein Objekt
+  curl --request POST \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
+  --url 'https://api.ax-semantics.com/v1/content_project/1/thing/123/generate_content/?force=true
+```
+
+> Die Api antwortet beispielsweise mit:
+
+```json
+{ "next_link": "https://api.ax-semantics.com/v1/allthings/?page=2",
+  "count": 2,
+  "ordering": "-modified",
+  "next": 2,
+  "page": 1,
+  "results": [ {
+      "id": 9001,
+      "uid": "123",
+      "uuid": "ea9cebc6-6c40-11e5-bd8e-3d122d9baef2",
+      "name": "demoteil",
+      "status": "success",
+      "thing_type": "demo",
+      "content_project_pk": 1,
+      "...": "..." } ] }
+```
+
+Beachten Sie, dass das Feld `id` der Objekte in dieser Ansicht nicht immer
+eineindeutig ist. Um Eineindeutigkeit herzustellen, sollten Sie entweder `id`
+mit `content_project_pk` kombinieren oder das Feld `uuid` verwenden.
+
+### Endpoint
+`GET /v1/allthings/`
+
