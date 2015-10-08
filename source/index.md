@@ -62,11 +62,10 @@ Nach dem Login erhalten Sie Ihr Token in der Antwort der API.
 ### Endpoint
 `POST /v1/rest-auth/login/`
 
-# Objekte
-Ihre Datensätze werden unabhängig vom Format als Objekte gespeichert. Alle
-Objekte sind immer einem Content Projekt zugeordnet.
+# Objects
+Your data input is saved as objects, regardless of their old format. These Objects are allways attached to a content project.
 
-## Neue Objekte anlegen
+## Create new objects
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -82,32 +81,26 @@ $ curl --request POST \
   --data '{"uid":1, "name":"demo", "content_project":1, "pure_data":"{\"key\":\"value\"}"}'
 ```
 
-Um ein neues Objekt anzulegen, POSTen Sie dessen Daten in ein bestehendes
-Content Projekt. Geben Sie ebenfalls die ID des Content Projekts an.
+To create a new object, POST its data into an existing content project. Please add the ID of the existing content project into your POST URL.
 
-Pflichtangaben bei allen Objekten sind:
+Mandatory information for the creation of an object are:
 
- - **uid**: String mit beliebigem Inhalt; hiermit können Sie Ihren Datensatz
- identifizieren
- - **name**: String mit beliebigem Inhalt; der sprechende Bezeichner dieses
- Datensatzes
- - **content_project**: Integer; gibt das Content Projekt an, dem dieser
- Datensatz zugeordnet werden soll
+ - **uid**: String containing arbitrary content; the primary mean of identifying your objects
+ - **name**: String containing arbitrary content; the textual identifier of the object
+ - **content_project**: Integer; states the Content Project which contains this object
  - **pure_data** (nur bei entsprechenden Projekten): JSON
  
-Je nach Inhaltstyp kann es weitere Pflichtfelder geben.
+Depending on the type of content the object may need other mandatory information.
 
-### Hinweise zu pure_data
-Falls Sie cURL verwenden, müssen Sie den JSON-String für das pure_data-Feld
-noch schützen. Im shell-Beispiel sehen Sie, dass die Anführungszeichen durch ein
-vorangestelltes Backslash geschützt wurden. 
+### notes on pure_data
+Depending on the shell you're using, you may need to escape quotation marks in the JSON-String for the pure_data field. In the example call on a cURL shell the quotation marks are escaped with a backslash prefix. 
 
 ### Endpoint
 `POST /v1/content-project/{CP_ID}/thing/`
 
-Sie müssen `{CP_ID}` durch die ID Content Projekts ersetzen.
+In the example you have to exchange `{CP_ID}` with a valid content project id.
 
-## ein bestehendes Objekt aktualisieren
+## update an existing object
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -127,10 +120,9 @@ $ curl --request PUT \
 ### Endpoint
 `PUT /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
-Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
-durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
+In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
-## ein bestehendes Objekt löschen
+## delete an existing object
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -148,8 +140,7 @@ $ curl --request DELETE \
 ### Endpoint
 `DELETE /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
-Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
-durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
+In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
 # Content Generierung
 Wenn die Daten der Objekte den projektabhängigen Qualitätskriterien genügen,
