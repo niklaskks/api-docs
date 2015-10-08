@@ -13,16 +13,16 @@ toc_footers:
 search: true
 ---
 
-# Einführung
-Die Webapplikation „myAX“ (`my.ax-semantics.com`) ist das self-service Portal der AX NLG Cloud. Darüber ist der Zugang zum Zwecke des Datenaustausch, generieren von Texten und abrufen von automatisch generierten Texten möglich.
+# Introduction
+The myAX web application (`my.ax-semantics.com`), as a self-service portal integrated in the AX NLG Cloud, enables your acces to functionalities like data transfer, text generation and integration of automated content generation into your website.
 
-**Alle Funktionen stehen dabei über eine API zur Verfügung** (`api.ax-semantics.com`), um eine Integration mit anderen IT-Systemen zu ermöglichen.
+**All functionalities are accesible via an API** (`api.ax-semantics.com`), to ensure an easy integration into other platforms and it systems.
 
-## Generelle Konzepte
-* _Objekte_ (sog. Things) sind die Datenpunkte, aus denen jeweils ein Text generierbar ist
-* _Content Projekte_ sind eine Sammlung an gleichartigen Datenobjekten, mit Zuordnung zu einem Training und Konfiguration wie z.B. gewünschte Textlänge, Keyworddichte
-* ein _Training_ ist ein Regelsatz zur Interpretation durch die AX Text-Engine, der aus Daten die Aussagen ableitet und in natürliche Sprache überführt. Trainings beziehen sich immer auf konkrete Datenstrukturen.
-* _Content Generierung_ sind Aufträge an die NLG Cloud, für einen Datensatz anhand eines Trainings einen Text zu generieren. Dieser Text wird asyncron generiert und nach erfolgreicher Generierung am Objekt abgelegt.
+## terms and definitions
+* _Objects_ (aka. Things) are data nodes containing certain informations from which a text can be individually generated 
+* _Content Projects_ are a pool of similar Objects combined with a text engine training and an engine configuration whitch includes the desired keyword density, textlength, language, etc.
+* A _Training_ is an interpretative Ruleset for the AX Text-Engine, to derive information from data and transfer this information into natural language. Trainings are allways dependent on a certain datastructure.
+* A _Content generation_ is a request send to the NLG Cloud, to produce a story out of an Object based on the underlying training. The generated content is realized through an asynchronous process and is attached to the object after successfull text generation.
 
 
 
