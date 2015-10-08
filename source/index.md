@@ -27,14 +27,13 @@ The myAX web application (`my.ax-semantics.com`), as a self-service portal integ
 
 
 # Authentication
-Die API verlangt die Angabe eines sog. "Authorization headers". Der Wert wird
-Ihnen nach Login übermittelt.
+The API requires the input of an "Authorization header". The value will be relayed to you after your login.
 
-Der Header sollte wie folgt aussehen:
+The header should look like this:
 
 `Authorization: Token aa5d2e36668c11e5964038bc572ec103`
 
-Sie müssen `aa5d2e36668c11e5964038bc572ec103` durch Ihr persönliches Token ersetzen.
+You have to exchange `aa5d2e36668c11e5964038bc572ec103` for your own API token.
 
 ## Login
 ```python
@@ -51,13 +50,13 @@ $ curl --request POST \
   --data '{"username":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
 ```
 
-> Die API gibt dabei beispielsweise folgendes JSON zurück:
+> The API returns a JSON file such as:
 
 ```json
 {"key":"aa5d2e36668c11e5964038bc572ec103"} 
 ```
 
-Nach dem Login erhalten Sie Ihr Token in der Antwort der API.
+After you have logged in you can view your token in the API response.
 
 ### Endpoint
 `POST /v1/rest-auth/login/`
