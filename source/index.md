@@ -141,11 +141,10 @@ $ curl --request DELETE \
 
 In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
-# Content Generierung
-Wenn die Daten der Objekte den projektabhängigen Qualitätskriterien genügen,
-kann über die API die Contentgenerierung gestartet werden.
+# Generating Content
+The content generation through the API is accessible, when all the mandatory information is present in the object.
 
-## Content für ein einzelnes Objekt generieren lassen
+## Generate content for a single object
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -160,7 +159,7 @@ $ curl --request POST \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' 
 ```
 
-> Als Antwort bekommt man Angaben zu dem sog. Text Request:
+> The response contains informations regarding the content request, such as:
 
 ```json
 { "status": "CALLED",
@@ -179,18 +178,14 @@ $ curl --request POST \
 ### Endpoint
 `POST /v1/content-project/{CP_ID}/thing/{OBJ_ID}/generate_content/{force}`
 
-Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
-durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
+In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
-`{force}` ist ein sog. Queryparameter, mit dem Sie angeben können ob eventuell
-bereits bestehender Content durch neu Generierten ersetzt werden soll. Die
-Angabe ist optional: wenn Sie sie weglassen, wird **force=false** angenommen.
+`{force}` is a query parameter which is used to define wether the content request should discard and regenerate existing content. This parameter is optional: If you didn't use the force parameter the default action is **force=false**.
 
-- **?force=false** (default): gibt es für dieses Objekt noch keinen Content, so
-wird dieser generiert. Gibt es bereits Content, geschieht nichts weiter.
-- **?force=true**: eventuell bestehender Content wird ersetzt
+- **?force=false** (default): content is requested if this object has no existing content. Otherwise no action is taken. 
+- - **?force=true**: existing content will be discarded and regenerated
 
-## Content für ein gesamtes Content Projekt generieren lassen
+## Generate content for a whole content project
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -206,7 +201,7 @@ curl --request POST \
   --header "Authorization: Token aa5d2e36668c11e5964038bc572ec103"
 ```
 
-> Die API gibt beispielsweise folgendes JSON zurück:
+> The API responds by returning a JSON file, such as:
 
 ```json
 {"status":"CALLED","number":3}
@@ -214,13 +209,11 @@ curl --request POST \
 ### Endpoint
 `POST /v1/content_project/{CP_ID}/generate_content/{force}`
 
-Sie müssen `{CP_ID}` durch die ID des betreffenden Content Projekts ersetzen.
+In the example you have to exchange `{CP_ID}` with a valid content project id.
 
-`{force}` ist ein sog. Queryparameter, mit dem Sie angeben können ob eventuell
-bereits bestehender Content durch neu Generierten ersetzt werden soll. Die
-Angabe ist optional: wenn Sie sie weglassen, wird **force=false** angenommen.
+`{force}` is a query parameter which is used to define wether the content request should discard and regenerate existing content. This parameter is optional: If you didn't use the force parameter the default action is **force=false**.
 
-## Status der Contentgenerierung abfragen
+## Request status report for a content request
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -236,7 +229,7 @@ $ curl --request GET \
     --url "https://api.ax-semantics.com/v1/content-project/1/thing/123/"
 ```
 
-> Das relevante Feld in der API-Antwort heißt **status**.
+> The API response includes a status field:
 
 ```json
 { "id": 123,
@@ -250,10 +243,9 @@ $ curl --request GET \
 ### Endpoint
 `GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
-Sie müssen `{CP_ID}` ersetzen durch die ID des Content Projekts; und `{OBJ_ID}`
-durch die ID des betreffenden Objektes, dies ist *nicht Ihre selbst gewählte UID*.
+In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
-## Generierten Content abrufen für einzelnes Objekt
+## Export generated conted for a single object
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -268,7 +260,7 @@ $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
-> Die API gibt beispielsweise folgende Information zum Content Request aus:
+> The API returns information regarding the Content Request, such as:
 
 ```json
 { "id": 456,
@@ -280,17 +272,14 @@ $ curl --request GET \
   "...": "..." }
 ```
 
-Der generierte Content wird im Originalformat und in HTML-Formatierung
-ausgegeben. Das Originalformat ist üblicherweise [Markdown](https://daringfireball.net/projects/markdown/syntax/).
+The generated content is available in its original format or in HTML-format. Usually the original format is [Markdown](https://daringfireball.net/projects/markdown/syntax/).
 
 ### Endpoint
 `GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/content_request/`
 
-Ersetzen Sie `{CP_ID}` durch die ID des betreffenden Content Projects; und
-`{OBJ_ID}` durch die ID des Objektes, dies ist *nicht die von Ihnen angegebende
-UID*.
+In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
-## Generierten Content abrufen für gesamtes Content Projekt
+## Export generated conted for an entire content project
 ```python
 import axsemantics
 api = axsemantics.login('', '')
