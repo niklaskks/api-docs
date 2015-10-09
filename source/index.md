@@ -323,24 +323,17 @@ $ curl --request POST \
   --form 'data_file=@/home/user/Desktop/demofile.xlsx;filename=demofile.xlsx' \
   --form 'autoprocess=true'
 ```
-Mittels Autoprocessing können Sie Content generieren und zum download
-bereitstellen lassen. Sie erhalten eine E-Mail, wenn der Content für Sie
-bereit liegt.
+By using Autoprocessing youre content gets automatically generated and prepared for download. 
 
-Sie können Autoprocessing veranlassen, wenn sie ein entsprechendes Flag beim
-Bulkupload angeben. Ihre Daten werden zunächst in das angegebene Content
-Projekt übernommen, dann wird hierfür Content generiert, der anschließend zum
-Download bereitgestellt wird, und schließlich wird Ihnen eine
-Benachrichtigungs-E-Mail geschickt.
+The Autoprocessing function is triggered if you use the checkbox during a bulkupload. Your Date is then imported into a content project. After that the content is generated for all imported objects and packed into a downloadable file in your account. You are informed by email when your content is available.
+
 ### Endpoint
 `POST /v1/bulkupload/`
 
-# Content Projekte
-"Content Projekte" stellen jeweils die Trainings dar. Innerhalb der Content
-Projekte sind die einzelnen Datensätze als Objekte abgelegt; die Objekte haben
-jeweils den gleichen Datentyp.
+# Content Projects
+"Content Projects" are an interplay of objects, an engine configuration and an engine training. The data that is used to generate content is deposited into objects. The Framework and interpretational ruleset for the text creation is represented by the engine training. Lastly meta information like language and data type is provided by the chosen engine configuration.
 
-## Content Projekte auflisten
+## List content projects
 ```python
 import axsemantics
 api = axsemantics.login('your', 'credentials')
@@ -354,7 +347,7 @@ $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
-> Die API gibt beispielsweise folgendes JSON zurück:
+> The API returns a JSON file, such as:
 
 ```json
 { "count": 1,
@@ -377,7 +370,7 @@ $ curl --request GET \
 ### Endpoint
 `GET /v1/content-project/`
 
-## Ein bestimmtes Content Projekt anzeigen
+## List a single content project
 ```python
 import axsemntics
 api = axsemantics.login('', '')
@@ -391,7 +384,7 @@ $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
-> Die API gibt beispielsweise folgendes JSON zurück:
+> The API returns a JSON file, such as:
 
 ```json
 { "id": 1,
@@ -411,9 +404,9 @@ $ curl --request GET \
 ### Endpoint
 `GET /v1/content-project/{CP_ID}/`
 
-Sie müssen `{CP_ID}` durch die id des jeweiligen Content Projektes ersetzen.
+In the example you have to exchange `{CP_ID}` with a valid content project id.
 
-## Neues Content Projekt anlegen
+## Creat new content project
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -429,7 +422,7 @@ $ curl --request POST \
   --data '{"name":"neues cp","engine_configuration":123}'
 ```
 
-> Die API gibt beispielsweise folgendes JSON zurück:
+> The API returns a JSON file, such as:
 
 ```json
 { "id": 42,
@@ -449,22 +442,19 @@ $ curl --request POST \
 ### Endpoint
 `POST /v1/content-project/`
 
-Sie müssen folgende Felder angeben: 
+Mandatory information to creat a new contentproject: 
 
- - **name**: der von Ihnen gewählte Name dieses Content Projekts, geben Sie
- hier einen String an
- - **engine_configuration**: Die ID der passenden Engine Configuration, dies
- muss ein Integer sein. Die IDs der Ihnen zur Verfügung stehenden Engine
- Configurations erfahren Sie von dem Endpoint für "Engine Configuration".
+ - **name**: a sufficiently descriptive name of your content project, formated as a string
+ - **engine_configuration**: The ID of the suitable Engine Configuration, formated as an Integer. This ID is visible in the API endpoint "Engine Configuration".
  
-Sie können folgende Felder angeben:
+Optional information for your contentproject:
 
- - **keyword_deviation**: Dezimalzahl, z.B.: '33.0'
- - **keyword_density**: Dezimalzahl, z.B.: '3.0'
+ - **keyword_deviation**: decimal, e.g.: '33.0'
+ - **keyword_density**: decimal, e.g.: '3.0'
 
-## Content Projekte suchen & filtern
+## filter and search for content projects
 
-## Content Projekte löschen
+## Delete content projects
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -478,25 +468,22 @@ $ curl --request DELETE \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
-> Die API antwortet mit einem '204 NO CONTENT'-Status.
+> The API returns a '204 NO CONTENT'-message.
 
 ### Endpoint
 `DELETE /v1/content-project/{CP_ID}/`
 
-Sie müssen `{CP_ID}` durch die id des zu löschenden Content Projektes ersetzen.
+In the example you have to exchange `{CP_ID}` with a valid content project id.
 
 <aside class="warning">
-Wenn Sie ein Content Projekt löschen, werden ALLE Objekte und deren generierte
-Texte ebenfalls gelöscht! Die API wird nicht nachfragen sondern ohne extra
-Bestätigung den Löschauftrag ausführen.
+In the event of deleting a content project ALL objects and generated content is also deleted! The API does not ask for conformation, but immidately executes the request!
 </aside>
 
-# Projektübergreifende Aktionen
+# Actions which affect multiple content projects
 
-Einige Aktionen lassen sich für Objekte unabhängig von ihrer Zugehörigkeit
-eines Content Projektes durchführen.
+Some actions are executable for objects regardless of their affiliation to a content project.
 
-## Objekte aus verschiedenen Content Projekten anzeigen
+## Display objects from different content projects
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -516,7 +503,7 @@ $ curl --request GET \
   --url 'https://api.ax-semantics.com/v1/content_project/1/thing/123/generate_content/?force=true
 ```
 
-> Die Api antwortet beispielsweise mit:
+> The API responds a JSON file, such as:
 
 ```json
 { "next_link": "https://api.ax-semantics.com/v1/allthings/?page=2",
@@ -535,9 +522,7 @@ $ curl --request GET \
       "...": "..." } ] }
 ```
 
-Beachten Sie, dass das Feld `id` der Objekte in dieser Ansicht nicht immer
-eineindeutig ist. Um Eineindeutigkeit herzustellen, sollten Sie entweder `id`
-mit `content_project_pk` kombinieren oder das Feld `uuid` verwenden.
+Please keep in mind that the field `id` doesnt necessesarily have a one-to-one relation in this view. To establish this relation combine the fileds `id` and `content_project_pk` or use the field `uuid` for reference.
 
 ### Endpoint
 `GET /v1/allthings/`
