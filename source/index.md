@@ -196,7 +196,7 @@ if success:
 ```
 
 ```shell
-curl --request POST \
+$ curl --request POST \
   --url "https://api.ax-semantics.com/v1/content-project/2123/generate_content/?force=true" \
   --header "Authorization: Token aa5d2e36668c11e5964038bc572ec103"
 ```
@@ -563,5 +563,48 @@ Please keep in mind that the field `id` doesnt necessesarily have a one-to-one r
 &nbsp;
   
 
+# Example use cases
 
+## Generate content from existing data
+```python
+import axsemantics
 
+api = axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
+cp_list = api.content_projects.all()
+cp = cp_list[INDEX]
+success, count = cp.generate_content(force=True)
+download = api.download_exports.filter(content_project=cp).first()
+with open('exports.xlsx', mode='wb') as f:
+    f.write(download)  # nun kann man die Datei z.B. in Excel öffnen
+```
+
+```shell
+$ curl --request POST \
+  --url https://api.ax-semantics.com/v1/rest-auth/login/ \
+  --header 'Content-Type: application/json' \
+  --data '{"username":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
+$ curl --request GET \
+  --url https://api.ax-semantics.com/v1/content-project/ \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
+$ curl --request POST \
+  --url "https://api.ax-semantics.com/v1/content-project/2123/generate_content/?force=true" \
+  --header "Authorization: Token aa5d2e36668c11e5964038bc572ec103"
+$ curl --request GET \
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
+  --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10' 
+  # ergibt Liste von möglichen Downloads, die analysiert werden müssen. Die
+  # relevante Information findet sich unter dem Schlüsselwort "download_url"
+$ curl --request GET \
+  --output export.xlsx \
+  --url https://api.ax-semantics.com/v1/content_project_export_download/7f9cc6a2-6b55-11e5-bb84-5e2c2d9baef2
+```
+
+To generate content to already imported data (in this example, a complete content project), follow these steps:
+
+1. Get your authentication token
+2. Find the Content Project ID
+3. Generate content for the whole Content Project
+4. [Optional] Request status of content generation until it is finished
+5. Find the appropriate Download URL for the generated content and download it
+
+## Import data, then generate content
