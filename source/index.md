@@ -601,10 +601,10 @@ $ curl --request GET \
 
 To generate content to already imported data (in this example, a complete content project), follow these steps:
 
-1. Get your authentication token by sending your login information (username and password).
-2. If you do not know the ID of your chosen Content Project, request the list of all Content Projects and look at its entries to determine the Content Project ID.
-3. Generate content for the whole Content Project, referred to by the Content Project ID you determined in step **2**.
-4. [Optional] Request status of content generation until it is finished, this is mostly relevant for larger requests. You need to use both the Content Project ID and a Thing ID here.
-5. Find the appropriate Download URL for the generated content and request the download.
+1. **Get your authentication token:** Use your existing login information (username and password). This authentication token will be used in all further step to authenticate you with the API. (Every API client will do this for you.)
+2. **Determine the Content Project ID:** If you do not know the ID of your chosen Content Project, request the list of all Content Projects and look at its entries to determine the Content Project ID.
+3. **Generate content for the whole Content Project:** Refer to the Content Project by the ID you determined in step **2**.
+4. [Optional] **Request status of content generation until it is finished:** this is mostly relevant for larger requests. You need to use both the Content Project ID and a Thing ID here.
+5. **Download the generated content:** Find the appropriate Download URL for the generated content and request the download.
 
 ## Import data, then generate content
