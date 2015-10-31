@@ -476,7 +476,7 @@ $ curl --request DELETE \
 In the example you have to exchange `{CP_ID}` with a valid content project id.
 
 <aside class="warning">
-In the event of deleting a content project ALL objects and generated content is also deleted! The API does not ask for conformation, but immidately executes the request!
+In the event of deleting a content project ALL objects and generated content is also deleted! The API does not ask for conformation, but immediately executes the request!
 </aside>
 
 # Actions which affect multiple content projects
