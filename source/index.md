@@ -245,7 +245,7 @@ $ curl --request GET \
 
 In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
-## Export generated conted for a single object
+## Export generated content for a single object
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -279,7 +279,43 @@ The generated content is available in its original format or in HTML-format. Usu
 
 In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
-## Export generated conted for an entire content project
+## Push for new content via webhooks
+
+On request, we can activate the push feature for new content: When a new text is generated MyAX will send a HTTP POST request to the webhook URL.
+
+It has a signature header to verify the integrity/authenticity and some data about the object and the text in the post data body.
+
+### Signature header
+
+```
+HTTP_X_MYAX_SIGNATURE: "sha1=df589122eac0f6a7bd8795436e692e3675cadc3b"
+```
+
+The checksum is calculated as hmac sha1 hexdigest. The key is your API token. The message is the post data.
+  
+### Post data 
+
+You will receive post data looking like this:
+
+```
+{
+  "id": 9001
+  "name": "<The name of the object>",
+  "text": "<The new text (raw)>",
+  "text_as_html": "<The new text (as html from markdown)>",
+  "uid": "<The uid you put in the object>",
+  "content_project_name": "<Name of the content project>",
+  "content_project_id": 1337,
+  "text_modified": "2015-10-21T23:29:00.000000+00:00",
+}
+```
+
+
+
+
+## Export generated content for an entire content project
+If you want to have the content available as one big download file, you can use the export commands.
+
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -305,6 +341,8 @@ $ curl --request GET \
 
 
 # Autoprocessing
+ 
+## Autoprocessing for bulkuploads
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -326,6 +364,10 @@ $ curl --request POST \
 By using Autoprocessing youre content gets automatically generated and prepared for download. 
 
 The Autoprocessing function is triggered if you use the checkbox during a bulkupload. Your Date is then imported into a content project. After that the content is generated for all imported objects and packed into a downloadable file in your account. You are informed by email when your content is available.
+
+## Autoprocessing for new objects
+On request, your Content Project can be configured for "automatic processing". For any new objects, a text generation request is then triggerd automatically once, saving you the call to request the content. 
+
 
 ### Endpoint
 `POST /v1/bulkupload/`
@@ -406,7 +448,7 @@ $ curl --request GET \
 
 In the example you have to exchange `{CP_ID}` with a valid content project id.
 
-## Creat new content project
+## Create new content project
 ```python
 import axsemantics
 api = axsemantics.login('', '')
@@ -442,7 +484,7 @@ $ curl --request POST \
 ### Endpoint
 `POST /v1/content-project/`
 
-Mandatory information to creat a new contentproject: 
+Mandatory information to create a new contentproject: 
 
  - **name**: a sufficiently descriptive name of your content project, formated as a string
  - **engine_configuration**: The ID of the suitable Engine Configuration, formated as an Integer. This ID is visible in the API endpoint "Engine Configuration".
