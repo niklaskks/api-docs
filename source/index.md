@@ -301,7 +301,7 @@ You will receive post data looking like this:
 
 ```
 {
-  "id": 9001
+  "id": 9001,
   "name": "<The name of the object>",
   "text": "<The new text (raw)>",
   "text_as_html": "<The new text (as html from markdown)>",
