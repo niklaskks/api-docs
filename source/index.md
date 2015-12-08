@@ -6,14 +6,16 @@ language_tabs:
   - python
 
 toc_footers:
-  - <a href='https://www.ax-semantics.com/'>mehr über AX NLG Cloud</a>
-  - <a href='https://my.ax-semantics.com/#/account/sign-up'>auf dem myAX - Self Service Portal registrieren</a>
-  - <a href="https://github.com/axsemantics/api-docs/">Quellcode auf Github</a>
+  - <a href='https://www.ax-semantics.com/'>more about the AX NLG Cloud</a>
+  - <a href='https://my.ax-semantics.com/#/account/sign-up'>register on myAX - Self Service Portal</a>
+  - <a href="https://github.com/axsemantics/api-docs/">Source on Github</a>
 
 search: true
 ---
 
-# Introduction
+# Introduction to the myAX API
+
+## Basics
 The myAX web application (`my.ax-semantics.com`), as a self-service portal integrated in the AX NLG Cloud, enables your acces to functionalities like data transfer, text generation and integration of automated content generation into your website.
 
 **All functionalities are accesible via an API** (`api.ax-semantics.com`), to ensure an easy integration into other platforms and it systems.
