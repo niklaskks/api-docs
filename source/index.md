@@ -21,7 +21,7 @@ The myAX web application (`my.ax-semantics.com`), as a self-service portal integ
 **All functionalities are accesible via an API** (`api.ax-semantics.com`), to ensure an easy integration into other platforms and it systems.
 
 ## terms and definitions
-* _Objects_ (aka. Things) are data nodes containing certain informations from which a text can be individually generated 
+* _Objects_ (aka. Things) are data nodes containing certain informations from which a text can be individually generated
 * _Content Projects_ are a pool of similar Objects combined with a text engine training and an engine configuration whitch includes the desired keyword density, textlength, language, etc.
 * A _Training_ is an interpretative Ruleset for the AX Text-Engine, to derive information from data and transfer this information into natural language. Trainings are allways dependent on a certain datastructure.
 * A _Content generation_ is a request send to the NLG Cloud, to produce a story out of an Object based on the underlying training. The generated content is realized through an asynchronous process and is attached to the object after successfull text generation.
@@ -55,7 +55,7 @@ $ curl --request POST \
 > The API returns a JSON file such as:
 
 ```json
-{"key":"aa5d2e36668c11e5964038bc572ec103"} 
+{"key":"aa5d2e36668c11e5964038bc572ec103"}
 ```
 
 After you have logged in you can view your token in the API response.
@@ -90,11 +90,11 @@ Mandatory information for the creation of an object are:
  - **name**: String containing arbitrary content; the textual identifier of the object
  - **content_project**: Integer; states the Content Project which contains this object
  - **pure_data** (nur bei entsprechenden Projekten): JSON
- 
+
 Depending on the type of content the object may need other mandatory information.
 
 ### notes on pure_data
-Depending on the shell you're using, you may need to escape quotation marks in the JSON-String for the pure_data field. In the example call on a cURL shell the quotation marks are escaped with a backslash prefix. 
+Depending on the shell you're using, you may need to escape quotation marks in the JSON-String for the pure_data field. In the example call on a cURL shell the quotation marks are escaped with a backslash prefix.
 
 ### Endpoint
 `POST /v1/content-project/{CP_ID}/thing/`
@@ -158,7 +158,7 @@ obj.generate_content(force=True)
 ```shell
 $ curl --request POST \
   --url https://api.ax-semantics.com/v1/content-project/1/thing/123/generate_content/?force=true \
-  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' 
+  --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
 > The response contains informations regarding the content request, such as:
@@ -184,7 +184,7 @@ In the example you have to exchange `{CP_ID}` with a valid content project id an
 
 `{force}` is a query parameter which is used to define wether the content request should discard and regenerate existing content. This parameter is optional: If you didn't use the force parameter the default action is **force=false**.
 
-- **?force=false** (default): content is requested if this object has no existing content. Otherwise no action is taken. 
+- **?force=false** (default): content is requested if this object has no existing content. Otherwise no action is taken.
 - - **?force=true**: existing content will be discarded and regenerated
 
 ## Generate content for a whole content project
@@ -294,8 +294,8 @@ HTTP_X_MYAX_SIGNATURE: "sha1=df589122eac0f6a7bd8795436e692e3675cadc3b"
 ```
 
 The checksum is calculated as hmac sha1 hexdigest. The key is your API token. The message is the post data.
-  
-### Post data 
+
+### Post data
 
 You will receive post data looking like this:
 
@@ -331,7 +331,7 @@ with open('exports.xlsx', mode='wb') as f:
 ```shell
 $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
-  --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10' 
+  --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10'
   # ergibt Liste von möglichen Downloads, die analysiert werden müssen. Die
   # relevante Information findet sich unter dem Schlüsselwort "download_url"
 $ curl --request GET \
@@ -343,7 +343,7 @@ $ curl --request GET \
 
 
 # Autoprocessing
- 
+
 ## Autoprocessing for bulkuploads
 ```python
 import axsemantics
@@ -363,12 +363,12 @@ $ curl --request POST \
   --form 'data_file=@/home/user/Desktop/demofile.xlsx;filename=demofile.xlsx' \
   --form 'autoprocess=true'
 ```
-By using Autoprocessing youre content gets automatically generated and prepared for download. 
+By using Autoprocessing youre content gets automatically generated and prepared for download.
 
 The Autoprocessing function is triggered if you use the checkbox during a bulkupload. Your Date is then imported into a content project. After that the content is generated for all imported objects and packed into a downloadable file in your account. You are informed by email when your content is available.
 
 ## Autoprocessing for new objects
-On request, your Content Project can be configured for "automatic processing". For any new objects, a text generation request is then triggerd automatically once, saving you the call to request the content. 
+On request, your Content Project can be configured for "automatic processing". For any new objects, a text generation request is then triggerd automatically once, saving you the call to request the content.
 
 
 ### Endpoint
@@ -486,11 +486,11 @@ $ curl --request POST \
 ### Endpoint
 `POST /v1/content-project/`
 
-Mandatory information to create a new contentproject: 
+Mandatory information to create a new contentproject:
 
  - **name**: a sufficiently descriptive name of your content project, formated as a string
  - **engine_configuration**: The ID of the suitable Engine Configuration, formated as an Integer. This ID is visible in the API endpoint "Engine Configuration".
- 
+
 Optional information for your contentproject:
 
  - **keyword_deviation**: decimal, e.g.: '33.0'
@@ -605,7 +605,7 @@ Please keep in mind that the field `id` doesnt necessesarily have a one-to-one r
 &nbsp;
 &nbsp;
 &nbsp;
-  
+
 
 # Example use cases
 
@@ -635,7 +635,7 @@ $ curl --request POST \
   --header "Authorization: Token aa5d2e36668c11e5964038bc572ec103"
 $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
-  --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10' 
+  --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10'
   # ergibt Liste von möglichen Downloads, die analysiert werden müssen. Die
   # relevante Information findet sich unter dem Schlüsselwort "download_url"
 $ curl --request GET \
