@@ -49,7 +49,7 @@ print(api.token)
 $ curl --request POST \
   --url https://api.ax-semantics.com/v1/rest-auth/login/ \
   --header 'Content-Type: application/json' \
-  --data '{"username":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
+  --data '{"email":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
 ```
 
 > The API returns a JSON file such as:
@@ -626,7 +626,7 @@ with open('exports.xlsx', mode='wb') as f:
 $ curl --request POST \
   --url https://api.ax-semantics.com/v1/rest-auth/login/ \
   --header 'Content-Type: application/json' \
-  --data '{"username":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
+  --data '{"email":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
 $ curl --request GET \
   --url https://api.ax-semantics.com/v1/content-project/ \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
@@ -645,7 +645,7 @@ $ curl --request GET \
 
 To generate content for already imported data (in this example, a complete content project), follow these steps:
 
-1. **Get your authentication token:** Use your existing login information (username and password). This authentication token will be used in all further step to authenticate you with the API. (Every API client will do this for you.)
+1. **Get your authentication token:** Use your existing login information (email and password). This authentication token will be used in all further step to authenticate you with the API. (Every API client will do this for you.)
 2. **Determine the Content Project ID:** If you do not know the ID of your chosen Content Project, request the list of all Content Projects and look at its entries to determine the Content Project ID.
 3. **Generate content for the whole Content Project:** Refer to the Content Project by the ID you determined in step **2**.
 4. [Optional] **Request status of content generation until it is finished:** this is mostly relevant for larger requests. You need to use both the Content Project ID and a Thing ID here.
@@ -669,7 +669,7 @@ obj.save()
 $ curl --request POST \
   --url https://api.ax-semantics.com/v1/rest-auth/login/ \
   --header 'Content-Type: application/json' \
-  --data '{"username":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
+  --data '{"email":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
 $ curl --request GET \
   --url https://api.ax-semantics.com/v1/content-project/ \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
@@ -685,7 +685,7 @@ $ curl --request PUT \
 
 If you have an existing Content Project, but you need to import data before conent generation, follow these steps and then continue at the example for content generation above.
 
-1. **Get your authentication token:** Use your existing login information (username and password). This authentication token will be used in all further step to authenticate you with the API. (Every API client will do this for you.)
+1. **Get your authentication token:** Use your existing login information (email and password). This authentication token will be used in all further step to authenticate you with the API. (Every API client will do this for you.)
 2. **Determine the Content Project ID:** If you do not know the ID of your chosen Content Project, request the list of all Content Projects and look at its entries to determine the Content Project ID.
 3. **Create a new Object with your data:** Within that Content Project, you can now create new objects. The data you want to import should be sent in the `pure_data` field. You will give the Object an UID. However, if you need to look up or address the Object later on, you need to save the returned Object ID.
 4. [Optional] **Update an Object's data:** Sometimes, you want to update an Object's data. Here you will have to use the generated Object ID (instead of the UID of your choosing) to address the Object.
