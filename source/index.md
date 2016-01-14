@@ -450,6 +450,60 @@ $ curl --request GET \
 
 In the example you have to exchange `{CP_ID}` with a valid content project id.
 
+
+### Access generated content 
+
+To get to your content, all things with their content are listable as follows:
+
+`GET /v1/content-project/{CP_ID}/thing/`
+
+* This gives you the data to identify the thing and the generated text.
+* the field `generated_text` contains the text (with markdown) and `text_as_html` contains the same content converted to HTML 
+* This endpoint uses pagination, the URLs for `next`/`previous` page are provided by the API in the respective fields.
+
+```
+{
+    "count": 164,
+    "next": "https://api.ax-semantics.com/v1/content-project/3992/thing/?page=2",
+    "previous": null,
+    "results": [
+        {
+            "id": 1637938,
+            "generated_text": "Mit einem leichten Plus von 0,36 % schloss die Pearson plc-Aktie heute bei 700,5 GBP. Im Vergleich zum Vortag stieg die Aktie um 0,94 % (6,5 GBP). Im Vergleich zum Vorjahr fiel sie um -38,51 % (-438,72 GBP).",
+            "status": "success",
+            "error_msg": "",
+            "most_important_missing_requirement_level": 0,
+            "requirement_level_status_text": "Data quality for this object is satisfactory.",
+            "is_content_generation_available": true,
+            "created": "2016-01-14T06:24:23.221964Z",
+            "modified": "2016-01-14T06:50:06.152555Z",
+            "uuid": "35963a99-8849-4f0d-87d6-1e8e6ce70b73",
+            "uid": "7207909",
+            "alternate_name": null,
+            "description": null,
+            "name": "Pearson plc [LSE] (2016-01-13)",
+            "url": null,
+            "tag": null,
+            "_text": "Mit einem leichten Plus von 0,36 % schloss die Pearson plc-Aktie heute bei 700,5 GBP. Im Vergleich zum Vortag stieg die Aktie um 0,94 % (6,5 GBP). Im Vergleich zum Vorjahr fiel sie um -38,51 % (-438,72 GBP).",
+            "text_as_html": "<p>Mit einem leichten Plus von 0,36 % schloss die Pearson plc-Aktie heute bei 700,5 GBP. Im Vergleich zum Vortag stieg die Aktie um 0,94 % (6,5 GBP). Im Vergleich zum Vorjahr fiel sie um -38,51 % (-438,72 GBP).</p>",
+            "text_modified": "2016-01-14T06:50:06.152029Z",
+            "text_state": "SUCCESS",
+            "text_error_msg": null,
+            "text_duration": 1542838,
+            "text_metrics": "{\n  \"text_length_in_words\": 57,\n  \"text_length_in_chars\": 207\n}",
+            "stock_code": "PSON.L",
+            "stock_name": "Pearson plc",
+            "stock_exchange": "LSE",
+            "stock_type": "stock",
+            "category_name": "Publishing - Newspapers",
+            "date": "2016-01-13",
+            "content_project": 3992
+        },
+```
+
+
+
+
 ## Create new content project
 ```python
 import axsemantics
