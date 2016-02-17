@@ -79,7 +79,8 @@ obj = api.content_project.get(1).create(uid=1, name='demo', pure_data=data)
 $ curl --request POST \
   --url https://api.ax-semantics.com/v1/content-project/1/thing/ \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
-  --data '{"uid":1, "name":"demo", "content_project":1, "pure_data":"{\"key\":\"value\"}"}'
+  --header 'Content-Type: application/json' \
+  --data '{"uid":1, "name":"demo", "content_project":1, "pure_data": {"key":"value"}}'
 ```
 
 To create a new object, POST its data into an existing content project. Please add the ID of the existing content project into your POST URL.
@@ -115,7 +116,8 @@ obj.save()
 $ curl --request PUT \
   --url https://api.ax-semantics.com/v1/content-project/1/thing/123/ \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
-  --data '{"uid":1, "name":"demo", "content_project":1, "pure_data":"{\"diffent key\":\"different value\"}"}'
+  --header 'Content-Type: application/json' \
+  --data '{"uid":1, "name":"demo", "content_project":1, "pure_data": {"diffent key":"different value"}}'
 ```
 
 ### Endpoint
@@ -157,7 +159,7 @@ obj.generate_content(force=True)
 
 ```shell
 $ curl --request POST \
-  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/generate_content/?force=true \
+  --url "https://api.ax-semantics.com/v1/content-project/1/thing/123/generate_content/?force=true" \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
