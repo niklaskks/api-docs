@@ -41,8 +41,8 @@ You have to exchange `aa5d2e36668c11e5964038bc572ec103` for your own API token.
 ```python
 import axsemantics
 
-api = axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
-print(api.token)
+axsemantics.login(user='USER@EXAMPLE.COM', password='SECRET_PASSWORD')
+print(axsemantics.constants.API_TOKEN)
 ```
 
 ```shell
@@ -69,7 +69,7 @@ Your data input is saved as objects, regardless of their old format. These Objec
 ## Create new objects
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 data = {'key':'value'}
 obj = api.content_project.get(1).create(uid=1, name='demo', pure_data=data)
@@ -105,7 +105,7 @@ In the example you have to exchange `{CP_ID}` with a valid content project id.
 ## update an existing object
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 obj = api.content_project.get(1).get(123)
 obj.pure_data = {'different key':'different value'}
@@ -128,7 +128,7 @@ In the example you have to exchange `{CP_ID}` with a valid content project id an
 ## delete an existing object
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 obj = axsemantics.content_project.get(1).get(123)
 obj.delete()
@@ -151,7 +151,7 @@ The content generation through the API is accessible, when all the mandatory inf
 ## Generate content for a single object
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 obj = axsemantics.content_project.get(1).get(123)
 obj.generate_content(force=True)
@@ -192,7 +192,7 @@ In the example you have to exchange `{CP_ID}` with a valid content project id an
 ## Generate content for a whole content project
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 success, count = api.content_project.get(1).generate_content(force=True)
 if success:
@@ -220,7 +220,7 @@ In the example you have to exchange `{CP_ID}` with a valid content project id.
 ## Request status report for a content request
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 obj = api.content_project.get(1).get(123)
 if obj.status:
@@ -252,7 +252,7 @@ In the example you have to exchange `{CP_ID}` with a valid content project id an
 ## Export generated content for a single object
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 content = api.content_project.get(1).get(123).content
 print(content.text_html)
@@ -322,7 +322,7 @@ If you want to have the content available as one big download file, you can use 
 
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 cp = api.content_project.get(1)
 download = api.download_exports.filter(content_project=cp).first()
@@ -349,7 +349,7 @@ $ curl --request GET \
 ## Autoprocessing for bulkuploads
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 cp = api.content_project.get(1)
 axsemantics.bulkupload(content_project=cp, tag='demo',
@@ -382,7 +382,7 @@ On request, your Content Project can be configured for "automatic processing". F
 ## List content projects
 ```python
 import axsemantics
-api = axsemantics.login('your', 'credentials')
+axsemantics.login('', '')
 
 cp_list = api.content_projects.all()
 ```
@@ -418,8 +418,8 @@ $ curl --request GET \
 
 ## List a single content project
 ```python
-import axsemntics
-api = axsemantics.login('', '')
+import axsemantics
+axsemantics.login('', '')
 
 cp = axsemantics.content_projects.get(1)
 ```
@@ -509,7 +509,7 @@ To get to your content, all things with their content are listable as follows:
 ## Create new content project
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 cp = axsemantics.content_project.create(name='neues cp', engine_configuration=123)
 ```
@@ -557,7 +557,7 @@ Optional information for your contentproject:
 ## Delete content projects
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 api.content_project.get(1).delete()
 ```
@@ -586,7 +586,7 @@ Some actions are executable for objects regardless of their affiliation to a con
 ## Display objects from different content projects
 ```python
 import axsemantics
-api = axsemantics.login('', '')
+axsemantics.login('', '')
 
 for each_obj in api.allthings(tag='KW23'):
     if not each_obj.status:
@@ -669,7 +669,7 @@ Please keep in mind that the field `id` doesnt necessesarily have a one-to-one r
 ```python
 import axsemantics
 
-api = axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
+axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
 cp_list = api.content_projects.all()
 cp = cp_list[INDEX]
 success, count = cp.generate_content(force=True)
@@ -711,7 +711,7 @@ To generate content for already imported data (in this example, a complete conte
 ```python
 import axsemantics
 
-api = axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
+axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
 cp_list = api.content_projects.all()
 cp = cp_list[INDEX]
 data = {'key':'value'}
