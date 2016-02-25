@@ -1,5 +1,5 @@
 ---
-title: AX Semantics API Referenz
+title: AX Semantics API Reference
 
 language_tabs:
   - shell
@@ -16,15 +16,15 @@ search: true
 # Introduction to the myAX API
 
 ## Basics
-The myAX web application (`my.ax-semantics.com`), as a self-service portal integrated in the AX NLG Cloud, enables your acces to functionalities like data transfer, text generation and integration of automated content generation into your website.
+The myAX web application (`my.ax-semantics.com`), as a self-service portal integrated in the AX NLG Cloud, enables your access to functionalities like data transfer, text generation and integration of automated content generation into your website.
 
 **All functionalities are accesible via an API** (`api.ax-semantics.com`), to ensure an easy integration into other platforms and it systems.
 
 ## terms and definitions
 * _Objects_ (aka. Things) are data nodes containing certain informations from which a text can be individually generated
-* _Content Projects_ are a pool of similar Objects combined with a text engine training and an engine configuration whitch includes the desired keyword density, textlength, language, etc.
-* A _Training_ is an interpretative Ruleset for the AX Text-Engine, to derive information from data and transfer this information into natural language. Trainings are allways dependent on a certain datastructure.
-* A _Content generation_ is a request send to the NLG Cloud, to produce a story out of an Object based on the underlying training. The generated content is realized through an asynchronous process and is attached to the object after successfull text generation.
+* _Content Projects_ are a pool of similar Objects combined with a text engine training and an engine configuration which includes the desired keyword density, text length, language, etc.
+* A _Training_ is an interpretative ruleset for the AX Text-Engine, to derive information from data and transfer this information into natural language. Trainings are always dependent on a certain data structure.
+* A _Content generation_ is a request send to the NLG Cloud, to produce a story out of an Object based on the underlying training. The generated content is realized through an asynchronous process and is attached to the object after successful text generation.
 
 
 
@@ -64,7 +64,7 @@ After you have logged in you can view your token in the API response.
 `POST /v1/rest-auth/login/`
 
 # Objects
-Your data input is saved as objects, regardless of their old format. These Objects are allways attached to a content project.
+Your data input is saved as objects, regardless of their old format. These Objects are always attached to a content project.
 
 ## Create new objects
 ```python
@@ -90,7 +90,7 @@ Mandatory information for the creation of an object are:
  - **uid**: String containing arbitrary content; the primary mean of identifying your objects
  - **name**: String containing arbitrary content; the textual identifier of the object
  - **content_project**: Integer; states the Content Project which contains this object
- - **pure_data** (nur bei entsprechenden Projekten): JSON
+ - **pure_data** (if applicable): JSON
 
 Depending on the type of content the object may need other mandatory information.
 
@@ -184,7 +184,7 @@ $ curl --request POST \
 
 In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
-`{force}` is a query parameter which is used to define wether the content request should discard and regenerate existing content. This parameter is optional: If you didn't use the force parameter the default action is **force=false**.
+`{force}` is a query parameter which is used to define whether the content request should discard and regenerate existing content. This parameter is optional: If you didn't use the force parameter the default action is **force=false**.
 
 - **?force=false** (default): content is requested if this object has no existing content. Otherwise no action is taken.
 - - **?force=true**: existing content will be discarded and regenerated
@@ -215,7 +215,7 @@ $ curl --request POST \
 
 In the example you have to exchange `{CP_ID}` with a valid content project id.
 
-`{force}` is a query parameter which is used to define wether the content request should discard and regenerate existing content. This parameter is optional: If you didn't use the force parameter the default action is **force=false**.
+`{force}` is a query parameter which is used to define whether the content request should discard and regenerate existing content. This parameter is optional: If you didn't use the force parameter the default action is **force=false**.
 
 ## Request status report for a content request
 ```python
@@ -283,9 +283,9 @@ The generated content is available in its original format or in HTML-format. Usu
 
 In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
 
-## Push for new content via webhooks
+## Push for new content via web hooks
 
-On request, we can activate the push feature for new content: When a new text is generated MyAX will send a HTTP POST request to the webhook URL.
+On request, we can activate the push feature for new content: When a new text is generated MyAX will send a HTTP POST request to the web hook URL.
 
 It has a signature header to verify the integrity/authenticity and some data about the object and the text in the post data body.
 
@@ -365,12 +365,12 @@ $ curl --request POST \
   --form 'data_file=@/home/user/Desktop/demofile.xlsx;filename=demofile.xlsx' \
   --form 'autoprocess=true'
 ```
-By using Autoprocessing youre content gets automatically generated and prepared for download.
+By using Autoprocessing your content gets automatically generated and prepared for download.
 
 The Autoprocessing function is triggered if you use the checkbox during a bulkupload. Your Date is then imported into a content project. After that the content is generated for all imported objects and packed into a downloadable file in your account. You are informed by email when your content is available.
 
 ## Autoprocessing for new objects
-On request, your Content Project can be configured for "automatic processing". For any new objects, a text generation request is then triggerd automatically once, saving you the call to request the content.
+On request, your Content Project can be configured for "automatic processing". For any new objects, a text generation request is then triggered automatically once, saving you the call to request the content.
 
 
 ### Endpoint
@@ -455,7 +455,7 @@ In the example you have to exchange `{CP_ID}` with a valid content project id.
 
 ### Access generated content 
 
-To get to your content, all things with their content are listable as follows:
+To get to your content, all things with their content can be listed as follows:
 
 `GET /v1/content-project/{CP_ID}/thing/`
 
@@ -542,12 +542,12 @@ $ curl --request POST \
 ### Endpoint
 `POST /v1/content-project/`
 
-Mandatory information to create a new contentproject:
+Mandatory information to create a new content project:
 
- - **name**: a sufficiently descriptive name of your content project, formated as a string
- - **engine_configuration**: The ID of the suitable Engine Configuration, formated as an Integer. This ID is visible in the API endpoint "Engine Configuration".
+ - **name**: a sufficiently descriptive name of your content project, formatted as a string
+ - **engine_configuration**: The ID of the suitable Engine Configuration, formatted as an Integer. This ID is visible in the API endpoint "Engine Configuration".
 
-Optional information for your contentproject:
+Optional information for your content project:
 
  - **keyword_deviation**: decimal, e.g.: '33.0'
  - **keyword_density**: decimal, e.g.: '3.0'
@@ -622,7 +622,7 @@ $ curl --request GET \
       "...": "..." } ] }
 ```
 
-Please keep in mind that the field `id` doesnt necessesarily have a one-to-one relation in this view. To establish this relation combine the fileds `id` and `content_project_pk` or use the field `uuid` for reference.
+Please keep in mind that the field `id` doesn't necessarily have a one-to-one relation in this view. To establish this relation combine the fields `id` and `content_project_pk` or use the field `uuid` for reference.
 
 ### Endpoint
 `GET /v1/allthings/`
@@ -739,7 +739,7 @@ $ curl --request PUT \
   --data '{"uid":1, "name":"demo", "content_project":1, "pure_data":"{\"diffent key\":\"different value\"}"}'
 ```
 
-If you have an existing Content Project, but you need to import data before conent generation, follow these steps and then continue at the example for content generation above.
+If you have an existing Content Project, but you need to import data before content generation, follow these steps and then continue at the example for content generation above.
 
 1. **Get your authentication token:** Use your existing login information (email and password). This authentication token will be used in all further step to authenticate you with the API. (Every API client will do this for you.)
 2. **Determine the Content Project ID:** If you do not know the ID of your chosen Content Project, request the list of all Content Projects and look at its entries to determine the Content Project ID.
