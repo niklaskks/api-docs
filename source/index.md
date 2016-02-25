@@ -16,16 +16,15 @@ search: true
 # Introduction to the myAX API
 
 ## Basics
-The myAX web application (`my.ax-semantics.com`), as a self-service portal integrated in the AX NLG Cloud, enables your access to functionalities like data transfer, text generation and integration of automated content generation into your website.
+The myAX web application (`my.ax-semantics.com`) is a self-service portal integrated in the AX NLG Cloud. It enables your access to functionality such as data transfer, text generation and integration of automated content generation into your website.
 
-**All functionalities are accesible via an API** (`api.ax-semantics.com`), to ensure an easy integration into other platforms and it systems.
+**All functionality of the platform is accessible via our API** at `api.ax-semantics.com` to ensure an easy integration into other platforms and systems.
 
-## terms and definitions
-* _Objects_ (aka. Things) are data nodes containing certain informations from which a text can be individually generated
-* _Content Projects_ are a pool of similar Objects combined with a text engine training and an engine configuration which includes the desired keyword density, text length, language, etc.
+## Terms and Definitions
+* _Objects_ (aka Things) are data nodes containing information from which a text can be generated
+* _Content Projects_ are collections of similar Objects combined with a text engine training and an engine configuration which includes the desired keyword density, text length, language etc.
 * A _Training_ is an interpretative ruleset for the AX Text-Engine, to derive information from data and transfer this information into natural language. Trainings are always dependent on a certain data structure.
-* A _Content generation_ is a request send to the NLG Cloud, to produce a story out of an Object based on the underlying training. The generated content is realized through an asynchronous process and is attached to the object after successful text generation.
-
+* A _Content generation request_ is a request sent to the NLG Cloud to produce a text out of an Object based on the underlying training. The generated content is realized through an asynchronous process and is attached to the object after successful text generation.
 
 
 # Authentication
@@ -52,19 +51,21 @@ $ curl --request POST \
   --data '{"email":"USER@EXAMPLE.COM","password":"SECRET_PASSWORD"}'
 ```
 
-> The API returns a JSON file such as:
+> The API returns a JSON string such as:
 
 ```json
 {"key":"aa5d2e36668c11e5964038bc572ec103"}
 ```
 
-After you have logged in you can view your token in the API response.
+You will receive your token as response to your login request.
 
 ### Endpoint
 `POST /v1/rest-auth/login/`
 
+
+
 # Objects
-Your data input is saved as objects, regardless of their old format. These Objects are always attached to a content project.
+Your data input is saved as objects, regardless of their old format. These Objects are always attached to a Content Project.
 
 ## Create new objects
 ```python
@@ -83,18 +84,18 @@ $ curl --request POST \
   --data '{"uid":1, "name":"demo", "content_project":1, "pure_data": {"key":"value"}}'
 ```
 
-To create a new object, POST its data into an existing content project. Please add the ID of the existing content project into your POST URL.
+To create a new object, POST its data into an existing content project. Please add the ID of the existing content project into your POST URL as well as your request data.
 
 Mandatory information for the creation of an object are:
 
- - **uid**: String containing arbitrary content; the primary mean of identifying your objects
+ - **uid**: String containing arbitrary content; the primary means of identifying your objects
  - **name**: String containing arbitrary content; the textual identifier of the object
  - **content_project**: Integer; states the Content Project which contains this object
  - **pure_data** (if applicable): JSON
 
 Depending on the type of content the object may need other mandatory information.
 
-### notes on pure_data
+### Notes on pure_data
 Depending on the shell you're using, you may need to escape quotation marks in the JSON-String for the pure_data field. In the example call on a cURL shell the quotation marks are escaped with a backslash prefix.
 
 ### Endpoint
@@ -102,7 +103,7 @@ Depending on the shell you're using, you may need to escape quotation marks in t
 
 In the example you have to exchange `{CP_ID}` with a valid content project id.
 
-## update an existing object
+## Update an existing Object
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -123,9 +124,9 @@ $ curl --request PUT \
 ### Endpoint
 `PUT /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
-In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the object ID assigned by the platform!*.
 
-## delete an existing object
+## Delete an Object
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -143,12 +144,12 @@ $ curl --request DELETE \
 ### Endpoint
 `DELETE /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
-In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the object ID assigned by the platform!*.
 
 # Generating Content
-The content generation through the API is accessible, when all the mandatory information is present in the object.
+The content generation through the API is accessible when all mandatory information is present in the object.
 
-## Generate content for a single object
+## Generate content for a single Object
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -182,14 +183,14 @@ $ curl --request POST \
 ### Endpoint
 `POST /v1/content-project/{CP_ID}/thing/{OBJ_ID}/generate_content/{force}`
 
-In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the object ID assigned by the platform!*.
 
-`{force}` is a query parameter which is used to define whether the content request should discard and regenerate existing content. This parameter is optional: If you didn't use the force parameter the default action is **force=false**.
+`{force}` is a query parameter which is used to define whether the Content Request should discard and regenerate existing content. This parameter is optional, the default is **force=false**.
 
-- **?force=false** (default): content is requested if this object has no existing content. Otherwise no action is taken.
-- - **?force=true**: existing content will be discarded and regenerated
+- **?force=false** (default): Content will be requested if this object has no existing content. Otherwise no action is taken.
+- - **?force=true**: Existing content will be discarded and regenerated.
 
-## Generate content for a whole content project
+## Generate content for a whole Content Project
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -205,7 +206,7 @@ $ curl --request POST \
   --header "Authorization: Token aa5d2e36668c11e5964038bc572ec103"
 ```
 
-> The API responds by returning a JSON file, such as:
+> The API responds by returning a JSON response, such as:
 
 ```json
 {"status":"CALLED","number":3}
@@ -213,9 +214,9 @@ $ curl --request POST \
 ### Endpoint
 `POST /v1/content_project/{CP_ID}/generate_content/{force}`
 
-In the example you have to exchange `{CP_ID}` with a valid content project id.
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
-`{force}` is a query parameter which is used to define whether the content request should discard and regenerate existing content. This parameter is optional: If you didn't use the force parameter the default action is **force=false**.
+`{force}` is a query parameter which is used to define whether the content request should discard and regenerate existing content. This parameter is optional, the default is **force=false**.
 
 ## Request status report for a content request
 ```python
@@ -247,9 +248,9 @@ $ curl --request GET \
 ### Endpoint
 `GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
-In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the ID assigned by the platform!*.
 
-## Export generated content for a single object
+## Export generated content for a single Object
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -281,7 +282,7 @@ The generated content is available in its original format or in HTML-format. Usu
 ### Endpoint
 `GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/content_request/`
 
-In the example you have to exchange `{CP_ID}` with a valid content project id and `{OBJ_ID}` with a valid object id. *Keep in mind that this is not the UID but the object ID given by the platform!*.
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the ID assigned by the platform!*.
 
 ## Push for new content via web hooks
 
@@ -297,9 +298,9 @@ HTTP_X_MYAX_SIGNATURE: "sha1=df589122eac0f6a7bd8795436e692e3675cadc3b"
 
 The checksum is calculated as hmac sha1 hexdigest. The key is your API token. The message is the post data.
 
-### Post data
+### POST data
 
-You will receive post data looking like this:
+You will receive POST data looking like this:
 
 ```
 {
@@ -317,8 +318,9 @@ You will receive post data looking like this:
 
 
 
-## Export generated content for an entire content project
-If you want to have the content available as one big download file, you can use the export commands.
+## Export generated content for an entire Content Project
+
+If you want to have the content available as one big download file, you can use the export functionality.
 
 ```python
 import axsemantics
@@ -334,8 +336,8 @@ with open('exports.xlsx', mode='wb') as f:
 $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
   --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10'
-  # ergibt Liste von möglichen Downloads, die analysiert werden müssen. Die
-  # relevante Information findet sich unter dem Schlüsselwort "download_url"
+  # yields a list of available downloads
+  # find your required download and use its 'download_url' attribute
 $ curl --request GET \
   --output export.xlsx \
   --url https://api.ax-semantics.com/v1/content_project_export_download/7f9cc6a2-6b55-11e5-bb84-5e2c2d9baef2
@@ -365,11 +367,11 @@ $ curl --request POST \
   --form 'data_file=@/home/user/Desktop/demofile.xlsx;filename=demofile.xlsx' \
   --form 'autoprocess=true'
 ```
-By using Autoprocessing your content gets automatically generated and prepared for download.
+By using Autoprocessing your content will be automatically generated and prepared for download.
 
-The Autoprocessing function is triggered if you use the checkbox during a bulkupload. Your Date is then imported into a content project. After that the content is generated for all imported objects and packed into a downloadable file in your account. You are informed by email when your content is available.
+The Autoprocessing function is triggered if you use the checkbox during a bulkupload. Your data will then be imported into a content project. Afterwards the content will be generated for all imported objects and made available as a file in your account. You are informed by email when your content is available.
 
-## Autoprocessing for new objects
+## Autoprocessing for new Objects
 On request, your Content Project can be configured for "automatic processing". For any new objects, a text generation request is then triggered automatically once, saving you the call to request the content.
 
 
@@ -377,14 +379,14 @@ On request, your Content Project can be configured for "automatic processing". F
 `POST /v1/bulkupload/`
 
 # Content Projects
-"Content Projects" are an interplay of objects, an engine configuration and an engine training. The data that is used to generate content is deposited into objects. The Framework and interpretational ruleset for the text creation is represented by the engine training. Lastly meta information like language and data type is provided by the chosen engine configuration.
+Content Projects are collections of objects, coupled with an engine configuration and an engine training. The data that is used to generate content is deposited into objects. The Framework and interpretational ruleset for the text creation is represented by the engine training. Lastly meta information like language and data type is provided by the chosen engine configuration.
 
-## List content projects
+## List Content Projects
 ```python
 import axsemantics
 axsemantics.login('', '')
 
-cp_list = api.content_projects.all()
+cp_list = axsemantics.ContentProjects.all()
 ```
 
 ```shell
@@ -393,7 +395,7 @@ $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
-> The API returns a JSON file, such as:
+> The API returns a JSON string, such as:
 
 ```json
 { "count": 1,
@@ -416,12 +418,12 @@ $ curl --request GET \
 ### Endpoint
 `GET /v1/content-project/`
 
-## List a single content project
+## List a single Content Project
 ```python
 import axsemantics
 axsemantics.login('', '')
 
-cp = axsemantics.content_projects.get(1)
+cp = axsemantics.ContentProject.all().get(id=1)
 ```
 
 ```shell
@@ -430,7 +432,7 @@ $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
-> The API returns a JSON file, such as:
+> The API returns a JSON response, such as:
 
 ```json
 { "id": 1,
@@ -450,12 +452,12 @@ $ curl --request GET \
 ### Endpoint
 `GET /v1/content-project/{CP_ID}/`
 
-In the example you have to exchange `{CP_ID}` with a valid content project id.
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
 
 ### Access generated content 
 
-To get to your content, all things with their content can be listed as follows:
+To get your generated content, all things with their content can be listed as follows:
 
 `GET /v1/content-project/{CP_ID}/thing/`
 
@@ -506,12 +508,12 @@ To get to your content, all things with their content can be listed as follows:
 
 
 
-## Create new content project
+## Create new Content Project
 ```python
 import axsemantics
 axsemantics.login('', '')
 
-cp = axsemantics.content_project.create(name='neues cp', engine_configuration=123)
+cp = axsemantics.ContentProject.create(name='neues cp', engine_configuration=123)
 ```
 
 ```shell
@@ -522,7 +524,7 @@ $ curl --request POST \
   --data '{"name":"neues cp","engine_configuration":123}'
 ```
 
-> The API returns a JSON file, such as:
+> The API returns a JSON response, such as:
 
 ```json
 { "id": 42,
@@ -544,22 +546,22 @@ $ curl --request POST \
 
 Mandatory information to create a new content project:
 
- - **name**: a sufficiently descriptive name of your content project, formatted as a string
- - **engine_configuration**: The ID of the suitable Engine Configuration, formatted as an Integer. This ID is visible in the API endpoint "Engine Configuration".
+ - **name**: a sufficiently descriptive name of your content project (string)
+ - **engine_configuration**: The ID of the suitable Engine Configuration (integer). This ID is visible in the API endpoint "Engine Configuration".
 
 Optional information for your content project:
 
  - **keyword_deviation**: decimal, e.g.: '33.0'
  - **keyword_density**: decimal, e.g.: '3.0'
 
-## filter and search for content projects
+## Filter and search for Content Projects
 
-## Delete content projects
+## Delete Content Projects
 ```python
 import axsemantics
 axsemantics.login('', '')
 
-api.content_project.get(1).delete()
+axsemantics.ContentProject.all().get(id=1).delete()
 ```
 
 ```shell
@@ -568,22 +570,22 @@ $ curl --request DELETE \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
-> The API returns a '204 NO CONTENT'-message.
+> The API responds with a '204 NO CONTENT' status.
 
 ### Endpoint
 `DELETE /v1/content-project/{CP_ID}/`
 
-In the example you have to exchange `{CP_ID}` with a valid content project id.
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
 <aside class="warning">
-In the event of deleting a content project ALL objects and generated content is also deleted! The API does not ask for conformation, but immediately executes the request!
+In the event of deleting a content project ALL Objects and generated content is also deleted! The API does not ask for conformation, but immediately executes the request!
 </aside>
 
-# Actions which affect multiple content projects
+# Actions affecting multiple Content Projects
 
 Some actions are executable for objects regardless of their affiliation to a content project.
 
-## Display objects from different content projects
+## Display Objects from different Content Projects
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -603,7 +605,7 @@ $ curl --request GET \
   --url 'https://api.ax-semantics.com/v1/content_project/1/thing/123/generate_content/?force=true
 ```
 
-> The API responds a JSON file, such as:
+> The API responds with a JSON string, such as:
 
 ```json
 { "next_link": "https://api.ax-semantics.com/v1/allthings/?page=2",
@@ -628,41 +630,6 @@ Please keep in mind that the field `id` doesn't necessarily have a one-to-one re
 `GET /v1/allthings/`
 
 
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-
-
 # Example use cases
 
 ## Generate content from existing data
@@ -670,8 +637,8 @@ Please keep in mind that the field `id` doesn't necessarily have a one-to-one re
 import axsemantics
 
 axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
-cp_list = api.content_projects.all()
-cp = cp_list[INDEX]
+cp_list = axsemantics.ContentProject.all()
+cp = cp_list.get(id=1)
 success, count = cp.generate_content(force=True)
 download = api.download_exports.filter(content_project=cp).first()
 with open('exports.xlsx', mode='wb') as f:
