@@ -109,9 +109,10 @@ In the example you have to exchange `{CP_ID}` with a valid content project id.
 import axsemantics
 axsemantics.login('', '')
 
-obj = api.content_project.get(1).get(123)
-obj.pure_data = {'different key':'different value'}
-obj.save()
+cp = axsemantics.ContentProject.all().get(id=1)
+thing = cp.things.all().get(123)
+thing['pure_data'] = {'different key':'different value'}
+thing.save()
 ```
 
 ```shell
@@ -132,8 +133,9 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID an
 import axsemantics
 axsemantics.login('', '')
 
-obj = axsemantics.content_project.get(1).get(123)
-obj.delete()
+cp = axsemantics.ContentProject.all().get(id=1).get(123)
+thing = cp.things.all().get(id=2)
+thing.delete()
 ```
 
 ```shell
@@ -514,7 +516,8 @@ To get your generated content, all things with their content can be listed as fo
 import axsemantics
 axsemantics.login('', '')
 
-cp = axsemantics.ContentProject.create(name='neues cp', engine_configuration=123)
+cp = axsemantics.ContentProject(name='new cp', engine_configuration=123)
+cp.create()
 ```
 
 ```shell
@@ -679,14 +682,10 @@ To generate content for already imported data (in this example, a complete conte
 ```python
 import axsemantics
 
-axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
-cp_list = api.content_projects.all()
-cp = cp_list[INDEX]
+axsemantics.login('', '')
+
 data = {'key':'value'}
-obj = api.content_project.get(1).create(uid=1, name='demo', pure_data=data)
-obj = api.content_project.get(1).get(123)
-obj.pure_data = {'different key':'different value'}
-obj.save()
+thing = axsemantics.Thing(uid=1, cp_id=1, pure_data=data, name='demo').create()
 ```
 
 ```shell
