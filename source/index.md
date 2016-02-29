@@ -73,7 +73,8 @@ import axsemantics
 axsemantics.login('', '')
 
 data = {'key':'value'}
-obj = api.content_project.get(1).create(uid=1, name='demo', pure_data=data)
+cp = axsemantics.ContentProject.all().get(id=1)
+thing = axsemantics.Thing(uid=1, name='demo', pure_data=data, cp_id=cp['id']).create()
 ```
 
 ```shell
