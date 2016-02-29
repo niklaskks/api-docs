@@ -154,11 +154,7 @@ The content generation through the API is accessible when all mandatory informat
 
 ## Generate content for a single Object
 ```python
-import axsemantics
-axsemantics.login('', '')
-
-obj = axsemantics.content_project.get(1).get(123)
-obj.generate_content(force=True)
+Coming soon.
 ```
 
 ```shell
@@ -195,12 +191,7 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID an
 
 ## Generate content for a whole Content Project
 ```python
-import axsemantics
-axsemantics.login('', '')
-
-success, count = api.content_project.get(1).generate_content(force=True)
-if success:
-    print('Started content generation for {} objects'.format(count))
+Coming soon.
 ```
 
 ```shell
@@ -223,12 +214,7 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
 ## Request status report for a content request
 ```python
-import axsemantics
-axsemantics.login('', '')
-
-obj = api.content_project.get(1).get(123)
-if obj.status:
-    print('Content for this object has already been requested.')
+Coming soon.
 ```
 
 ```shell
@@ -255,11 +241,7 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID an
 
 ## Export generated content for a single Object
 ```python
-import axsemantics
-axsemantics.login('', '')
-
-content = api.content_project.get(1).get(123).content
-print(content.text_html)
+Coming soon.
 ```
 
 ```shell
@@ -326,13 +308,7 @@ You will receive POST data looking like this:
 If you want to have the content available as one big download file, you can use the export functionality.
 
 ```python
-import axsemantics
-axsemantics.login('', '')
-
-cp = api.content_project.get(1)
-download = api.download_exports.filter(content_project=cp).first()
-with open('exports.xlsx', mode='wb') as f:
-    f.write(download)  # nun kann man die Datei z.B. in Excel öffnen
+Coming soon.
 ```
 
 ```shell
@@ -353,12 +329,7 @@ $ curl --request GET \
 
 ## Autoprocessing for bulkuploads
 ```python
-import axsemantics
-axsemantics.login('', '')
-
-cp = api.content_project.get(1)
-axsemantics.bulkupload(content_project=cp, tag='demo',
-    file='/home/user/Desktop/demofile.xlsx', autoprocess=True)
+Coming soon.
 ```
 
 ```shell
@@ -591,12 +562,7 @@ Some actions are executable for objects regardless of their affiliation to a con
 
 ## Display Objects from different Content Projects
 ```python
-import axsemantics
-axsemantics.login('', '')
-
-for each_obj in api.allthings(tag='KW23'):
-    if not each_obj.status:
-        each_obj.generate_content()
+Coming soon.
 ```
 ```shell
 $ curl --request GET \
@@ -638,15 +604,7 @@ Please keep in mind that the field `id` doesn't necessarily have a one-to-one re
 
 ## Generate content from existing data
 ```python
-import axsemantics
-
-axsemantics.login('USER@EXAMPLE.COM', 'SECRET_PASSWORD')
-cp_list = axsemantics.ContentProject.all()
-cp = cp_list.get(id=1)
-success, count = cp.generate_content(force=True)
-download = api.download_exports.filter(content_project=cp).first()
-with open('exports.xlsx', mode='wb') as f:
-    f.write(download)  # nun kann man die Datei z.B. in Excel öffnen
+Coming soon.
 ```
 
 ```shell
