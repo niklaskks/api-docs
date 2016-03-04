@@ -40,8 +40,12 @@ You have to exchange `aa5d2e36668c11e5964038bc572ec103` for your own API token.
 ```python
 import axsemantics
 
-axsemantics.login(user='USER@EXAMPLE.COM', password='SECRET_PASSWORD')
-print(axsemantics.constants.API_TOKEN)
+try:
+    axsemantics.login(user='USER@EXAMPLE.COM', password='SECRET_PASSWORD')
+    print(axsemantics.constants.API_TOKEN)
+
+except axsemantics.AuthenticationError:
+    pass
 ```
 
 ```shell
