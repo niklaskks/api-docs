@@ -296,7 +296,8 @@ You will receive POST data looking like this:
   "uid": "<The uid you put in the object>",
   "content_project_name": "<Name of the content project>",
   "content_project_id": 1337,
-  "text_modified": "2015-10-21T23:29:00.000000+00:00"
+  "text_modified": "2015-10-21T23:29:00.000000+00:00",
+  "language": "en-US"
 }
 ```
 
