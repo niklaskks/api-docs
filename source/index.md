@@ -158,7 +158,12 @@ The content generation through the API is accessible when all mandatory informat
 
 ## Generate content for a single Object
 ```python
-Coming soon.
+import axsemantics
+axsemantics.login('', '')
+
+cp = axsemantics.ContentProject.all().get(id=1)
+thing = cp.things().get(id=334)
+response = thing.generate_content(force=False)
 ```
 
 ```shell
@@ -195,7 +200,11 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID an
 
 ## Generate content for a whole Content Project
 ```python
-Coming soon.
+import axsemantics
+axsemantics.login('', '')
+
+cp = axsemantics.ContentProject.all().get(id=1)
+response = cp.generate_content(force=False)
 ```
 
 ```shell
@@ -218,7 +227,12 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
 ## Request status report for a content request
 ```python
-Coming soon.
+import axsemantics
+axsemantics.login('', '')
+
+cp = axsemantics.ContentProject.all().get(id=1)
+thing = cp.things().get(id=334)
+thing['status']
 ```
 
 ```shell
@@ -245,16 +259,22 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID an
 
 ## Export generated content for a single Object
 ```python
-Coming soon.
+import axsemantics
+axsemantics.login('', '')
+
+cp = axsemantics.ContentProject.all().get(id=1)
+thing = cp.things().get(id=334)
+thing['generated_text']
+thing['text_as_html']
 ```
 
 ```shell
 $ curl --request GET \
-  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/content_request/ \
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/ \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103'
 ```
 
-> The API returns information regarding the Content Request, such as:
+> The API returns information regarding the Object, including generated text if any exists:
 
 ```json
 { "id": 456,
@@ -262,7 +282,6 @@ $ curl --request GET \
   "state": "Success",
   "generated_text_in_html": "<h1>Überschrift</h1>\n<p>Absatz</p>",
   "generated_text": "# Überschrift\nAbsatz",
-  "error_msg": null,
   "...": "..." }
 ```
 
