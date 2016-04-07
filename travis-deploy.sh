@@ -1,9 +1,13 @@
 #!/bin/sh
+set -e
 
+bundle exec middleman build
+echo $GH_PAGES_REPO
 # confirm environment variables
 if [ ! -n "$GH_PAGES_TOKEN" ]
 then
-  fail "missing option \"token\", aborting"
+  echo "missing option \"token\", aborting"
+  exit 1
 fi
 
 # use repo option or guess from git info
@@ -11,10 +15,11 @@ if [ -n "$GH_PAGES_REPO" ]
 then
   repo="$GH_PAGES_REPO"
 else
-  fail "missing option \"repo\", aborting"
+  echo "missing option \"repo\", aborting"
+  exit 1
 fi
 
-info "using github repo \"$repo\""
+echo "using github repo \"$repo\""
 
 remote="https://$GH_PAGES_TOKEN@github.com/$repo.git"
 branch="gh-pages"
@@ -49,8 +54,9 @@ result="$(git push -f $remote master:$branch)"
 
 if [[ $? -ne 0 ]]
 then
-  warning "$result"
-  fail "failed pushing to github pages"
+  echo "$result"
+  echo "failed pushing to github pages"
+  exit 1
 else
-  success "pushed to github pages"
+  echo "pushed to github pages"
 fi

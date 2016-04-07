@@ -10,4 +10,4 @@ branches:
     - master
 
 cache: bundler
-script: bundle exec middleman build && ./travis-deploy.sh
+script: . ./travis-deploy.sh
