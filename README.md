@@ -19,6 +19,13 @@ cd api-docs
 bundle install
 bundle exec middleman server
 ```
+
+Danach liegt die Dokumentation unter <http://localhost:4567>.
+
+### Setup mit Vagrant
+```
+vagrant up
+```
 ### Setup mit Docker
 
 Alternativ kann Docker verwendet werden.
@@ -34,9 +41,12 @@ Danach liegt die Dokumentation unter <http://localhost:4567>.
 Mit dem Befehl
 
 ```shell
-docker exec -ti api-docs rake build
+docker exec -ti api-docs bundle exec middleman build --clean
 ```
 wird eine deploy-fertige Version des Projekts im `build`-Verzeichnis erstellt.
+
+Dokumentation
+-------------
 
 Weitere Informationen über den [verwendeten Markdown-Stil](https://github.com/tripit/slate/wiki/Markdown-Syntax) und das [Deployment](https://github.com/tripit/slate/wiki/Deploying-Slate) befinden sich in der Slate-Dokumentation.
 

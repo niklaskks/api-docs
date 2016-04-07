@@ -1,6 +1,6 @@
 # Contributing to AX Semantics API Documntation
 
-Thanks for contributing to our API Doc! A couple of quick guidelines for submitting PRs:
+Thanks for contributing to our API Documentation! A couple of quick guidelines for submitting PRs:
 
 - Please point your pull requests at the `master` branch, and keep your commit messages clear and informative.
 - If you're are interested in having a specific use case documented, just make us a ticket showing the use case.
