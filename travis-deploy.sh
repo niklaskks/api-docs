@@ -2,25 +2,8 @@
 set -e
 
 bundle exec middleman build
-echo $GH_PAGES_REPO
-# confirm environment variables
-if [ ! -n "$GH_PAGES_TOKEN" ]
-then
-  echo "missing option \"token\", aborting"
-  exit 1
-fi
 
-# use repo option or guess from git info
-if [ -n "$GH_PAGES_REPO" ]
-then
-  repo="$GH_PAGES_REPO"
-else
-  echo "missing option \"repo\", aborting"
-  exit 1
-fi
-
-echo "using github repo \"$repo\""
-
+repo="$GH_PAGES_REPO"
 remote="https://$GH_PAGES_TOKEN@github.com/$repo.git"
 branch="gh-pages"
 
@@ -32,13 +15,12 @@ LAST_HASH=$(git log -1 --pretty=%h)
 if [ -d "$GH_PAGES_BASEDIR" ]
 then
   cd $GH_PAGES_BASEDIR
+else
+  echo "BASEDIR $GH_PAGES_BASEDIR not found, aborting"
+  exit 1
 fi
 
-if [ -n $GH_PAGES_DOMAIN  ]
-then
-  echo $GH_PAGES_DOMAIN > CNAME
-fi
-
+echo $GH_PAGES_DOMAIN > CNAME
 
 # remove existing commit history
 rm -rf .git
