@@ -3,8 +3,7 @@ set -e
 
 bundle exec middleman build
 
-repo="$GH_PAGES_REPO"
-remote="https://$GH_PAGES_TOKEN@github.com/$repo.git"
+remote="https://$GH_PAGES_TOKEN@github.com/$GH_PAGES_REPO.git"
 branch="gh-pages"
 
 # get these variables while still in the original repo
