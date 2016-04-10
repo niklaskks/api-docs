@@ -1,13 +1,15 @@
 sudo: false
-
 language: ruby
-
 rvm:
-  - 2.1.0
-
+- 2.1.0
 branches:
   only:
-    - master
-
+  - master
+env:
+  global:
+    - GH_PAGES_REPO=axsemantics/api-docs
+    - GH_PAGES_DOMAIN=apidocs.ax-semantics.com
+    - GH_PAGES_BASEDIR=build
+    - secure: SC1xTID0W8lXgCmuwojofdoz1ylweFuRdxrefjJo+fmDdtS03/MT60mVaGNQjN+iZJPZfGp4Qg5JSVN4cZcdiCMGHai0WPbBbGcSt/XQT8JSjRUOzWk5tiafAzzDUySgXtEGQtVkwL4EIuW3Soh7Km+s4TKTev2KohqytHRXitO4ZLGRSBXJSqQggs0dGD6BAu9Z7m0RaWQJ6RbTCuPtP2n5HkCcKIrDtaSoer95q6L2VRvhsK1/fKkhFeviogZiwGgg+dtDBUR9jresziX37kBt00/DcuORv0NwYDPxwg0i4Skba8YwmhwmOwB6W/PkOtPmpI+g8A1Tvn1DV/gbQY8muvZEHpGwwswwE06yXLzZ/zUjCGNV0U+SCt/EWh0Gm62+j/G7a5Vb++yqxCW6szus5SKJ4HhIngODEAPHEuyYiMEFl7RMJYzTQCyIArM7e5QLVSg1GifjJx79FtRxPM+uucXVD4l/Qelq8gkcdV+46kRH8GzKO7ghdYtfmQJpBbEgMz5b4V/oucgd4rmE4kcin+lx/2HxSmiHr7ZRKgRtWDxW29nofz+0p9u62pbBLaxfkek45rdfc2oGPc9gWOqrtNhfYolqItkTQ3A01S7eymcks181pcT8eqCYuXWp02Zdhw0tfrWwXKPAuUo4Tg4dlvPF3cad4Fqiwi4XP3Q=
 cache: bundler
-script: . ./travis-deploy.sh
+script: ". ./travis-deploy.sh"
