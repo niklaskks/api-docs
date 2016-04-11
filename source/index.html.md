@@ -93,10 +93,10 @@ To create a new object, POST its data into an existing content project. Please a
 
 Mandatory information for the creation of an object are:
 
- - **uid**: String containing arbitrary content; the primary means of identifying your objects
- - **name**: String containing arbitrary content; the textual identifier of the object
- - **content_project**: Integer; states the Content Project which contains this object
- - **pure_data** (if applicable): JSON
+ - `uid`: String containing arbitrary content; the primary means of identifying your objects
+ - `name`: String containing arbitrary content; the textual identifier of the object
+ - `content_project`: Integer; states the Content Project which contains this object
+ - `pure_data` (if applicable): JSON
 
 Depending on the type of content the object may need other mandatory information.
 
