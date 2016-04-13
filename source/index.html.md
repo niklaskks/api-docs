@@ -155,6 +155,48 @@ $ curl --request DELETE \
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the object ID assigned by the platform!*.
 
+## Get more information about Object properties
+
+Sometimes you might require more details on object properties (like units in a field like `width`). This endpoint will
+return a description of properties including a help text, their requirement level and the expected type.
+
+```shell
+$ curl --request OPTIONS \
+  --url https://api.ax-sementics.com/v1/content-project/1/thing/ \
+  --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
+```
+
+The response will be structured similar to this:
+
+```json
+{ "name": "Leaf Detail List",
+  "renders":["application/json","text/html"],
+  "parses":["application/json","application/x-www-form-urlencoded","multipart/form-data"],
+  "actions":{"POST":{
+    "uid":{
+        "type":"string",
+        "required":true,
+        "read_only":false,
+        "help_text":"A unique ID. Used for later references to this object.",
+        "max_length":256,
+        "requirement_level":3
+    },
+    "description":{
+        "type":"string",
+        "required":false,
+        "read_only":false,
+        "help_text":"A short description of the item.",
+        "requirement_level":0
+    }
+  }}
+}
+```
+
+### Endpoint
+`OPTIONS /v1/content-project/{CP_ID}/thing/`
+
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
+
 # Generating Content
 The content generation through the API is accessible when all mandatory information is present in the object.
 
