@@ -657,6 +657,7 @@ This will delete all objects and generated content for the given Content Project
 Creates a new Content Project for you. It will copy Objects from the original to the new Content Project. These Objects will be seperate entities with their own IDs but otherwise same properties.
 
 Cloning is done asynchrounosly: the new Content Project will show up in your list after a while (depending on its size).
+
 ```python
 Coming soon.
 ```
