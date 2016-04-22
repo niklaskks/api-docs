@@ -624,6 +624,34 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 In the event of deleting a content project ALL Objects and generated content is also deleted! The API does not ask for conformation, but immediately executes the request!
 </aside>
 
+
+## Empty a Content Project
+```python
+Coming soon.
+```
+
+```shell
+$ curl --request POST \
+  --url https://api.ax-sementics.com/v1/content-project/1/empty \
+  --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
+```
+
+> The API returns status code '202 ACCEPTED' and a JSON messges such as:
+```json
+{"message": "Started emptying ContentProject (1/neues cp)"}
+```
+
+### Endpoint
+`POST /v1/content-project/{CP_ID}/empty/`
+
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
+
+<aside class="warning">
+This will delete all objects and generated content for the given Content Project. The API does not ask for confirmation,  but immediately executes the request!
+</aside>
+
+
+
 # Actions affecting multiple Content Projects
 
 Some actions are executable for objects regardless of their affiliation to a content project.
