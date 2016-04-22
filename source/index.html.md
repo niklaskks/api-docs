@@ -652,6 +652,28 @@ This will delete all objects and generated content for the given Content Project
 </aside>
 
 
+## Clone a Content Project
+
+Creates a new Content Project for you. It will copy Objects from the original to the new Content Project. These Objects will be seperate entities with their own IDs but otherwise same properties.
+
+Cloning is done asynchrounosly: the new Content Project will show up in your list after a while (depending on its size).
+```python
+Coming soon.
+```
+
+```shell
+$ curl --request POST \
+  --url https://api.ax-sementics.com/v1/content-project/1/clone \
+  --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
+```
+
+> The API returns '202 ACCEPTED' if the given Content Project could be cloned; otherwise it returns a '404 NOT ALLOWED'.
+
+### Endpoint
+`POST /v1/content-project/{CP_ID}/clone/`
+
+In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
+
 
 # Actions affecting multiple Content Projects
 
