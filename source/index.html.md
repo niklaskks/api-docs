@@ -637,6 +637,7 @@ $ curl --request POST \
 ```
 
 > The API returns status code '202 ACCEPTED' and a JSON messges such as:
+
 ```json
 {"message": "Started emptying ContentProject (1/neues cp)"}
 ```
