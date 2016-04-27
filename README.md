@@ -28,22 +28,14 @@ vagrant up
 ```
 ### Setup mit Docker
 
-Alternativ kann Docker verwendet werden.
+Alternativ kann Docker mit docker-compose verwendet werden.
 
 ```shell
 git clone https://github.com/axsemantics/api-docs.git
 cd api-docs
-docker build -t api-docs .
-docker run -d -p 4567:4567 --name api-docs -v $(pwd):/app api-docs
+docker-compose up
 ```
 Danach liegt die Dokumentation unter <http://localhost:4567>.
-
-Mit dem Befehl
-
-```shell
-docker exec -ti api-docs bundle exec middleman build --clean
-```
-wird eine deploy-fertige Version des Projekts im `build`-Verzeichnis erstellt.
 
 Dokumentation
 -------------
