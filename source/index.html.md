@@ -146,7 +146,7 @@ thing.delete()
 
 ```shell
 $ curl --request DELETE \
-  --url https://api.ax-sementics.com/v1/content-project/1/thing/123/ \
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/123/ \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
@@ -162,7 +162,7 @@ return a description of properties including a help text, their requirement leve
 
 ```shell
 $ curl --request OPTIONS \
-  --url https://api.ax-sementics.com/v1/content-project/1/thing/ \
+  --url https://api.ax-semantics.com/v1/content-project/1/thing/ \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
@@ -561,7 +561,7 @@ cp.create()
 
 ```shell
 $ curl --request POST \
-  --url https://api.ax-sementics.com/v1/content-project/ \
+  --url https://api.ax-semantics.com/v1/content-project/ \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
   --header 'Content-type: application/json' \
   --data '{"name":"neues cp","engine_configuration":123}'
@@ -609,7 +609,7 @@ axsemantics.ContentProject.all().get(id=1).delete()
 
 ```shell
 $ curl --request DELETE \
-  --url https://api.ax-sementics.com/v1/content-project/1/ \
+  --url https://api.ax-semantics.com/v1/content-project/1/ \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
@@ -632,7 +632,7 @@ Coming soon.
 
 ```shell
 $ curl --request POST \
-  --url https://api.ax-sementics.com/v1/content-project/1/empty \
+  --url https://api.ax-semantics.com/v1/content-project/1/empty/ \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
@@ -664,7 +664,7 @@ Coming soon.
 
 ```shell
 $ curl --request POST \
-  --url https://api.ax-sementics.com/v1/content-project/1/clone \
+  --url https://api.ax-semantics.com/v1/content-project/1/clone \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
