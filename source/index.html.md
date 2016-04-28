@@ -664,7 +664,7 @@ Coming soon.
 
 ```shell
 $ curl --request POST \
-  --url https://api.ax-semantics.com/v1/content-project/1/clone \
+  --url https://api.ax-semantics.com/v1/content-project/1/clone/ \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
