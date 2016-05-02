@@ -276,7 +276,7 @@ axsemantics.login('', '')
 
 cp = axsemantics.ContentProject.all().get(id=1)
 thing = cp.things().get(id=334)
-thing['status']
+print(thing['status'])
 ```
 
 ```shell
@@ -308,8 +308,8 @@ axsemantics.login('', '')
 
 cp = axsemantics.ContentProject.all().get(id=1)
 thing = cp.things().get(id=334)
-thing['generated_text']
-thing['text_as_html']
+print(thing['generated_text'])
+print(thing['text_as_html'])
 ```
 
 ```shell
