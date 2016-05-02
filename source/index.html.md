@@ -375,10 +375,6 @@ You will receive POST data looking like this:
 
 If you want to have the content available as one big download file, you can use the export functionality.
 
-```python
-Coming soon.
-```
-
 ```shell
 $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
@@ -396,9 +392,6 @@ $ curl --request GET \
 # Autoprocessing
 
 ## Autoprocessing for bulkuploads
-```python
-Coming soon.
-```
 
 ```shell
 $ curl --request POST \
@@ -626,9 +619,6 @@ In the event of deleting a content project ALL Objects and generated content is 
 
 
 ## Empty a Content Project
-```python
-Coming soon.
-```
 
 ```shell
 $ curl --request POST \
@@ -658,9 +648,6 @@ Creates a new Content Project for you. It will copy Objects from the original to
 
 Cloning is done asynchrounosly: the new Content Project will show up in your list after a while (depending on its size).
 
-```python
-Coming soon.
-```
 
 ```shell
 $ curl --request POST \
@@ -681,9 +668,7 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 Some actions are executable for objects regardless of their affiliation to a content project.
 
 ## Display Objects from different Content Projects
-```python
-Coming soon.
-```
+
 ```shell
 $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
