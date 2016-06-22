@@ -85,6 +85,7 @@ To get your generated content, all things with their content can be listed as fo
 * the field `generated_text` contains the text (with markdown) and `text_as_html` contains the same content converted to HTML
 * This endpoint uses pagination, the URLs for `next`/`previous` page are provided by the API in the respective fields.
 
+
 ```
 {
     "count": 164,
@@ -124,6 +125,12 @@ To get your generated content, all things with their content can be listed as fo
             "content_project": 3992
         },
 ```
+
+
+### Pull Content from API
+* if you want to filter on all succesfull text generations, you can add `?text_state=SUCCESS` to `/thinglist/`
+`https://api-stage.ax-semantics.com/v1/content-project/3745/thinglist/?text_state=SUCCESS`
+
 
 
 
