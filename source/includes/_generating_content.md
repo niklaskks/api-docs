@@ -169,6 +169,7 @@ You will receive POST data looking like this:
 }
 ```
 
+Here is an example how you can verify the encryption 'hmac' on your side: [hmac example gist](https://gist.github.com/mfa/f12fadd6b707127de3338d673c839e4d)
 
 
 
