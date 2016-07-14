@@ -146,7 +146,7 @@ It has a signature header to verify the integrity/authenticity and some data abo
 ### Signature header
 
 ```
-HTTP_X_MYAX_SIGNATURE: "sha1=df589122eac0f6a7bd8795436e692e3675cadc3b"
+X-MYAX-SIGNATURE: "sha1=df589122eac0f6a7bd8795436e692e3675cadc3b"
 ```
 
 The checksum is calculated as hmac sha1 hexdigest. The key is your API token. The message is the post data.
