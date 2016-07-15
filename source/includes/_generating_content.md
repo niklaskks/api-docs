@@ -169,8 +169,9 @@ You will receive POST data looking like this:
 }
 ```
 
-Here is an example how you can verify the encryption 'hmac' on your side: [hmac example gist](https://gist.github.com/mfa/f12fadd6b707127de3338d673c839e4d)
+Here is an python example how you can verify the encryption 'hmac' on your side: [python hmac example gist](https://gist.github.com/mfa/f12fadd6b707127de3338d673c839e4d)
 
+Here is an PHP example how you can verify the encryption 'hmac' on your side: [PHP hmac example gist](https://gist.github.com/michael-k/80ee280107ea0df454e6cd19f08b7c8d)
 
 
 ## Export generated content for an entire Content Project
