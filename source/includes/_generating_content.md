@@ -151,6 +151,8 @@ HTTP_X_MYAX_SIGNATURE: "sha1=df589122eac0f6a7bd8795436e692e3675cadc3b"
 
 The checksum is calculated as hmac sha1 hexdigest. The key is your API token. The message is the post data.
 
+Please note that depending on the framework/language that is in use, the siganture header can also be X-MYAX-SIGNATURE.
+
 ### POST data
 
 You will receive POST data looking like this:
@@ -169,7 +171,9 @@ You will receive POST data looking like this:
 }
 ```
 
-Here is an example how you can verify the encryption 'hmac' on your side: [hmac example gist](https://gist.github.com/mfa/f12fadd6b707127de3338d673c839e4d)
+Here is an example how you can verify the encryption 'hmac' with Python on your side: [hmac python example gist](https://gist.github.com/mfa/f12fadd6b707127de3338d673c839e4d)
+
+And here is an example for the encryption with PHP: [hmac php example gist](https://gist.github.com/michael-k/80ee280107ea0df454e6cd19f08b7c8d)
 
 
 
