@@ -4,6 +4,7 @@ title: AX Semantics API Reference
 language_tabs:
   - shell
   - python
+  - php
 
 toc_footers:
   - <a href="https://www.ax-semantics.com/">more about the AX NLG Cloud</a>

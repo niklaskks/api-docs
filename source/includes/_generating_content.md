@@ -155,8 +155,6 @@ Please note that depending on the framework/language that is in use, the sigantu
 
 ### POST data
 
-You will receive POST data looking like this:
-
 ```
 {
   "id": 9001,
@@ -171,7 +169,16 @@ You will receive POST data looking like this:
 }
 ```
 
-Here is an example how you can verify the encryption 'hmac' with Python on your side:
+You will receive POST data looking like the JSON on the right.
+
+### Verification
+
+See the examples on the right on how to verify the hmac.
+
+For more information about hmacs validation with your programming language and
+framework of choice.  Eg. for PHP documentation is available in the
+[manual](http://php.net/manual/en/function.hash-hmac.php).
+
 ```python
 import hmac
 import hashlib
@@ -196,14 +203,8 @@ def signature_valid(request, raw_data):
     return False
 ```
 
-And here is an example for the encryption with PHP, usable for Versions PHP 5 >= 5.1.2 and PHP 7:
 ```php
-# The variable in the header is actually named
-# X-MYAX-SIGNATURE, but PHP seems to convert it
-# to HTTP_X_MYAX_SIGNATURE, because it does not
-# know this header variable.  Make sure to use
-# the right one.
-
+/* Works with PHP 5 >= 5.1.2 and PHP 7 */
 $aHttpHead = isset($_SERVER) ? $_SERVER : [];
 $sHttpBody = file_get_contents('php://input');
 $sApiKey = '...';
@@ -224,7 +225,6 @@ if($sSignature !== NULL) {
     }
 }
 ```
-More information about hmacs validation with PHP is available in the [manual](http://php.net/manual/en/function.hash-hmac.php).
 
 
 ## Export generated content for an entire Content Project
