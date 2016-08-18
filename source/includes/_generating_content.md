@@ -171,10 +171,59 @@ You will receive POST data looking like this:
 }
 ```
 
-Here is an example how you can verify the encryption 'hmac' with Python on your side: [hmac python example gist](https://gist.github.com/mfa/f12fadd6b707127de3338d673c839e4d)
+Here is an example how you can verify the encryption 'hmac' with Python on your side:
+````
+import hmac
+import hashlib
 
-And here is an example for the encryption with PHP: [hmac php example gist](https://gist.github.com/michael-k/80ee280107ea0df454e6cd19f08b7c8d)
+def signature_valid(request, raw_data):
+    try:
+        secret = AX_API_TOKEN  # your knowledge!!
+        signature_header = request.META['HTTP_X_MYAX_SIGNATURE'].replace('sha1=', '')
+        signature_content = hmac.new(
+            key=secret.encode('utf-8'),
+            msg=raw_data,   # content of request
+            digestmod=hashlib.sha1
+        ).hexdigest()
+    except AttributeError:
+        pass
+    except KeyError:
+        pass
+    except Exception:
+        raise
+    else:
+        return bool(signature_header == signature_content)
+    return False
+````
+And here is an example for the encryption with PHP, usable for Versions PHP 5 >= 5.1.2 and PHP 7: 
+````
+# The variable in the header is actually named
+# X-MYAX-SIGNATURE, but PHP seems to convert it
+# to HTTP_X_MYAX_SIGNATURE, because it does not
+# know this header variable.  Make sure to use
+# the right one.
 
+$aHttpHead = isset($_SERVER) ? $_SERVER : [];
+$sHttpBody = file_get_contents('php://input');
+$sApiKey = '...';
+$sSignature = NULL;
+
+if(isset($aHttpHead['HTTP_X_MYAX_SIGNATURE'])) {
+	$sSignature = $aHttpHead['HTTP_X_MYAX_SIGNATURE'];
+} elseif(isset($aHttpHead['http_x_myax_signature'])) {
+	$sSignature = $aHttpHead['http_x_myax_signature'];
+}
+
+if($sSignature !== NULL) {
+    $sChecksum = hash_hmac('sha1', $sHttpBody, $sApiKey, FALSE);
+    if($sSignature == 'sha1='.$sChecksum || $sSignature == $sChecksum) {
+        if(($aData = json_decode($sHttpBody, TRUE))) {
+			//...
+		}
+	}
+}
+````
+More information about hmacs validation with PHP [here](http://php.net/manual/de/function.hash-hmac.php).
 
 
 ## Export generated content for an entire Content Project
