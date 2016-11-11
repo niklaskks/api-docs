@@ -12,9 +12,13 @@ $ curl --request POST \
 
 To create a new Document object, POST its data into an existing Collection.
 
-No fields are mandatory; however, if you provide `name` and/or `uid` we will make your Document accessable using these attributes. Otherwise we will generate the uid and name.
+No fields are mandatory; however, if you provide `name` and/or `uid` we will make your Document accessable using these attributes. Otherwise we will generate the uid and name. We suggest you provide both `uid` and `name`: it will help you find your _Document_ again in your _Collection_.
 
 The value for `uid` must be unique within a Collection.
+
+<aside>
+You cannot change a Document's <code>uid</code> once it's been created.
+</aside>
 
 ### Endpoint
 `POST /v2/collections/{CID}/document/`
