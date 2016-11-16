@@ -1,3 +1,11 @@
+# v2 API
+<aside>
+the v2 API is our new api. use this, if you are using the new Cloud Cockpit. 
+
+* Documents replace "Things" from v1
+* Collections replace "Content Projects" from v1
+</aside>
+
 # Documents
 We store your data in Documents. Each Document belongs to exactly one Collection.
 
