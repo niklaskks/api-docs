@@ -17,10 +17,11 @@ includes:
   - generating_content
   - autoprocessing
   - content_projects
-  - documents
-  - collections
   - automatic_story_exports
   - example_use_cases
+  - documents
+  - collections
+
 
 search: true
 ---
