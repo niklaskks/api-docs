@@ -37,6 +37,23 @@ You cannot change a Document's <code>uid</code> once it's been created.
 
 Replace `{CID}` with a valid Collection ID.
 
+## Text delivery
+To get to your generated text by pulling from the API, receive the list of all documents with a finished texts:
+
+`GET /v2/documents/?collection={CID}&processing_state=generated`
+
+Replace `{CID}` with a valid Collection ID.
+
+Hint on pagination: The API will return the items with a page size of 10, and includes a dynamic "next" object for automatically retrieving the next documents.
+
+```shell
+$ curl --request GET \
+  --url 'https://api.ax-semantics.com/v2/documents/?collection=11&processing_state=generated' \
+  --header 'Authorization: Token f763438dac31499ba9ee5fc850f4d420'
+```
+
+For push delivery, setup a webhook address and shared secret in the GUI.
+
 
 ## Show details of a Document
 ```shell
