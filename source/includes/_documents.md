@@ -1,15 +1,19 @@
 # v2 API
 <aside>
-the v2 API is our new api. use this, if you are using the new Cloud Cockpit. 
-
-* Documents replace "Things" from v1
-* Collections replace "Content Projects" from v1
+the v2 API is our current API. Use this, if you are using the NLG Cloud Cockpit (cockpit.ax-semantics.com). If you are migrating from v1 API: Documents replace "Things" from v1, Collections replace "Content Projects".
 </aside>
 
 # Documents
-We store your data in Documents. Each Document belongs to exactly one Collection.
+We store your data in Documents.
 
-## Create a new Document
+* Each Document belongs to exactly one Collection.
+* Each item that you want to write about, needs to have it's separate document, containing all the data that is needed for writing in one document.
+
+
+## Data Intake: Add a new Document
+
+To upload your data, send each data item as one document to a collection. you can setup the collection trough the GUI first, and then note the ID of the collection. That ID needs to be put into the API Call.
+
 ```shell
 $ curl --request POST \
   --url 'https://api.ax-semantics.com/v2/collections/1/document/' \
@@ -18,9 +22,9 @@ $ curl --request POST \
   --data '{"uid": 222333,"name":"demo","capacity":{"unit":"F","value":4"}'
 ```
 
-To create a new Document object, POST its data into an existing Collection.
+To create a new Document object, POST its data into an existing Collection as JSON.
 
-No fields are mandatory; however, if you provide `name` and/or `uid` we will make your Document accessable using these attributes. Otherwise we will generate the uid and name. We suggest you provide both `uid` and `name`: it will help you find your _Document_ again in your _Collection_.
+No fields are mandatory; however, if you provide `name` and/or `uid` we will make your Document accessable using these attributes. Otherwise we will generate the uid and name. We suggest you provide both `uid` and `name`: it will help you find your _Document_ again.
 
 The value for `uid` must be unique within a Collection.
 
