@@ -37,6 +37,18 @@ You cannot change a Document's <code>uid</code> once it's been created.
 
 Replace `{CID}` with a valid Collection ID.
 
+## List all documents of a collection
+
+```shell
+$ curl --request GET \
+  --url 'https://api.ax-semantics.com/v2/documents/?collection=11' \
+  --header 'Authorization: Token f763438dac31499ba9ee5fc850f4d420'
+```
+
+`GET /v2/documents/?collection={CID}`
+
+Replace `{CID}` with a valid Collection ID.
+
 ## Text delivery
 To get to your generated text by pulling from the API, receive the list of all documents with a finished texts:
 
