@@ -1,6 +1,6 @@
-# Autoprocessing
+## Autoprocessing
 
-## Autoprocessing for bulkuploads
+### Autoprocessing for bulkuploads
 
 ```shell
 $ curl --request POST \
@@ -15,10 +15,10 @@ By using Autoprocessing your content will be automatically generated and prepare
 
 The Autoprocessing function is triggered if you use the checkbox during a bulkupload. Your data will then be imported into a content project. Afterwards the content will be generated for all imported objects and made available as a file in your account. You are informed by email when your content is available.
 
-## Autoprocessing for new Objects
+### Autoprocessing for new Objects
 On request, your Content Project can be configured for "automatic processing". For any new objects, a text generation request is then triggered automatically once, saving you the call to request the content.
 
 
-### Endpoint
+#### Endpoint
 `POST /v1/bulkupload/`
 
