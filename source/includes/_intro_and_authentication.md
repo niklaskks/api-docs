@@ -1,7 +1,7 @@
 # Introduction to the myAX API
 
 ## Basics
-The myAX web application (`my.ax-semantics.com`) is a self-service portal integrated in the AX NLG Cloud. It enables your access to functionality such as data transfer, text generation and integration of automated content generation into your website.
+The AX NLG Cloud web application (`cockpit.ax-semantics.com`) is a self-service portal integrated in the AX NLG Cloud. It enables your access to functionality such as data transfer, text generation and integration of automated content generation into your website.
 
 **All functionality of the platform is accessible via our API** at `api.ax-semantics.com` to ensure an easy integration into other platforms and systems.
 
