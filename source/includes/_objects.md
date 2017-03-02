@@ -1,8 +1,14 @@
+# v1 API
 
-# Objects
+Legacy API for Projects via my.ax-semantics.com
+
+This API Endpoints and "Content Projects" are deprecated an will be removed Q3/2017. Please do not use so start new projects anymore.
+
+
+## Objects
 Your data input is saved as objects, regardless of their old format. These Objects are always attached to a Content Project.
 
-## Create new objects
+### Create new objects
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -31,17 +37,17 @@ Mandatory information for the creation of an object are:
 
 Depending on the type of content the object may need other mandatory information.
 
-### Notes on pure_data
+#### Notes on pure_data
 Depending on the shell you're using, you may need to escape quotation marks in the JSON-String for the pure_data field. In the example call on a cURL shell the quotation marks are escaped with a backslash prefix.
 
 Additionally, please take care of the data types in your json structure. Non-number formats like `"somekey":010` will result in errors, and may need to be put into double ticks (`"somekey":"010"`) or converted to a number (`'"somekey":10`). This will result in errors messages like `{"detail":"JSON parse error - Expecting ',' delimiter: line 1 column 9 (char 8)"}`.
 
-### Endpoint
+#### Endpoint
 `POST /v1/content-project/{CP_ID}/thing/`
 
 In the example you have to exchange `{CP_ID}` with a valid content project id.
 
-## Update an existing Object
+### Update an existing Object
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -60,12 +66,12 @@ $ curl --request PUT \
   --data '{"uid":1, "name":"demo", "content_project":1, "pure_data": {"diffent key":"different value"}}'
 ```
 
-### Endpoint
+#### Endpoint
 `PUT /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the object ID assigned by the platform!*.
 
-## Delete an Object
+### Delete an Object
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -81,12 +87,12 @@ $ curl --request DELETE \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
-### Endpoint
+#### Endpoint
 `DELETE /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the object ID assigned by the platform!*.
 
-## Get more information about Object properties
+### Get more information about Object properties
 
 Sometimes you might require more details on object properties (like units in a field like `width`). This endpoint will
 return a description of properties including a help text, their requirement level and the expected type.
@@ -123,7 +129,7 @@ The response will be structured similar to this:
 }
 ```
 
-### Endpoint
+#### Endpoint
 `OPTIONS /v1/content-project/{CP_ID}/thing/`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
