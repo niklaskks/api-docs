@@ -1,7 +1,7 @@
-# Generating Content
+## Generating Content
 The content generation through the API is accessible when all mandatory information is present in the object.
 
-## Generate content for a single Object
+### Generate content for a single Object
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -33,7 +33,7 @@ $ curl --request POST \
     "...":"..." }}
 ```
 
-### Endpoint
+#### Endpoint
 `POST /v1/content-project/{CP_ID}/thing/{OBJ_ID}/generate_content/{force}`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the object ID assigned by the platform!*.
@@ -43,7 +43,7 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID an
 - **?force=false** (default): Content will be requested if this object has no existing content. Otherwise no action is taken.
 - - **?force=true**: Existing content will be discarded and regenerated.
 
-## Generate content for a whole Content Project
+### Generate content for a whole Content Project
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -63,14 +63,14 @@ $ curl --request POST \
 ```json
 {"status":"CALLED","number":3}
 ```
-### Endpoint
+#### Endpoint
 `POST /v1/content_project/{CP_ID}/generate_content/{force}`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
 `{force}` is a query parameter which is used to define whether the content request should discard and regenerate existing content. This parameter is optional, the default is **force=false**.
 
-## Request status report for a content request
+### Request status report for a content request
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -97,12 +97,12 @@ $ curl --request GET \
   "...":"..." }
 ```
 
-### Endpoint
+#### Endpoint
 `GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the ID assigned by the platform!*.
 
-## Export generated content for a single Object
+### Export generated content for a single Object
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -126,24 +126,24 @@ $ curl --request GET \
   "content_project": 1,
   "state": "Success",
   "generated_text_in_html": "<h1>Überschrift</h1>\n<p>Absatz</p>",
-  "generated_text": "# Überschrift\nAbsatz",
+  "generated_text": "## Überschrift\nAbsatz",
   "...": "..." }
 ```
 
 The generated content is available in its original format or in HTML-format. Usually the original format is [Markdown](https://daringfireball.net/projects/markdown/syntax/).
 
-### Endpoint
+#### Endpoint
 `GET /v1/content-project/{CP_ID}/thing/{OBJ_ID}/content_request/`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID and `{OBJ_ID}` with a valid Object ID. *Keep in mind that this is not the UID but the ID assigned by the platform!*.
 
-## Push for new content via web hooks
+### Push for new content via web hooks
 
 On request, we can activate the push feature for new content: When a new text is generated MyAX will send a HTTP POST request to the web hook URL.
 
 It has a signature header to verify the integrity/authenticity and some data about the object and the text in the post data body.
 
-### Signature header
+#### Signature header
 
 ```
 HTTP_X_MYAX_SIGNATURE: "sha1=df589122eac0f6a7bd8795436e692e3675cadc3b"
@@ -153,7 +153,7 @@ The checksum is calculated as hmac sha1 hexdigest. The key is your API token. Th
 
 Please note that depending on the framework/language that is in use, the siganture header can also be X-MYAX-SIGNATURE.
 
-### POST data
+#### POST data
 
 ```
 {
@@ -171,7 +171,7 @@ Please note that depending on the framework/language that is in use, the sigantu
 
 You will receive POST data looking like the JSON on the right.
 
-### Verification
+#### Verification
 
 See the examples on the right on how to verify the hmac.
 
@@ -185,11 +185,11 @@ import hashlib
 
 def signature_valid(request, raw_data):
     try:
-        secret = AX_API_TOKEN  # your knowledge!!
+        secret = AX_API_TOKEN  ## your knowledge!!
         signature_header = request.META['HTTP_X_MYAX_SIGNATURE'].replace('sha1=', '')
         signature_content = hmac.new(
             key=secret.encode('utf-8'),
-            msg=raw_data,   # content of request
+            msg=raw_data,   ## content of request
             digestmod=hashlib.sha1
         ).hexdigest()
     except AttributeError:
@@ -227,7 +227,7 @@ if($sSignature !== NULL) {
 ```
 
 
-## Export generated content for an entire Content Project
+### Export generated content for an entire Content Project
 
 If you want to have the content available as one big download file, you can use the export functionality.
 
@@ -235,11 +235,11 @@ If you want to have the content available as one big download file, you can use 
 $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
   --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10'
-  # yields a list of available downloads
-  # find your required download and use its 'download_url' attribute
+  ## yields a list of available downloads
+  ## find your required download and use its 'download_url' attribute
 $ curl --request GET \
   --output export.xlsx \
   --url https://api.ax-semantics.com/v1/content_project_export_download/7f9cc6a2-6b55-11e5-bb84-5e2c2d9baef2
 ```
-### Endpoint
+#### Endpoint
 `GET /v1/download-exports/`
