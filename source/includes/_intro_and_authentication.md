@@ -1,4 +1,4 @@
-# Introduction to the myAX API
+# Introduction to the AX NLG Cloud API
 
 ## Basics
 The AX NLG Cloud web application (`cockpit.ax-semantics.com`) is a self-service portal integrated in the AX NLG Cloud. It enables your access to functionality such as data transfer, text generation and integration of automated content generation into your website.
