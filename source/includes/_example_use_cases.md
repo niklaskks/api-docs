@@ -1,6 +1,6 @@
-# Example use cases
+## Example use cases
 
-## Generate content from existing data
+### Generate content from existing data
 
 ```shell
 $ curl --request POST \
@@ -16,8 +16,8 @@ $ curl --request POST \
 $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
   --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10'
-  # ergibt Liste von möglichen Downloads, die analysiert werden müssen. Die
-  # relevante Information findet sich unter dem Schlüsselwort "download_url"
+  ## ergibt Liste von möglichen Downloads, die analysiert werden müssen. Die
+  ## relevante Information findet sich unter dem Schlüsselwort "download_url"
 $ curl --request GET \
   --output export.xlsx \
   --url https://api.ax-semantics.com/v1/content_project_export_download/7f9cc6a2-6b55-11e5-bb84-5e2c2d9baef2
@@ -31,7 +31,7 @@ To generate content for already imported data (in this example, a complete conte
 4. [Optional] **Request status of content generation until it is finished:** this is mostly relevant for larger requests. You need to use both the Content Project ID and a Thing ID here.
 5. **Download the generated content:** Find the appropriate Download URL for the generated content and request the download.
 
-## Import data, then generate content
+### Import data, then generate content
 ```python
 import axsemantics
 
