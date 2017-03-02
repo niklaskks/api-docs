@@ -1,7 +1,7 @@
-# Content Projects
+## Content Projects
 Content Projects are collections of objects, coupled with an engine configuration and an engine training. The data that is used to generate content is deposited into objects. The Framework and interpretational ruleset for the text creation is represented by the engine training. Lastly meta information like language and data type is provided by the chosen engine configuration.
 
-## List Content Projects
+### List Content Projects
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -35,10 +35,10 @@ $ curl --request GET \
       "count_generated_texts_errors": 0 } ] }
 ```
 
-### Endpoint
+#### Endpoint
 `GET /v1/content-project/`
 
-## List a single Content Project
+### List a single Content Project
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -69,13 +69,13 @@ $ curl --request GET \
   "count_generated_texts_errors": 0 }
 ```
 
-### Endpoint
+#### Endpoint
 `GET /v1/content-project/{CP_ID}/`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
 
-### Access generated content
+#### Access generated content
 
 To get your generated content, all things with their content can be listed as follows:
 
@@ -127,7 +127,7 @@ To get your generated content, all things with their content can be listed as fo
 ```
 
 
-### Pull Content from API
+#### Pull Content from API
 * if you want to filter on all succesfull text generations, you can add `?text_state=SUCCESS` to `/thinglist/`
 `https://api-stage.ax-semantics.com/v1/content-project/3745/thinglist/?text_state=SUCCESS`
 
@@ -135,7 +135,7 @@ To get your generated content, all things with their content can be listed as fo
 
 
 
-## Create new Content Project
+### Create new Content Project
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -169,7 +169,7 @@ $ curl --request POST \
   "count_generated_texts_errors": null }
 ```
 
-### Endpoint
+#### Endpoint
 `POST /v1/content-project/`
 
 Mandatory information to create a new content project:
@@ -182,9 +182,9 @@ Optional information for your content project:
  - **keyword_deviation**: decimal, e.g.: '33.0'
  - **keyword_density**: decimal, e.g.: '3.0'
 
-## Filter and search for Content Projects
+### Filter and search for Content Projects
 
-## Delete Content Projects
+### Delete Content Projects
 ```python
 import axsemantics
 axsemantics.login('', '')
@@ -200,7 +200,7 @@ $ curl --request DELETE \
 
 > The API responds with a '204 NO CONTENT' status.
 
-### Endpoint
+#### Endpoint
 `DELETE /v1/content-project/{CP_ID}/`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
@@ -210,7 +210,7 @@ In the event of deleting a content project ALL Objects and generated content is 
 </aside>
 
 
-## Empty a Content Project
+### Empty a Content Project
 
 ```shell
 $ curl --request POST \
@@ -224,7 +224,7 @@ $ curl --request POST \
 {"message": "Started emptying ContentProject (1/neues cp)"}
 ```
 
-### Endpoint
+#### Endpoint
 `POST /v1/content-project/{CP_ID}/empty/`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
@@ -234,7 +234,7 @@ This will delete all objects and generated content for the given Content Project
 </aside>
 
 
-## Clone a Content Project
+### Clone a Content Project
 
 Creates a new Content Project for you. It will copy Objects from the original to the new Content Project. These Objects will be seperate entities with their own IDs but otherwise same properties.
 
@@ -249,7 +249,7 @@ $ curl --request POST \
 
 > The API returns '202 ACCEPTED' if the given Content Project could be cloned; otherwise it returns a '404 NOT ALLOWED'.
 
-### Endpoint
+#### Endpoint
 `POST /v1/content-project/{CP_ID}/clone/`
 
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
@@ -259,7 +259,7 @@ In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
 Some actions are executable for objects regardless of their affiliation to a content project.
 
-## Display Objects from different Content Projects
+### Display Objects from different Content Projects
 
 ```shell
 $ curl --request GET \
@@ -293,6 +293,6 @@ $ curl --request GET \
 
 Please keep in mind that the field `id` doesn't necessarily have a one-to-one relation in this view. To establish this relation combine the fields `id` and `content_project_pk` or use the field `uuid` for reference.
 
-### Endpoint
+#### Endpoint
 `GET /v1/allthings/`
 
