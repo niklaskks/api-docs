@@ -23,5 +23,5 @@ Major structural changes will only happen within the context of a version update
 
 
 ### Deprecations
-* v1 API will be removed in Q3 (migration support is available via Service Team)
-* Login via static token will be removed in Q3
+* v1 API will be removed in Q4 (migration support is available via Service Team)
+* Login via static token will be removed in Q4
