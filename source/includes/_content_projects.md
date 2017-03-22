@@ -255,7 +255,7 @@ $ curl --request POST \
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
 
-# Actions affecting multiple Content Projects
+## Actions affecting multiple Content Projects
 
 Some actions are executable for objects regardless of their affiliation to a content project.
 
