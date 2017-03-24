@@ -117,3 +117,95 @@ $ curl --request POST \
 `POST /v2/documents/{DID}/generate-content`
 
 Replace `{DID}` with a valid Document ID.
+
+## webhook for receiving text
+### Push for new content via web hooks
+
+In the collection preferences, you can activate the push feature for new content: When a new text is generated our system will send a HTTP POST request to the web hook URL.
+
+It has a signature header to verify the integrity/authenticity and some data about the object and the text in the post data body.
+
+#### Signature header
+
+```
+HTTP_X_MYAX_SIGNATURE: "sha1=df589122eac0f6a7bd8795436e692e3675cadc3b"
+```
+
+The checksum is calculated as hmac sha1 hexdigest. The key is your API token. The message is the post data.
+
+Please note that depending on the framework/language that is in use, the siganture header can also be X-MYAX-SIGNATURE.
+
+#### POST data
+
+```
+{
+  "id": 9001,
+  "name": "<The name of the object>",
+  "text": "<The new text (raw)>",
+  "text_as_html": "<The new text (as html from markdown)>",
+  "uid": "<The uid you put in the object>",
+  "collection_name": "<Name of the content project>",
+  "collection_id": 1337,
+  "text_modified": "2015-10-21T23:29:00.000000+00:00",
+  "language": "en-US"
+}
+```
+
+You will receive POST data looking like the JSON on the right.
+
+#### Verification
+
+See the examples on the right on how to verify the hmac.
+
+For more information about hmacs validation with your programming language and
+framework of choice.  Eg. for PHP documentation is available in the
+[manual](http://php.net/manual/en/function.hash-hmac.php).
+
+```python
+import hmac
+import hashlib
+
+def signature_valid(request, raw_data):
+    try:
+        secret = AX_API_TOKEN  ## your knowledge!!
+        signature_header = request.META['HTTP_X_MYAX_SIGNATURE'].replace('sha1=', '')
+        signature_content = hmac.new(
+            key=secret.encode('utf-8'),
+            msg=raw_data,   ## content of request
+            digestmod=hashlib.sha1
+        ).hexdigest()
+    except AttributeError:
+        pass
+    except KeyError:
+        pass
+    except Exception:
+        raise
+    else:
+        return bool(signature_header == signature_content)
+    return False
+```
+
+```php
+/* Works with PHP 5 >= 5.1.2 and PHP 7 */
+$aHttpHead = isset($_SERVER) ? $_SERVER : [];
+$sHttpBody = file_get_contents('php://input');
+$sApiKey = '...';
+$sSignature = NULL;
+
+if(isset($aHttpHead['HTTP_X_MYAX_SIGNATURE'])) {
+    $sSignature = $aHttpHead['HTTP_X_MYAX_SIGNATURE'];
+} elseif(isset($aHttpHead['http_x_myax_signature'])) {
+    $sSignature = $aHttpHead['http_x_myax_signature'];
+}
+
+if($sSignature !== NULL) {
+    $sChecksum = hash_hmac('sha1', $sHttpBody, $sApiKey, FALSE);
+    if($sSignature == 'sha1='.$sChecksum || $sSignature == $sChecksum) {
+        if(($aData = json_decode($sHttpBody, TRUE))) {
+            //...
+        }
+    }
+}
+```
+
+
