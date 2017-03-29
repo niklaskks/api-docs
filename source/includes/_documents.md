@@ -24,9 +24,11 @@ $ curl --request POST \
 
 To create a new Document object, POST its data into an existing Collection as JSON.
 
-No fields are mandatory; however, if you provide `name` and/or `uid` we will make your Document accessable using these attributes. Otherwise we will generate the uid and name. We suggest you provide both `uid` and `name`: it will help you find your _Document_ again.
+No fields are mandatory; however, if you provide `name` and/or `uid` we will make your Document accessable using these attributes. We suggest you provide both `uid` and `name`: it will help you find your _Document_ again.
 
-The value for `uid` must be unique within a Collection.
+If you are not providing uid or name, we will try to find one of the following keys: 'id', 'uid', 'sku', 'Artikelnummer' and 'NAME', 'Name', 'Produktname','produktname', 'Artikel', 'article'. Otherwise we will generate the uid and name. 
+
+The value for `uid` must be unique within a Collection. This uniqueness criteria also applies, if your uid field is taken from one of the fallback keys mentioned above.
 
 <aside>
 You cannot change a Document's <code>uid</code> once it's been created.
