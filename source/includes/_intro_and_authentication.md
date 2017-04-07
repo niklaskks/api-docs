@@ -1,14 +1,15 @@
-# Introduction to the AX NLG Cloud API
+# Introduction
+The AX Semantics NLG Cloud ('NLG Cloud') is a product of AX Semantics.
 
 ## Basics
-The AX NLG Cloud web application (`cockpit.ax-semantics.com`) is a self-service portal integrated in the AX NLG Cloud. It enables your access to functionality such as data transfer, text generation and integration of automated content generation into your website.
+The NLG Cloud web application (`cockpit.ax-semantics.com`) is a self-service portal integrated in the NLG Cloud. It enables your access to functionality such as data transfer, text generation and integration of automated content generation into your website.
 
 **All functionality of the platform is accessible via our API** at `api.ax-semantics.com` to ensure an easy integration into other platforms and systems.
 
 ## Terms and Definitions
 * _Objects_ (aka document) are data nodes containing information from which a text can be generated 
 * _Collcetions_ are collections of similar Objects combined with a text engine training and an engine configuration which includes the desired keyword density, text length, language etc.
-* A _Training_ is an interpretative ruleset for the AX Text-Engine, to derive information from data and transfer this information into natural language. Trainings are always dependent on a certain data structure.
+* A _Training_ is an interpretative ruleset for the text engine, to derive information from data and transfer this information into natural language. Trainings are always dependent on a certain data structure.
 * A _Content generation request_ is a request sent to the NLG Cloud to produce a text out of an Object based on the underlying training. The generated content is realized through an asynchronous process and is attached to the object after successful text generation.
 
 We recently added new functionality for which we use new terms:
