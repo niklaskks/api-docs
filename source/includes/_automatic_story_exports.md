@@ -39,7 +39,7 @@ $ curl --request GET \
 #### Endpoint
 `GET /v1/bulkdownloads/by-training-id/{TRAINING_ID}/`
 
-Replace `{TRAINING_ID}` with the training ID which you can retreive from our Training Wizard.
+Replace `{TRAINING_ID}` with the training ID which you can retrieve from our Training Wizard.
 
 ### List automatic exports matching search terms
 

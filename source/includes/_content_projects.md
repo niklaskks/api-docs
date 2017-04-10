@@ -82,7 +82,7 @@ To get your generated content, all things with their content can be listed as fo
 `GET /v1/content-project/{CP_ID}/thing/`
 
 * This gives you the data to identify the thing and the generated text.
-* the field `generated_text` contains the text (with markdown) and `text_as_html` contains the same content converted to HTML
+* The field `generated_text` contains the text (with markdown) and `text_as_html` contains the same content converted to HTML
 * This endpoint uses pagination, the URLs for `next`/`previous` page are provided by the API in the respective fields.
 
 
@@ -128,7 +128,7 @@ To get your generated content, all things with their content can be listed as fo
 
 
 #### Pull Content from API
-* if you want to filter on all succesfull text generations, you can add `?text_state=SUCCESS` to `/thinglist/`
+* If you want to filter on all succesful text generations, you can add `?text_state=SUCCESS` to `/thinglist/`
 `https://api-stage.ax-semantics.com/v1/content-project/3745/thinglist/?text_state=SUCCESS`
 
 
@@ -179,8 +179,8 @@ Mandatory information to create a new content project:
 
 Optional information for your content project:
 
- - **keyword_deviation**: decimal, e.g.: '33.0'
- - **keyword_density**: decimal, e.g.: '3.0'
+ - **keyword_deviation**: decimal, e.g.: '33.0' (default)
+ - **keyword_density**: decimal, e.g.: '3.0' (default)
 
 ### Filter and search for Content Projects
 
@@ -206,7 +206,7 @@ $ curl --request DELETE \
 In the example you have to exchange `{CP_ID}` with a valid Content Project ID.
 
 <aside class="warning">
-In the event of deleting a content project ALL Objects and generated content is also deleted! The API does not ask for conformation, but immediately executes the request!
+In the event of deleting a content project ALL Objects and generated content are also deleted! The API does not ask for conformation, but immediately executes the request!
 </aside>
 
 
@@ -218,7 +218,7 @@ $ curl --request POST \
   --header 'Authorization: Token 3c019382668c11e5bb5feb0c65696656'
 ```
 
-> The API returns status code '202 ACCEPTED' and a JSON messges such as:
+> The API returns status code '202 ACCEPTED' and a JSON messages such as:
 
 ```json
 {"message": "Started emptying ContentProject (1/neues cp)"}
@@ -236,9 +236,9 @@ This will delete all objects and generated content for the given Content Project
 
 ### Clone a Content Project
 
-Creates a new Content Project for you. It will copy Objects from the original to the new Content Project. These Objects will be seperate entities with their own IDs but otherwise same properties.
+Creates a new Content Project for you. It will copy Objects from the original to the new Content Project. These Objects will be separate entities with their own IDs but otherwise same properties.
 
-Cloning is done asynchrounosly: the new Content Project will show up in your list after a while (depending on its size).
+Cloning is done asynchronously: the new Content Project will show up in your list after a while (depending on its size).
 
 
 ```shell

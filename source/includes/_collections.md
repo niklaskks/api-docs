@@ -3,7 +3,7 @@
 Collections bundle Document objects. All such Documents are rendered using the same training from their Collection.
 
 ## List Collections
-Shows paginated list of all Collections the user has access to.
+Shows a paginated list of all Collections the user has access to.
 
 ```shell
 $ curl --request GET \

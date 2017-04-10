@@ -16,9 +16,9 @@ We recently added new functionality for which we use new terms:
 * _Projects_ bundle Trainings and Collections.
 * _Collections_ help organize related or similar Documents. (These replaced "Content Projects")
 
-  There is a vague resemblence to the old Content Projects; however they are very different on the inside.
+  There is a vague resemblance to the old Content Projects; however they are very different on the inside.
 
-* _Documents_ are managable data containers for which a text can be generated.  (These replaced "Things")
+* _Documents_ are manageable data containers for which a text can be generated.  (These replaced "Things")
 
 
 
@@ -28,7 +28,7 @@ The API requires the input of an "Authorization header".
 To retrieve the value of this token you have to log in using the web application; then you will find it in your profile. At the moment it is not possible to login using an API call. (We are working on it though.)
 
 
-## Refresh-Token based API Authentification
+## Refresh-Token based API authentication
 The API uses time-limited tokens, which need to be generated first based on your refresh token.
 
 Get your refresh_token from the GUI in the cockpit, and use this to request an `id_token`
@@ -50,7 +50,7 @@ This can then be used to call the API
 `Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx`
 
 
-For example to upload something into the bulk-api:
+For example to upload something into the bulk API:
 
 ```shell
 curl --request POST \

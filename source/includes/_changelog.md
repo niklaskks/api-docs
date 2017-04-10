@@ -5,12 +5,11 @@
 We reserve the right to add to the API without advance notice.
 Breaking changes such as removing or renaming object properties may happen on the existing version of the API
 with two weeks notice and any deprecation will be highlighted here. We try to minimize the impact of every change. 
-Critically security relevant API might happen immediately.
+Critically security relevant API changes might happen immediately.
 
 Major structural changes will only happen within the context of a version update.
 
 ## Changes
-
 
 
 #### 2017-03

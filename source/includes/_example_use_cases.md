@@ -16,8 +16,6 @@ $ curl --request POST \
 $ curl --request GET \
   --header 'Authorization: Token aa5d2e36668c11e5964038bc572ec103' \
   --url 'https://api.ax-semantics.com/v1/download-exports/?page=1&page_size=10'
-  ## ergibt Liste von möglichen Downloads, die analysiert werden müssen. Die
-  ## relevante Information findet sich unter dem Schlüsselwort "download_url"
 $ curl --request GET \
   --output export.xlsx \
   --url https://api.ax-semantics.com/v1/content_project_export_download/7f9cc6a2-6b55-11e5-bb84-5e2c2d9baef2
@@ -29,7 +27,7 @@ To generate content for already imported data (in this example, a complete conte
 2. **Determine the Content Project ID:** If you do not know the ID of your chosen Content Project, request the list of all Content Projects and look at its entries to determine the Content Project ID.
 3. **Generate content for the whole Content Project:** Refer to the Content Project by the ID you determined in step **2**.
 4. [Optional] **Request status of content generation until it is finished:** this is mostly relevant for larger requests. You need to use both the Content Project ID and a Thing ID here.
-5. **Download the generated content:** Find the appropriate Download URL for the generated content and request the download.
+5. **Download the generated content:** Find the appropriate download URL for the generated content and request the download.
 
 ### Import data, then generate content
 ```python

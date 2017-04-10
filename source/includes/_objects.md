@@ -2,7 +2,8 @@
 
 Legacy API for Projects via my.ax-semantics.com
 
-This API Endpoints and "Content Projects" are deprecated an will be removed Q3/2017. Please do not use so start new projects anymore.
+These API Endpoints and "Content Projects" are deprecated an will be removed Q3/2017. Please do not use them to start new projects anymore.
+Instead, use our new v2 API, with Documents and Collections.
 
 
 ## Objects
@@ -40,7 +41,7 @@ Depending on the type of content the object may need other mandatory information
 #### Notes on pure_data
 Depending on the shell you're using, you may need to escape quotation marks in the JSON-String for the pure_data field. In the example call on a cURL shell the quotation marks are escaped with a backslash prefix.
 
-Additionally, please take care of the data types in your json structure. Non-number formats like `"somekey":010` will result in errors, and may need to be put into double ticks (`"somekey":"010"`) or converted to a number (`'"somekey":10`). This will result in errors messages like `{"detail":"JSON parse error - Expecting ',' delimiter: line 1 column 9 (char 8)"}`.
+Additionally, please take care of the data types in your JSON structure. Non-number formats like `"somekey":010` will result in errors, and may need to be put into double ticks (`"somekey":"010"`) or converted to a number (`'"somekey":10`). This will result in errors messages like `{"detail":"JSON parse error - Expecting ',' delimiter: line 1 column 9 (char 8)"}`.
 
 #### Endpoint
 `POST /v1/content-project/{CP_ID}/thing/`

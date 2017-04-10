@@ -149,9 +149,9 @@ It has a signature header to verify the integrity/authenticity and some data abo
 HTTP_X_MYAX_SIGNATURE: "sha1=df589122eac0f6a7bd8795436e692e3675cadc3b"
 ```
 
-The checksum is calculated as hmac sha1 hexdigest. The key is your API token. The message is the post data.
+The checksum is calculated as HMAX HSA1 hexdigest. The key is your API token. The message is the post data.
 
-Please note that depending on the framework/language that is in use, the siganture header can also be X-MYAX-SIGNATURE.
+Please note that depending on the framework/language that is in use, the signature header can also be X-MYAX-SIGNATURE.
 
 #### POST data
 
@@ -173,11 +173,10 @@ You will receive POST data looking like the JSON on the right.
 
 #### Verification
 
-See the examples on the right on how to verify the hmac.
+See the examples on the right on how to verify the HMAC.
 
-For more information about hmacs validation with your programming language and
-framework of choice.  Eg. for PHP documentation is available in the
-[manual](http://php.net/manual/en/function.hash-hmac.php).
+For more information about HMAC validation, consult the documentation for your programming language and framework of
+choice.  E.g. for PHP documentation is available in the [manual](http://php.net/manual/en/function.hash-hmac.php).
 
 ```python
 import hmac
