@@ -21,7 +21,7 @@ $ curl --request POST \
   --data '{"uid": 222333,"name":"demo","capacity":{"unit":"F","value":4"}}'
 ```
 
-To upload your data, create one Document object per item. Before doing so you have to use the GUI to set up the collection these Documents will belong to. Note the ID the new collection is assigned – this ID needs to be put into the API call.
+To upload your data, create one Document object per item. Before doing so you have to use the GUI to set up the collection, to which these Documents will belong. Note the ID the new collection is assigned – this ID needs to be put into the API call.
 
 To create a new Document object, POST its data into an existing Collection as JSON.
 
