@@ -18,7 +18,7 @@ $ curl --request POST \
   --url 'https://api.ax-semantics.com/v2/collections/1/document/' \
   --header 'Authorization: Token 7de3adb043d74ca79de98cc5b6d7c405' \
   --header 'Content-Type: application/json' \
-  --data '{"uid": 222333,"name":"demo","capacity":{"unit":"F","value":4"}'
+  --data '{"uid": 222333,"name":"demo","capacity":{"unit":"F","value":4"}}'
 ```
 
 To upload your data, create one Document object per item. Before doing so you have to use the GUI to set up the collection these Documents will belong to. Note the ID the new collection is assigned – this ID needs to be put into the API call.
