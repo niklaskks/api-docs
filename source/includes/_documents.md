@@ -131,7 +131,7 @@ Replace `{DID}` with a valid Document ID.
 ### Push for new content via webhooks
 
 In the Collection preferences, you can activate the push feature for new content: When a new text is generated our
-system will send a HTTP POST request to the webhook URL.
+system will send a HTTP POST request to the webhook URL. Your webhook URL needs to be a https endpoint, with a valid certificate. 
 
 The request will have a signature header to verify the integrity and authenticity. The request body will contain
 metadata about the object and the generated text.
