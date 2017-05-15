@@ -17,6 +17,7 @@ includes:
   - documents
   - collections
   - objects
+  - instant_requests
   - generating_content
   - autoprocessing
   - content_projects
