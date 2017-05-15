@@ -26,7 +26,7 @@ rm -rf .git
 
 # build repository and commit
 git init
-git config user.email "@ax-semantics.com"
+git config user.email "aexea-deploy@ax-semantics.com"
 git config user.name "Travis CI"
 
 git add .
