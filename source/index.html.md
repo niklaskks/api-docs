@@ -16,8 +16,8 @@ includes:
   - intro_and_authentication
   - documents
   - collections
-  - objects
   - instant_requests
+  - objects
   - generating_content
   - autoprocessing
   - content_projects
