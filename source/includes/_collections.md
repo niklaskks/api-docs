@@ -8,7 +8,7 @@ Shows a paginated list of all Collections the user has access to.
 ```shell
 $ curl --request GET \
   --url https://api.ax-semantics.com/v2/collections/ \
-  --header 'Authorization: Token f30d6b31bec34e3abe945fac786672fe'
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 
 > The API returns a JSON string, such as:
@@ -44,7 +44,7 @@ $ curl --request GET \
 ```shell
 $ curl --request POST \
   --url 'https://api.ax-semantics.com/v2/collections/' \
-  --header 'Authorization: Token bd800b0689384091936f0bec670a3e78' \
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx' \
   --data '{"name":"Demo collection","language":"en-US","training_id":333}'
 ```
 
@@ -55,7 +55,7 @@ $ curl --request POST \
 ```shell
 $ curl --request GET \
   --url http://api.ax-semantics.com/v2/collections/11/ \
-  --header 'Authorization: Token f1a9f7aa3dc545bbbf2b4d88c4713e86'
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 
 > The API returns a JSON response, such as:
@@ -91,7 +91,7 @@ Replace `{CID}` with a valid Collection ID.
 ```shell
 $ curl --request PATCH \
   --url 'https://api.ax-semantics.com/v2/collections/11/' \
-  --header 'Authorization: Token 535c66208b224449a834e91bae76b953' \
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx' \
   --data '{"webhook_url":"http://example.com/backdoor/"}'
 ```
 
@@ -104,7 +104,7 @@ Replace `{CID}` with a valid Collection ID.
 ```shell
 $ curl --request DELETE \
   --url 'https://api.ax-semantics.com/v2/collections/22/' \
-  --header 'Authorization: Token d63bcc2f75e8495493898334f197b01c'
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 Eventually the Collection and all its corresponding Documents will be removed from our database.
 
@@ -121,7 +121,7 @@ Replace `{CID}` with a valid Collection ID.
 ```shell
 $ curl --request POST \
   --url 'https://api.ax-semantics.com/v2/collections/11/generate-content/' \
-  --header 'Authorization: Token 759193889f174c33922a909ddece262a'
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 
 ### Endpoint

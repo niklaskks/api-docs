@@ -16,7 +16,7 @@ We store your data in Documents.
 ```shell
 $ curl --request POST \
   --url 'https://api.ax-semantics.com/v2/collections/1/document/' \
-  --header 'Authorization: Token 7de3adb043d74ca79de98cc5b6d7c405' \
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx' \
   --header 'Content-Type: application/json' \
   --data '{"uid": 222333,"name":"demo","capacity":{"unit":"F","value":4"}}'
 ```
@@ -50,7 +50,7 @@ Replace `{CID}` with a valid Collection ID.
 ```shell
 $ curl --request GET \
   --url 'https://api.ax-semantics.com/v2/documents/?collection=11' \
-  --header 'Authorization: Token f763438dac31499ba9ee5fc850f4d420'
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 
 `GET /v2/documents/?collection={CID}`
@@ -70,7 +70,7 @@ automatically retrieving the next documents.
 ```shell
 $ curl --request GET \
   --url 'https://api.ax-semantics.com/v2/documents/?collection=11&processing_state=generated' \
-  --header 'Authorization: Token f763438dac31499ba9ee5fc850f4d420'
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 
 For push delivery, set up a webhook address and shared secret in the GUI.
@@ -80,7 +80,7 @@ For push delivery, set up a webhook address and shared secret in the GUI.
 ```shell
 $ curl --request GET \
   --url 'https://api.ax-semantics.com/v2/documents/d731e27cdd234e5486f1f309cd344e51/' \
-  --header 'Authorization: Token f763438dac31499ba9ee5fc850f4d420'
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 
 ### Endpoint
@@ -92,7 +92,7 @@ Replace `{DID}` with a valid Document ID.
 ```shell
 $ curl --request PATCH \
   --url 'https://api.ax-semantics.com/v2/documents/fd5886af005c4ed9a9f56f8c1aa7949b/' \
-  --header 'Authorization: Token 6978b4e8bb464a0fae3f4c77166caf94' \
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx' \
   --header 'Content-Type: application/json' \
   --data '{"name":"Fresh new name","sn":"644129804140"}'
 ```
@@ -106,7 +106,7 @@ Replace `{DID}` with a valid Document ID.
 ```shell
 $ curl --request DELETE \
   --url 'https://api.ax-semantics.com/v2/documents/62e5c91175844887964c1a9a3f6af2c6' \
-  --header 'Authorization: Token df3f37d1c6f948738391661c705e13df'
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 
 ### Endpoint
@@ -119,7 +119,7 @@ Replace `{DID}` with a valid Document ID.
 ```shell
 $ curl --request POST \
   --url 'https://api.ax-semantics.com/v2/documents/dca2b1cac20249edaaeb5db305362636/generate-content/' \
-  --header 'Authorization: Token 9a06ea87078d4129be35262a868abc29'
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 
 ### Endpoint
