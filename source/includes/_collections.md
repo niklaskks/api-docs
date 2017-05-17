@@ -128,3 +128,22 @@ $ curl --request POST \
 `POST /v2/collections/{CID}/generate-content/`
 
 Replace `{CID}` with a valid Collection ID.
+
+
+## Remove all Documents from a Collection
+```shell
+$ curl --request POST \
+  --url 'https://api.ax-semantics.com/v2/collections/11/empty/' \
+  --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
+```
+
+All the Documents in the given Collection will be deleted. For Collections with a lot of Documents this can take a while.
+
+<aside class="warning">
+Be careful with this command: The API does not ask for confirmation but immediately executes your request.
+</aside>
+
+### Endpoint
+`POST /v2/collections/{CID}/empty/`
+
+Replace `{CID}` with a valid Collection ID.
