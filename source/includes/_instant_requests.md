@@ -22,12 +22,12 @@ $ curl --request POST \
   --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx' \
   --header 'Content-Type: application/json' \
   --data '{
-        "language": "en-US",
         "webhook_url": "https://example.com/pim/new_text_for/3/",
         "webhook_secret": "secret secret",
-        "data: {"name": "some name", "uid": 11112222, "weight": {"value": 19, "unit": "kg"} },
+        "data": {"name": "some name", "uid": 11112222, "weight": {"value": 19, "unit": "kg"}},
         "collection": 19,
-        "training": 7664}'
+        "uid": 11112222,
+        }'
 ```
 
 > The API returns status code 202 ACCEPTED and a JSON string, such as:
