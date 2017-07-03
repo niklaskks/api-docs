@@ -31,7 +31,7 @@ find your Document again.
 
 If you are not providing the fields uid or name, we will try to find one of the following keys: 'id', 'uid', 'sku',
 'Artikelnummer' for the `id` field, and 'NAME', 'Name', 'Produktname','produktname', 'Artikel', 'article' for the
-`name` field. If none of these are present, we will generate the uid and name. 
+`name` field. If none of these are present, we will generate the uid and name.
 
 The value for `uid` must be unique within a Collection. This uniqueness criteria also applies if your uid field is
 taken from one of the fallback keys mentioned above.
@@ -105,7 +105,7 @@ Replace `{DID}` with a valid Document ID.
 ## Delete a Document
 ```shell
 $ curl --request DELETE \
-  --url 'https://api.ax-semantics.com/v2/documents/62e5c91175844887964c1a9a3f6af2c6' \
+  --url 'https://api.ax-semantics.com/v2/documents/62e5c91175844887964c1a9a3f6af2c6/' \
   --header 'Authorization: JWT eXAiOiJKV1ciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F4LXNlbWFudGljcy5ldS5hdXRoMC5jb20vIiwiYXVkIjoiYnVmdzhQMUdTSGdPTzVnMVFWbjdVM2hxMkhvWkpTSFciLCJlbWFpbCI6mXXXAbWFkZmxleC5kZSIsImV4cCI6MTQ4NzM0NjgwNSwiaWF0IjoxNDg3Mjxxxx.zCFHRQkYAk3SQLzJTCrwRzuv9hMZcgqbef3gxxxxxx'
 ```
 
@@ -123,7 +123,7 @@ $ curl --request POST \
 ```
 
 ### Endpoint
-`POST /v2/documents/{DID}/generate-content`
+`POST /v2/documents/{DID}/generate-content/`
 
 Replace `{DID}` with a valid Document ID.
 
