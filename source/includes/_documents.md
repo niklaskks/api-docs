@@ -86,7 +86,7 @@ $ curl --request GET \
 ### Endpoint
 `GET /v2/documents/{DID}/`
 
-Replace `{DID}` with a valid Document ID.
+Replace `{DID}` with a valid Document ID. This Document ID can be found in the field uuid in the dataset and looks like this: 06d3cbdf-429f-4740-9375-4495127fdad0
 
 ## Update an existing Document
 ```shell
@@ -100,7 +100,7 @@ $ curl --request PATCH \
 ### Endpoint
 `PATCH /v2/documents/{DID}/`
 
-Replace `{DID}` with a valid Document ID.
+Replace `{DID}` with a valid Document ID. This Document ID can be found in the field uuid in the dataset and looks like this: 06d3cbdf-429f-4740-9375-4495127fdad0
 
 ## Delete a Document
 ```shell
@@ -112,7 +112,7 @@ $ curl --request DELETE \
 ### Endpoint
 `DELETE /v2/documents/{DID}/`
 
-Replace `{DID}` with a valid Document ID.
+Replace `{DID}` with a valid Document ID. This Document ID can be found in the field uuid in the dataset and looks like this: 06d3cbdf-429f-4740-9375-4495127fdad0
 
 
 ## Generate content for a single Document
@@ -125,7 +125,7 @@ $ curl --request POST \
 ### Endpoint
 `POST /v2/documents/{DID}/generate-content/`
 
-Replace `{DID}` with a valid Document ID.
+Replace `{DID}` with a valid Document ID. This Document ID can be found in the field uuid in the dataset and looks like this: 06d3cbdf-429f-4740-9375-4495127fdad0
 
 ## Webhook for receiving text
 ### Push for new content via webhooks
